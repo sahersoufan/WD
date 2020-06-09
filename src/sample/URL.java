@@ -1,4 +1,4 @@
-package com.company;
+package sample;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 public class URL {
 
 
-    public static ArrayList<String> getAllLink(String MainUrl) throws IOException {
+    public ArrayList<String> getAllLink(String MainUrl) throws IOException {
 
-        ArrayList<String>AllLink=new ArrayList<>();
+        ArrayList<String>AllLink = new ArrayList<>();
 
         Document doc = Jsoup.connect(MainUrl).get();
         Elements links = doc.select("a[href]");
@@ -31,8 +31,6 @@ public class URL {
             System.out.println("link:"+link.attr("href"));
         }
 
-
-
         return AllLink;
     }
 
@@ -44,8 +42,8 @@ public class URL {
         for (Element image : images) {
             AllImage.add(image.attr("href"));
             System.out.println("src : " + image.attr("src"));
-
         }
+
         return AllImage;
     }
 
