@@ -12,13 +12,13 @@ public class Spider {
         HTTPConnection.SetURL(URL);
         String page = HTTPConnection.connection();
         this.SendPage(page);
-         */
+        */
     }
     //send page to PageFile class
     private void SendPage(String page){
         /*
         file.Write(page);
-         */
+        */
     }
 
     public void setSaveLocation(String saveLocation) {
