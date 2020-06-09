@@ -12,7 +12,7 @@ public class PageFiles {
     //paths
     public static String path="D:"+File.separator+"Web";
     public static String CSS_PATH=path+File.separator+"CSS";
-    public static String HTML_PATH=path+File.separator+"CSS";
+    public static String HTML_PATH=path+File.separator+"HTML";
     public static String JS_PATH=path+File.separator+"JS";
     public static String MEDIA_PATH=path+File.separator+"media";
 
