@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class URL {
+public class filterUrl {
 
 
     public ArrayList<String> getAllLink(String MainUrl) throws IOException {
