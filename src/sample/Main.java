@@ -20,8 +20,12 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws IOException {
+<<<<<<< HEAD
 
       //  launch(args);
         ALLURL.getAllLink("http://www.guimp.com/");
+=======
+        launch(args);
+>>>>>>> 1f1306d924196e57ed5d8005e8e6f48d8236a4f5
     }
 }

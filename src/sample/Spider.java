@@ -1,9 +1,10 @@
 package sample;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Spider{
+public class Spider implements methods{
     private Connection connection;
     //private PageFile file;
     private List<String> urlsList;
@@ -22,7 +23,7 @@ public class Spider{
 
 
     //Run method to start the operation
-    public void Start() throws InterruptedException {
+    public void Start() throws InterruptedException, IOException {
 
         filterUrls();
         saveUrls();
@@ -35,9 +36,9 @@ public class Spider{
 
 
     //send basic url to filter and get all urls
-    private void filterUrls(){
+    private void filterUrls() throws IOException {
         urlsList = new ArrayList<String>();
-        //urlsList = filterIt(URL);
+        urlsList = filter.getAllLink(URL);
     }
 
     //send urlsList to urlFile to save it in txt file
