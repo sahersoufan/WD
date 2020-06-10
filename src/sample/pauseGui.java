@@ -1,13 +1,11 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class pauseGui extends Application {
 
@@ -23,9 +21,8 @@ public class pauseGui extends Application {
     }
 
     @FXML private javafx.scene.control.Button resumeid;
-
     @FXML
-    public void Resume() throws Exception {
+    public void Resume() {
         Spider spider = new Spider();
         Stage stage = (Stage) resumeid.getScene().getWindow();
         stage.close();

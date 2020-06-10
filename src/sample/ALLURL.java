@@ -48,9 +48,7 @@ public class ALLURL{
                 if(!Searsh(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
-
                 }
-
             }
 
             for (Element link : links2) {
@@ -98,8 +96,6 @@ public class ALLURL{
             }
             else
                 break;
-
-
         }
 
 
