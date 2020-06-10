@@ -1,0 +1,12 @@
+.cancelBtn:hover{
+	
+-fx-background-color:red;
+
+
+}
+.resumeBtn:hover{
+	
+-fx-background-color:green;
+
+
+}

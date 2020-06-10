@@ -1,7 +1,7 @@
 package sample;
 
 public interface methods {
-    filterUrl filter = new filterUrl();
+    ALLURL filter = new ALLURL();
 
 
 

@@ -11,24 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+       /* Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+        primaryStage.show();*/
 
     }
 
 
-    public static void main(String[] args) throws IOException {
-<<<<<<< HEAD
-
-      //  launch(args);
-        ALLURL.getAllLink("http://www.guimp.com/");
-=======
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Spider s = new Spider();
+        s.Start();
         launch(args);
->>>>>>> 1f1306d924196e57ed5d8005e8e6f48d8236a4f5
     }
 }
