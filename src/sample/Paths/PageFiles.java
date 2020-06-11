@@ -121,13 +121,13 @@ public class PageFiles{
 
         writer.close();
     }
-    public boolean isURL_InDownloading() throws IOException {
+    public synchronized boolean isURL_InDownloading() throws IOException {
         File file = new File(DOWNLOADING_FILE);
         return !file.exists() || file.length() <= 0;
     }
 
 
-    public boolean isURL_InURL_Text(String nameOfFile){
+    public synchronized boolean isURL_InURL_Text(String nameOfFile){
         File file=new File(nameOfFile);
         return !file.exists() || file.length() <= 0;
     }
