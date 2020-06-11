@@ -19,7 +19,7 @@ public class ALLURL{
     static int counter=0;
 
 
-    static boolean Searsh(String string)
+    static boolean Search(String string)
     {
         for (int i=0;i<Link.size();i++)
         {
@@ -45,7 +45,7 @@ public class ALLURL{
 
             for (Element link : links1) {
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")),false),depth);
-                if(!Searsh(Pair.getKey().getKey()))
+                if(!Search(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
                 }
@@ -54,7 +54,7 @@ public class ALLURL{
             for (Element link : links2) {
 
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")),false),depth);
-                if(!Searsh(Pair.getKey().getKey()))
+                if(!Search(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
 
@@ -64,7 +64,7 @@ public class ALLURL{
 
             for (Element image : images) {
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, image.attr("href")),false),depth);
-                if(!Searsh(Pair.getKey().getKey()))
+                if(!Search(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
                 }
