@@ -2,6 +2,7 @@ package sample;
 
 
 
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,10 +17,11 @@ public class ALLURL{
     private static final int MAX_DEPTH = 5;
     static List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
     static List<String>AllLink =new ArrayList<>();
-    static int counter=0;
+    static long size;
 
 
-    static boolean Search(String string)
+
+    static boolean Searsh(String string)
     {
         for (int i=0;i<Link.size();i++)
         {
@@ -39,22 +41,25 @@ public class ALLURL{
         if(!Filter.FilterExcluded(Url))
         {
             Document doc = Jsoup.connect(Url).get();
+            size += doc.outerHtml().length();
             Elements links1 = doc.select("a[href]");
             Elements links2 = doc.select("link[href]");
             Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
 
             for (Element link : links1) {
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")),false),depth);
-                if(!Search(Pair.getKey().getKey()))
+                if(!Searsh(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
+
                 }
+
             }
 
             for (Element link : links2) {
 
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")),false),depth);
-                if(!Search(Pair.getKey().getKey()))
+                if(!Searsh(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
 
@@ -64,7 +69,7 @@ public class ALLURL{
 
             for (Element image : images) {
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, image.attr("href")),false),depth);
-                if(!Search(Pair.getKey().getKey()))
+                if(!Searsh(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
                 }
@@ -96,6 +101,8 @@ public class ALLURL{
             }
             else
                 break;
+
+
         }
 
 
@@ -115,7 +122,7 @@ public class ALLURL{
 
     }
 
-
-
-
+    public static long getSize() {
+        return size;
+    }
 }

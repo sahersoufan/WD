@@ -3,15 +3,14 @@ package sample;
 
 
 
+
 public class Filter {
 
 
-    static String TypeUrl(String link)
-    {
+    static String TypeUrl(String link) {
         String Split[]=link.split("\\.");
         return Split[Split.length-1];
     }
-
     static Boolean FilterExcluded(String Url)  {
 
 
@@ -38,31 +37,28 @@ public class Filter {
         return  false;
 
     }
+    static String getTitlePage(String page) {
+        int  Index0 = page.indexOf("<title>");
+        int  Index1 = page.indexOf("</title>");
+        String result=page.substring(Index0+7,Index1);
 
-
-    Boolean FilterHtml(String Url)
-    {
+        return  result;
+    }
+    Boolean FilterHtml(String Url) {
         if(TypeUrl(Url).equals("html"))
             return true;
         return false;
     }
-
-
-    Boolean FilterCss(String Url)
-    {
+    Boolean FilterCss(String Url) {
         if(TypeUrl(Url).equals("css"))
             return true;
         return false;
     }
-
-
-    Boolean FilterJs(String Url)
-    {
+    Boolean FilterJs(String Url) {
         if(TypeUrl(Url).equals("js"))
             return true;
         return false;
     }
-
     static Boolean FilterImage(String Url) {
 
 
