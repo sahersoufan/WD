@@ -38,10 +38,10 @@ public class PageFiles{
     public Path getCSS() {
         return CSS;
     }
-    public void setURLS(String urls,String location,String page) throws IOException {
+    public void setURLS(String urls,String location,String nameOfFile) throws IOException {
         File folder=new File(location);
         folder.mkdirs();
-        File saveURLS=new File(location+File.separator+page);
+        File saveURLS=new File(location+File.separator+nameOfFile);
         if (!(saveURLS.exists())){
             boolean safe= saveURLS.createNewFile();
             if (safe)
@@ -74,8 +74,8 @@ public class PageFiles{
 
         writer.close();
     }
-    public String getOneURL(String page) throws IOException {
-        FileInputStream fis = new FileInputStream(page);
+    public String getOneURL(String nameOfFile) throws IOException {
+        FileInputStream fis = new FileInputStream(nameOfFile);
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
         String oneLine = "";
@@ -88,7 +88,7 @@ public class PageFiles{
         pw.println(oneLine);
         pw.close();
         fos.close();
-        deleteFirstLine(page);
+        deleteFirstLine(nameOfFile);
         return oneLine;
     }
     public String getOneURL_From_Downloading() throws IOException {
@@ -127,9 +127,11 @@ public class PageFiles{
     }
 
 
-    public boolean isURL_InURL_Text(String textPath){
-        File file=new File(textPath);
+    public boolean isURL_InURL_Text(String nameOfFile){
+        File file=new File(nameOfFile);
         return !file.exists() || file.length() <= 0;
-
+    }
+    public long sizeOfFile(String file){
+        return file.length();
     }
 }
