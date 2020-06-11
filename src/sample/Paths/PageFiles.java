@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class PageFiles{
     public static final String DOWNLOADING_FILE="downloading.txt";
-  String mainPath;
+    String mainPath;
     Path CSS;
     Path HTML;
     Path media;
@@ -18,26 +18,28 @@ public class PageFiles{
         JS=new JS(mainPath,"JS");
         media=new Media(mainPath,"Media");
     }
+
     public void saveIn(Path folder,String data,String nameOfFile) throws IOException {
        String save= folder.getObjPath()+File.separator+nameOfFile;
         folder.writeFile(save,data);
         String temp=folder.readFile(save);
         System.out.println(temp);
     }
+
     public Path getHTML() {
         return HTML;
     }
-
     public Path getMedia() {
         return media;
     }
-
     public Path getJS() {
         return JS;
     }
     public Path getCSS() {
         return CSS;
     }
+
+
     public void setURLS(String urls,String location,String page) throws IOException {
         File folder=new File(location);
         folder.mkdirs();
@@ -55,6 +57,8 @@ public class PageFiles{
         pw.close();
         fos.close();
     }
+
+
     public void deleteFirstLine(String file) throws IOException {
         File path = new File(file);
         Scanner scanner = new Scanner(path);
@@ -74,6 +78,8 @@ public class PageFiles{
 
         writer.close();
     }
+
+
     public String getOneURL(String page) throws IOException {
         FileInputStream fis = new FileInputStream(page);
         InputStreamReader isr = new InputStreamReader(fis);
@@ -91,6 +97,8 @@ public class PageFiles{
         deleteFirstLine(page);
         return oneLine;
     }
+
+
     public String getOneURL_From_Downloading() throws IOException {
         FileInputStream fis = new FileInputStream(DOWNLOADING_FILE);
         InputStreamReader isr = new InputStreamReader(fis);
@@ -102,6 +110,8 @@ public class PageFiles{
         fis.close();
         return oneLine;
     }
+
+
     public void removeOneURL_FromDownloading() throws IOException {
         File path = new File(DOWNLOADING_FILE);
         Scanner scanner = new Scanner(path);
@@ -121,9 +131,12 @@ public class PageFiles{
 
         writer.close();
     }
+
     public boolean isURL_InDownloading() throws IOException {
-        File file = new File(DOWNLOADING_FILE);
-        return !file.exists() || file.length() <= 0;
+
+            File file = new File(DOWNLOADING_FILE);
+            return !file.exists() || file.length() <= 0;
+
     }
 
 

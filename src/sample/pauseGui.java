@@ -9,15 +9,12 @@ import javafx.stage.Stage;
 
 public class pauseGui extends Application {
 
-
     @Override
     public void start(Stage pauseStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("pauseGui.fxml"));
         pauseStage.setTitle("Pause Download");
         pauseStage.setScene(new Scene(root, 500, 100));
         pauseStage.show();
-
-
     }
 
     @FXML private javafx.scene.control.Button resumeid;
@@ -33,7 +30,7 @@ public class pauseGui extends Application {
     @FXML private javafx.scene.control.Button cancelid;
     @FXML
     public void Cancel(){
-        Stage stage = (Stage) resumeid.getScene().getWindow();
+        Stage stage = (Stage) cancelid.getScene().getWindow();
         stage.close();
     }
 }

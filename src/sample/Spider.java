@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 public class Spider implements methods{
     private Connection connection = new Connection();
     private pauseGui pause = new pauseGui();
+    private info information = new info();
     //private PageFile file;
     private List<String> urlsList;
     private String SaveLocation;
@@ -31,12 +32,32 @@ public class Spider implements methods{
 
     //Run method to start the operation
     public void Start() throws IOException, InterruptedException {
+        RunInformationGui();
 
         //filterUrls();
         //saveUrls();
-        RunThreads();
+        //RunThreads();
+    }
+    //RunInformationGui run the gui for information
+    private void RunInformationGui(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    information.start(new Stage());
+                    information.set();
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
+    //Get Full Size of Web Site
+    private int getFullSize(){
+        return /*filter.getFullSize();*/ 50;
+    }
     //run threads
     public void RunThreads(){
         threads[] threadsArray = new threads[5];
@@ -52,6 +73,7 @@ public class Spider implements methods{
             }
         }
     }
+
     //send basic url to filter and get all urls
     private void filterUrls() throws IOException {
         urlsList = new ArrayList<String>();
