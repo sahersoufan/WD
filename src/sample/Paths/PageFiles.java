@@ -38,12 +38,16 @@ public class PageFiles{
     public Path getCSS() {
         return CSS;
     }
+<<<<<<< HEAD
 
 
     public void setURLS(String urls,String location,String page) throws IOException {
+=======
+    public void setURLS(String urls,String location,String nameOfFile) throws IOException {
+>>>>>>> 067194cc0b072b48e07f6b55724b36a4c1423a00
         File folder=new File(location);
         folder.mkdirs();
-        File saveURLS=new File(location+File.separator+page);
+        File saveURLS=new File(location+File.separator+nameOfFile);
         if (!(saveURLS.exists())){
             boolean safe= saveURLS.createNewFile();
             if (safe)
@@ -78,10 +82,15 @@ public class PageFiles{
 
         writer.close();
     }
+<<<<<<< HEAD
 
 
     public String getOneURL(String page) throws IOException {
         FileInputStream fis = new FileInputStream(page);
+=======
+    public String getOneURL(String nameOfFile) throws IOException {
+        FileInputStream fis = new FileInputStream(nameOfFile);
+>>>>>>> 067194cc0b072b48e07f6b55724b36a4c1423a00
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
         String oneLine = "";
@@ -94,7 +103,7 @@ public class PageFiles{
         pw.println(oneLine);
         pw.close();
         fos.close();
-        deleteFirstLine(page);
+        deleteFirstLine(nameOfFile);
         return oneLine;
     }
 
@@ -131,18 +140,30 @@ public class PageFiles{
 
         writer.close();
     }
+<<<<<<< HEAD
 
     public boolean isURL_InDownloading() throws IOException {
 
             File file = new File(DOWNLOADING_FILE);
             return !file.exists() || file.length() <= 0;
 
-    }
-
-
-    public boolean isURL_InURL_Text(String textPath){
-        File file=new File(textPath);
+=======
+    public synchronized boolean isURL_InDownloading() throws IOException {
+        File file = new File(DOWNLOADING_FILE);
         return !file.exists() || file.length() <= 0;
-
+>>>>>>> 067194cc0b072b48e07f6b55724b36a4c1423a00
     }
+
+
+    public synchronized boolean isURL_InURL_Text(String nameOfFile){
+        File file=new File(nameOfFile);
+        return !file.exists() || file.length() <= 0;
+    }
+    public long sizeOfFileInKB(String file){
+        return file.length()/1024;
+    }
+    public long sizeOfFileInMB(String file){
+        return sizeOfFileInKB(file)/1024;
+    }
+
 }
