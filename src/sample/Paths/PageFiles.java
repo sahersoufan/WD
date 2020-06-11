@@ -131,7 +131,11 @@ public class PageFiles{
         File file=new File(nameOfFile);
         return !file.exists() || file.length() <= 0;
     }
-    public long sizeOfFile(String file){
-        return file.length();
+    public long sizeOfFileInKB(String file){
+        return file.length()/1024;
     }
+    public long sizeOfFileInMB(String file){
+        return sizeOfFileInKB(file)/1024;
+    }
+
 }
