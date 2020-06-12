@@ -3,45 +3,49 @@ package sample;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.stage.Stage;
 
 public class info extends Application{
 
+    Parent root;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("info.fxml"));
-        primaryStage.setTitle("information");
+
+        root = FXMLLoader.load(getClass().getResource("info.fxml"));
+        primaryStage.setTitle("Information");
         primaryStage.setScene(new Scene(root, 550, 124));
         primaryStage.show();
     }
 
 
 
-    //@FXML private Button bu;
+
+    // Set full size of the website
     @FXML
-    public void set() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("info.fxml"));
-        Label file = (Label) root.lookup("#file");
-        System.out.print(file.getText());
-        //file.setText("hello");
+    public void set(String FullSize)throws Exception{
+
+        Label fullsize = (Label)root.lookup("#fullsize");
+        fullsize.setText(FullSize);
+
     }
 
-    //put full size
+    // update the progress bar and the downloading value
+    @FXML
+    public void updateDownloadingState(){
+        Label fullsize = (Label)root.lookup("#fullsize");
+        fullsize.setText("FullSize");
+    }
     //update
+
     //close
+
     //pause
+
     //fileLocation
 
 }

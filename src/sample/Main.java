@@ -18,9 +18,10 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Spider s = new Spider();
-        s.Start();
+    public static void main(String[] args) throws Exception {
+        //Spider s = new Spider();
+        Downloading s = new Downloading();
+        s.RunInformationGui();
         launch(args);
     }
 }

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class Spider implements methods{
+public class Spider{
+
     private Connection connection = new Connection();
     private pauseGui pause = new pauseGui();
     private info information = new info();
@@ -31,7 +32,7 @@ public class Spider implements methods{
 
 
     //Run method to start the operation
-    public void Start() throws IOException, InterruptedException {
+    public void Start() throws Exception {
         RunInformationGui();
 
         //filterUrls();
@@ -39,13 +40,13 @@ public class Spider implements methods{
         //RunThreads();
     }
     //RunInformationGui run the gui for information
-    private void RunInformationGui(){
+    private void RunInformationGui() throws Exception {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try {
                     information.start(new Stage());
-                    information.set();
+                    //information.set(Long.toString(getFullSize()));
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -55,7 +56,7 @@ public class Spider implements methods{
     }
 
     //Get Full Size of Web Site
-    private int getFullSize(){
+    private long getFullSize(){
         return /*filter.getFullSize();*/ 50;
     }
     //run threads
@@ -77,13 +78,15 @@ public class Spider implements methods{
     //send basic url to filter and get all urls
     private void filterUrls() throws IOException {
         urlsList = new ArrayList<String>();
-        urlsList = filter.getAllLink(URL);
+        //urlsList = filter.getAllLink(URL);
     }
 
     //send urlsList to urlFile to save it in txt file
     private void saveUrls(){
         //file.saveUrlsInTxtFile(urlsList);
     }
+
+
 
     //------------------------innerClass--------------------------\\
 

@@ -38,13 +38,9 @@ public class PageFiles{
     public Path getCSS() {
         return CSS;
     }
-<<<<<<< HEAD
 
 
-    public void setURLS(String urls,String location,String page) throws IOException {
-=======
     public void setURLS(String urls,String location,String nameOfFile) throws IOException {
->>>>>>> 067194cc0b072b48e07f6b55724b36a4c1423a00
         File folder=new File(location);
         folder.mkdirs();
         File saveURLS=new File(location+File.separator+nameOfFile);
@@ -82,15 +78,11 @@ public class PageFiles{
 
         writer.close();
     }
-<<<<<<< HEAD
 
 
-    public String getOneURL(String page) throws IOException {
-        FileInputStream fis = new FileInputStream(page);
-=======
+
     public String getOneURL(String nameOfFile) throws IOException {
         FileInputStream fis = new FileInputStream(nameOfFile);
->>>>>>> 067194cc0b072b48e07f6b55724b36a4c1423a00
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
         String oneLine = "";
@@ -140,18 +132,11 @@ public class PageFiles{
 
         writer.close();
     }
-<<<<<<< HEAD
 
-    public boolean isURL_InDownloading() throws IOException {
 
-            File file = new File(DOWNLOADING_FILE);
-            return !file.exists() || file.length() <= 0;
-
-=======
     public synchronized boolean isURL_InDownloading() throws IOException {
         File file = new File(DOWNLOADING_FILE);
         return !file.exists() || file.length() <= 0;
->>>>>>> 067194cc0b072b48e07f6b55724b36a4c1423a00
     }
 
 

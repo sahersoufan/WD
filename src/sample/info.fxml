@@ -32,7 +32,7 @@
                         <Insets left="5.0" top="35.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="file" text="00">
+                  <Label fx:id="fullsize" text="00">
                      <HBox.margin>
                         <Insets left="5.0" top="35.0" />
                      </HBox.margin>
