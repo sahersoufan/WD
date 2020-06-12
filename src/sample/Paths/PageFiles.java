@@ -1,6 +1,7 @@
 package sample.Paths;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PageFiles{
@@ -37,13 +38,8 @@ public class PageFiles{
     public Path getCSS() {
         return CSS;
     }
-<<<<<<< HEAD
 
-
-    public void setURLS(String urls,String location,String nameOfFile) throws IOException {
-=======
-    public void setURLS(ArrayList<String> urls,String location,String namePage) throws IOException {
->>>>>>> 2953778f9c326dd922a1a544537928f6fba02cec
+    public void setURLS(List<String> urls, String location, String namePage) throws IOException {
         File folder=new File(location);
         folder.mkdirs();
         File saveURLS=new File(location+File.separator+namePage);
@@ -81,16 +77,11 @@ public class PageFiles{
 
         writer.close();
     }
-<<<<<<< HEAD
 
 
 
-    public String getOneURL(String nameOfFile) throws IOException {
-        FileInputStream fis = new FileInputStream(nameOfFile);
-=======
     public String getOneURL(String pathOfFile) throws IOException {
         FileInputStream fis = new FileInputStream(pathOfFile);
->>>>>>> 2953778f9c326dd922a1a544537928f6fba02cec
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
         String oneLine = "";
@@ -137,12 +128,9 @@ public class PageFiles{
         writer.close();
     }
 
-<<<<<<< HEAD
 
     public synchronized boolean isURL_InDownloading() throws IOException {
-=======
-    public synchronized boolean  isURL_InDownloading()  throws IOException {
->>>>>>> 2953778f9c326dd922a1a544537928f6fba02cec
+
         File file = new File(DOWNLOADING_FILE);
         return !file.exists() || file.length() <= 0;
     }

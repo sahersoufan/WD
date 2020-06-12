@@ -3,62 +3,80 @@ package sample;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.jsoup.nodes.Document;
+import sample.Paths.PageFiles;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class Spider{
-
+public class Spider implements methods{
     private Connection connection = new Connection();
     private pauseGui pause = new pauseGui();
-    private info information = new info();
-    //private PageFile file;
-    private List<String> urlsList;
     private String SaveLocation;
     private String URL;
+    private List<String> urlsList;
     volatile private Boolean repeat;
+    volatile private long downloadingSize = 10;
+    private ALLURL allUrl = new ALLURL();
+    private PageFiles file;
+    volatile private Boolean CancelStatementInfoGui = false;
+
 
 
     public void setSaveLocation(String saveLocation) {
         SaveLocation = saveLocation;
         //file.setLocation;
     }
-
     public void setURL(String URL) {
         this.URL = URL;
     }
-
+    public void setCancelStatementInfoGui(Boolean cancelStatementInfoGui) {
+        CancelStatementInfoGui = cancelStatementInfoGui;
+    }
 
     //Run method to start the operation
-    public void Start() throws Exception {
-        RunInformationGui();
-
+    public void FirstStep() throws Exception {
         //filterUrls();
         //saveUrls();
-        //RunThreads();
+        setFullSizeLabel();
+        setUpdateDownloadingSizeLabel();
+        setOriginPathFolder();
     }
-    //RunInformationGui run the gui for information
-    private void RunInformationGui() throws Exception {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    information.start(new Stage());
-                    //information.set(Long.toString(getFullSize()));
 
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+    //Run threads
+    public void secondStep(){
+        RunThreads();
     }
+
+    //set full suze of web site
+    public void setFullSizeLabel() throws Exception {
+        d.setFullSizeLabel(Long.toString(getFullSize()));
+    }
+
+    //set update for downloading size
+    public void setUpdateDownloadingSizeLabel() throws Exception {
+        d.setUpdateDownloadingSizeLabel(Long.toString(downloadingSize));
+    }
+
+    //set origin path folder
+    public void setOriginPathFolder() throws Exception {
+        d.setOriginPathFolder(SaveLocation);
+    }
+    public void print(){System.out.print("Asd");}
+
+
+
+
+
+
+
+
 
     //Get Full Size of Web Site
     private long getFullSize(){
         return /*filter.getFullSize();*/ 50;
     }
+
     //run threads
     public void RunThreads(){
         threads[] threadsArray = new threads[5];
@@ -78,12 +96,13 @@ public class Spider{
     //send basic url to filter and get all urls
     private void filterUrls() throws IOException {
         urlsList = new ArrayList<String>();
-        //urlsList = filter.getAllLink(URL);
+        urlsList = allUrl.getAllLink(URL);
     }
 
     //send urlsList to urlFile to save it in txt file
-    private void saveUrls(){
-        //file.saveUrlsInTxtFile(urlsList);
+    private void saveUrls() throws IOException {
+        file = new PageFiles(SaveLocation);
+        file.setURLS(urlsList,SaveLocation,URL);
     }
 
 
@@ -98,12 +117,13 @@ private class threads extends Thread {
         public void start(){
 
                 //if there is still urls in downloading txt file
-                if(/*file.thereIsStillUrlsInDownloading()*/ true) {
+            try {
+                if(file.isURL_InDownloading() && !CancelStatementInfoGui) {
 
-                    //String stackUrl = file.getStackUrl();
+                    String stackUrl = file.getOneURL_From_Downloading();
                     try {
 
-                        Document Page = connection.connect(/*oneUrl*/"http://www.guimp.com/");
+                        Document Page = connection.connect(stackUrl);
                         System.out.print(Page);
                     } catch (IOException e) {
 
@@ -130,9 +150,12 @@ private class threads extends Thread {
                         }
                     }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-                //SendPage(page);
-                //deleteOneUrl(oneUrl);
+            //SendPage(page);
+            //deleteOneUrl(oneUrl);
 
             /*
             while( true && !interrupted()){

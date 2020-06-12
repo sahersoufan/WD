@@ -81,7 +81,7 @@ public class ALLURL{
 
     }
 
-    public static List<String> getAllLink(String MainUrl) throws IOException {
+    public List<String> getAllLink(String MainUrl) throws IOException {
 
 
 

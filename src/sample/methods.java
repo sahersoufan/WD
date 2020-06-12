@@ -1,7 +1,8 @@
 package sample;
 
-public interface methods {
+public interface methods{
 
+Downloading d = new Downloading();
 
 
 }

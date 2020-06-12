@@ -19,7 +19,7 @@ public class pauseGui extends Application {
 
     @FXML private javafx.scene.control.Button resumeid;
     @FXML
-    public void Resume() {
+    public void Resume() throws Exception{
         Spider spider = new Spider();
         Stage stage = (Stage) resumeid.getScene().getWindow();
         stage.close();
