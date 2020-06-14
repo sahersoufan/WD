@@ -9,7 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Spider implements methods{
+public class Spider{
+    private Downloading download;
     private Connection connection = new Connection();
     private pauseGui pause = new pauseGui();
     private String SaveLocation;
@@ -22,6 +23,9 @@ public class Spider implements methods{
     volatile private Boolean CancelStatementInfoGui = false;
 
 
+    public void setDownload(Downloading download) {
+        this.download = download;
+    }
 
     public void setSaveLocation(String saveLocation) {
         SaveLocation = saveLocation;
@@ -29,9 +33,6 @@ public class Spider implements methods{
     }
     public void setURL(String URL) {
         this.URL = URL;
-    }
-    public void setCancelStatementInfoGui(Boolean cancelStatementInfoGui) {
-        CancelStatementInfoGui = cancelStatementInfoGui;
     }
 
     //Run method to start the operation
@@ -50,27 +51,18 @@ public class Spider implements methods{
 
     //set full suze of web site
     public void setFullSizeLabel() throws Exception {
-        d.setFullSizeLabel(Long.toString(getFullSize()));
+        download.setFullSizeLabel(Long.toString(getFullSize()));
     }
 
     //set update for downloading size
     public void setUpdateDownloadingSizeLabel() throws Exception {
-        d.setUpdateDownloadingSizeLabel(Long.toString(downloadingSize));
+        download.setUpdateDownloadingSizeLabel(Long.toString(downloadingSize));
     }
 
     //set origin path folder
     public void setOriginPathFolder() throws Exception {
-        d.setOriginPathFolder(SaveLocation);
+        download.setOriginPathFolder(SaveLocation);
     }
-    public void print(){System.out.print("Asd");}
-
-
-
-
-
-
-
-
 
     //Get Full Size of Web Site
     private long getFullSize(){
@@ -81,6 +73,7 @@ public class Spider implements methods{
     public void RunThreads(){
         threads[] threadsArray = new threads[5];
         repeat = false;
+        CancelStatementInfoGui = false;
         for(threads th : threadsArray){
             try{
                 th = new threads();
@@ -105,6 +98,20 @@ public class Spider implements methods{
         file.setURLS(urlsList,SaveLocation,URL);
     }
 
+    //Cancel threads work
+    public void setCancelStatementInfoGui(Boolean cancelStatementInfoGui) {
+        CancelStatementInfoGui = cancelStatementInfoGui;
+    }
+
+    // pause the download operation
+    public void PauseDownloading(){
+        CancelStatementInfoGui = true;
+    }
+
+    // resume the download operation
+    public void ResumeDownloading(){
+        RunThreads();
+    }
 
 
     //------------------------innerClass--------------------------\\
@@ -118,7 +125,7 @@ private class threads extends Thread {
 
                 //if there is still urls in downloading txt file
             try {
-                if(file.isURL_InDownloading() && !CancelStatementInfoGui) {
+                if(file.isURL_InDownloading()) {
 
                     String stackUrl = file.getOneURL_From_Downloading();
                     try {
@@ -127,26 +134,14 @@ private class threads extends Thread {
                         System.out.print(Page);
                     } catch (IOException e) {
 
-                        cancelThread();
                         if(!repeat){
                             repeat = true;
                             try {
-                                sleep(2000);
+                                sleep(1000);
                             } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                             }
-
-                            // call firstKid fun
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            pause.start(new Stage());
-                                        } catch (Exception ex) {
-                                            ex.printStackTrace();
-                                        }
-                                    }
-                                });
+                            download.RunPauseGui();
                         }
                     }
                 }
@@ -158,7 +153,7 @@ private class threads extends Thread {
             //deleteOneUrl(oneUrl);
 
             /*
-            while( true && !interrupted()){
+            while( true && !interrupted() && !CancelStatementInfoGui){
 
                 //String oneUrl = file.getOneUrl();
                 try {
@@ -195,7 +190,7 @@ private class threads extends Thread {
         }
 
         //cancel thread
-        private void cancelThread(){
+       /* private void cancelThread(){
             interrupt();
         }
         //send page to PageFile class
@@ -205,4 +200,4 @@ private class threads extends Thread {
         */
         }
     }
-}
+

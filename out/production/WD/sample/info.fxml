@@ -46,17 +46,22 @@
                         <Insets left="15.0" top="15.0" />
                      </HBox.margin>
                   </Label>
-                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#Cancel" styleClass="cancelBtn" stylesheets="@css/pasueGui.css" text="Cancel">
+                  <Button fx:id="resumeBtn" disable="true" mnemonicParsing="false" styleClass="resumeBtn" stylesheets="@css/pasueGui.css" text="Resume">
                      <HBox.margin>
-                        <Insets left="170.0" top="40.0" />
+                        <Insets left="140.0" top="40.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Pause">
+                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#Cancel" styleClass="cancelBtn" stylesheets="@css/pasueGui.css" text="Cancel">
+                     <HBox.margin>
+                        <Insets left="5.0" top="40.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#Pause" text="Pause">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" top="40.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="File Location">
+                  <Button fx:id="fileLocation" mnemonicParsing="false" onAction="#OpenFileLocation" text="File Location">
                      <HBox.margin>
                         <Insets top="40.0" />
                      </HBox.margin>

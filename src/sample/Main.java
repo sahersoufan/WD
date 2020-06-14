@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class Main extends Application implements methods{
+public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         /*Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -19,7 +19,7 @@ public class Main extends Application implements methods{
 
 
     public static void main(String[] args) throws Exception {
-        //Spider s = new Spider();
+        Downloading d = new Downloading();
         d.Start();
         launch(args);
     }

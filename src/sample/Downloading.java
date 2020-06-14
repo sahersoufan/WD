@@ -6,12 +6,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Downloading {
-    private info information = new info();
+public class Downloading implements Objects4GUI{
     private Spider spider = new Spider();
-    private betweeninfodownloader between ;
     private String URL="aa", saveLocation="D:\\NEW HORIZON\\WEB";
 
+
+    Downloading(){
+        spider.setDownload(this);
+        helper.setD(this);
+    }
 
     public void setURL(String URL) {
         this.URL = URL;
@@ -21,43 +24,24 @@ public class Downloading {
         this.saveLocation = saveLocation;
     }
 
-    //set text Label
+    //set FUll size text Label
     public void setFullSizeLabel(String fullSize){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    information.set(fullSize);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+        helper.setFullSizeLabel(fullSize);
+    }
 
-    }
+    // Update download size label
     public void setUpdateDownloadingSizeLabel(String updateSize){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    information.updateDownloadingState(updateSize);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+            helper.setUpdateDownloadingSizeLabel(updateSize);
     }
+
+    //set origin path of downloading folder
     public void setOriginPathFolder(String originPath){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    information.setOriginPathFolder(originPath);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+        helper.setOriginPathFolder(originPath);
+    }
+
+    //Run information GUI
+    public void RunInformationGui(){
+        helper.RunInformationGUI();
     }
 
     //Start method
@@ -67,25 +51,35 @@ public class Downloading {
         spider.setSaveLocation(saveLocation);
         RunInformationGui();
         spider.FirstStep();
-        //spider.setFullSizeLabel();
-        //spider.secondStep();
+        RunPauseGui();
     }
 
 
+    // send an order to spider to stop the download operation
+    public  void CancelDownloading(){
+        spider.setCancelStatementInfoGui(true);
+    }
 
-    public  void print(){
-        System.out.print("close");
+    // send order to spider to pause the download operation
+    public void PauseDownloading(){
+        spider.PauseDownloading();
     }
-    public void RunInformationGui() throws Exception {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    information.start(new Stage());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+
+    // send order to spider to resume the download operation
+    public void ResumeDownloading(){
+        spider.ResumeDownloading();
     }
-}
+
+    //open file location that we download web site in it
+    public void OpenFileLocation(){
+        System.out.print("we will do it don't worry");
+    }
+
+    // Run Pause Gui
+    public void RunPauseGui() {
+        helper.RunPauseGui();
+    }
+
+    }
+
+

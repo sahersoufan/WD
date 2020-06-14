@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class info extends Application  implements methods{
+public class info extends Application implements Objects4GUI{
 
     Parent root;
 
@@ -47,36 +47,52 @@ public class info extends Application  implements methods{
         Label downloadingsize = (Label)root.lookup("#Downloadingsize");
         downloadingsize.setText(newUpdate);
     }
-    //update
 
     //set origin path folder
     @FXML
     public void setOriginPathFolder(String OriginPath){
         Label path = (Label)root.lookup("#pathfolder");
+
         path.setText(OriginPath);
     }
-    //Path
 
-    //close downloading
+    //close
     @FXML Button cancelBtn;
+    @FXML Button pauseBtn;
+    @FXML Button resumeBtn;
+    @FXML Button fileLocation;
     @FXML
     public void Cancel() throws IOException {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
-        pr();
-
+        helper.CancelDownloading();
     }
-    public void pr(){
-        d.print();
-    }
-
-    @FXML private void initialize(){
-    }
-
-    //close
 
     //pause
+    @FXML
+    public void Pause() throws IOException {
+        resumeBtn.setDisable(false);
+        pauseBtn.setDisable(true);
+        helper.PauseDownloading();
+    }
+    //resume
+    @FXML
+    public void Resume() throws IOException {
+        pauseBtn.setDisable(false);
+        helper.ResumeDownloading();
+    }
 
     //fileLocation
+    @FXML
+    public void OpenFileLocation(){
+        helper.OpenFileLocation();
+    }
+
+    // close information Gui from pause command
+    public  void CancelDownloadingFromPauseGui(){
+        Button close = (Button) root.lookup("#cancelBtn");
+        Stage stage = (Stage)close.getScene().getWindow();
+        stage.close();
+    }
 
 }
