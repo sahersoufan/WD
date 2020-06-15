@@ -27,11 +27,9 @@ public class PageFiles{
     public Path getHTML() {
         return HTML;
     }
-
     public Path getMedia() {
         return media;
     }
-
     public Path getJS() {
         return JS;
     }
@@ -40,9 +38,10 @@ public class PageFiles{
     }
 
     public void setURLS(List<String> urls, String location, String namePage) throws IOException {
+
         File folder=new File(location);
         folder.mkdirs();
-        File saveURLS=new File(location+File.separator+namePage);
+        File saveURLS=new File(location+File.separator+namePage+".txt");
         if (!(saveURLS.exists())){
             boolean safe= saveURLS.createNewFile();
             if (safe)
@@ -57,7 +56,10 @@ public class PageFiles{
         }
         pw.close();
         fos.close();
+        deleteFirstLine(location+File.separator+namePage+".txt");
+
     }
+
     public void deleteFirstLine(String file) throws IOException {
         File path = new File(file);
         Scanner scanner = new Scanner(path);
@@ -67,9 +69,7 @@ public class PageFiles{
             String line = scanner.nextLine();
             coll.add(line);
         }
-
         scanner.close();
-
         FileWriter writer = new FileWriter(path);
         for (String line : coll) {
             writer.write(line+"\n");
@@ -129,17 +129,18 @@ public class PageFiles{
     }
 
 
-    public synchronized boolean isURL_InDownloading() throws IOException {
+    public synchronized boolean isURL_InDownloading(){
 
         File file = new File(DOWNLOADING_FILE);
         return !file.exists() || file.length() <= 0;
     }
 
 
-    public synchronized boolean isURL_InURL_Text(String textPath){
-        File file=new File(textPath);
+    public synchronized boolean isURL_InURL_Text(){
+        File file=new File(mainPath);
         return !file.exists() || file.length() <= 0;
     }
+
     public long sizeOfFileInKB(String file){
         return file.length()/1024;
     }

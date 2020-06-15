@@ -1,14 +1,10 @@
 package sample;
 
 
-import javafx.application.Platform;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class Downloading implements Objects4GUI{
     private Spider spider = new Spider();
-    private String URL="aa", saveLocation="D:\\NEW HORIZON\\WEB";
+    private String URL="http://www.guimp.com/", saveLocation="D:\\";
 
 
     Downloading(){
@@ -46,13 +42,11 @@ public class Downloading implements Objects4GUI{
 
     //Start method
     public void Start() throws Exception {
-
         spider.setURL(URL);
         spider.setSaveLocation(saveLocation);
-        RunInformationGui();
+        //RunInformationGui();
         spider.FirstStep();
-        helper.update();
-        //RunPauseGui();
+        //helper.update();
     }
 
 
@@ -74,6 +68,11 @@ public class Downloading implements Objects4GUI{
     //open file location that we download web site in it
     public void OpenFileLocation(){
         System.out.print("we will do it don't worry");
+    }
+
+    //get downloading size
+    public long getDownloadingSize(){
+        return spider.getDownloadingSize();
     }
 
     // Run Pause Gui

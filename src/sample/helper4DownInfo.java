@@ -97,8 +97,7 @@ public class helper4DownInfo {
 
     //get downloading size
     public long getDownloadingSize(){
-
-        return i++;
+        return download.getDownloadingSize();
     }
 
     public void update(){

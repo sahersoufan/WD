@@ -108,7 +108,10 @@ public class info extends Application implements Objects4GUI{
         Label downloadingsize = (Label)root.lookup("#Downloadingsize");
         ProgressBar progressBar =(ProgressBar) root.lookup("#progressBar");
 
-        long FZ = Long.parseLong(fullsize.getText());
+        String StringFZ = fullsize.getText();
+        String[] FZStringSplit = StringFZ.split(" ");
+        long FZ = Long.parseLong(FZStringSplit[0]);
+
         Task<Void> task = new Task<Void>() {
             long DZ;
             @Override
@@ -116,7 +119,7 @@ public class info extends Application implements Objects4GUI{
 
                 while((DZ = helper.getDownloadingSize()) <= FZ){
                     updateProgress(DZ,FZ);
-                    updateMessage(Long.toString(DZ));
+                    updateMessage(DZ + " mg");
                     Thread.sleep(10);
                 }
                 return null;
