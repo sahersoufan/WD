@@ -1,4 +1,5 @@
 package sample.Paths;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,17 +12,16 @@ public class PageFiles{
     Path media;
     Path JS;
 
-    public PageFiles(String mainPath) throws IOException {
+    public PageFiles(String mainPath) {
         this.mainPath = mainPath;
         CSS=new CSS(mainPath,"CSS");
         HTML=new HTML(mainPath,"HTML");
         JS=new JS(mainPath,"JS");
         media=new Media(mainPath,"Media");
     }
-    public void saveIn(Path folder,String data,String nameOfFile) throws IOException {
-        String save= folder.getObjPath()+File.separator+nameOfFile;
-        folder.writeFile(save,data);
-        String temp=folder.readFile(save);
+    public synchronized void saveIn(Path folder,String data,String nameOfFile) throws IOException {
+        String fileSave= folder.getObjPath()+File.separator+nameOfFile;
+        folder.writeFile(fileSave,data);
     }
     public Path getHTML() {
         return HTML;
@@ -37,13 +37,7 @@ public class PageFiles{
     public Path getCSS() {
         return CSS;
     }
-<<<<<<< HEAD
-
-
-    public void setURLS(String urls,String location,String nameOfFile) throws IOException {
-=======
-    public void setURLS(ArrayList<String> urls,String location,String namePage) throws IOException {
->>>>>>> 2953778f9c326dd922a1a544537928f6fba02cec
+    public synchronized void setURLS(ArrayList<String> urls,String location,String namePage) throws IOException {
         File folder=new File(location);
         folder.mkdirs();
         File saveURLS=new File(location+File.separator+namePage);
@@ -62,7 +56,7 @@ public class PageFiles{
         pw.close();
         fos.close();
     }
-    public void deleteFirstLine(String file) throws IOException {
+    public synchronized void deleteFirstLine(String file) throws IOException {
         File path = new File(file);
         Scanner scanner = new Scanner(path);
         ArrayList<String> coll = new ArrayList<String>();
@@ -81,16 +75,8 @@ public class PageFiles{
 
         writer.close();
     }
-<<<<<<< HEAD
-
-
-
-    public String getOneURL(String nameOfFile) throws IOException {
-        FileInputStream fis = new FileInputStream(nameOfFile);
-=======
-    public String getOneURL(String pathOfFile) throws IOException {
+    public synchronized String getOneURL(String pathOfFile) throws IOException {
         FileInputStream fis = new FileInputStream(pathOfFile);
->>>>>>> 2953778f9c326dd922a1a544537928f6fba02cec
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
         String oneLine = "";
@@ -106,7 +92,7 @@ public class PageFiles{
         deleteFirstLine(pathOfFile);
         return oneLine;
     }
-    public String getOneURL_From_Downloading() throws IOException {
+    public synchronized String getOneURL_From_Downloading() throws IOException {
         FileInputStream fis = new FileInputStream(DOWNLOADING_FILE);
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
@@ -117,7 +103,7 @@ public class PageFiles{
         fis.close();
         return oneLine;
     }
-    public void  removeOneURL_FromDownloading() throws IOException {
+    public synchronized void  removeOneURL_FromDownloading() throws IOException {
         File path = new File(DOWNLOADING_FILE);
         Scanner scanner = new Scanner(path);
         ArrayList<String> coll = new ArrayList<String>();
@@ -136,18 +122,10 @@ public class PageFiles{
 
         writer.close();
     }
-
-<<<<<<< HEAD
-
-    public synchronized boolean isURL_InDownloading() throws IOException {
-=======
-    public synchronized boolean  isURL_InDownloading()  throws IOException {
->>>>>>> 2953778f9c326dd922a1a544537928f6fba02cec
+    public synchronized boolean  isURL_InDownloading() {
         File file = new File(DOWNLOADING_FILE);
         return !file.exists() || file.length() <= 0;
     }
-
-
     public synchronized boolean isURL_InURL_Text(String textPath){
         File file=new File(textPath);
         return !file.exists() || file.length() <= 0;
@@ -157,5 +135,15 @@ public class PageFiles{
     }
     public long sizeOfFileInMB(String file){
         return sizeOfFileInKB(file)/1024;
+    }
+    public void openInBrowser(String filePath) throws IOException {
+        try {
+            File htmlFile = new File(filePath);
+            Desktop.getDesktop().browse(htmlFile.toURI());
+        }
+        catch (Exception e){
+            System.err.println("error to open browser because you insert false path of file that you wont to open");
+            System.err.println(e.getMessage());
+        }
     }
 }
