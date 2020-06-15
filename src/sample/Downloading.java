@@ -51,7 +51,8 @@ public class Downloading implements Objects4GUI{
         spider.setSaveLocation(saveLocation);
         RunInformationGui();
         spider.FirstStep();
-        RunPauseGui();
+        helper.update();
+        //RunPauseGui();
     }
 
 

@@ -14,7 +14,7 @@
          <children>
             <HBox>
                <children>
-                  <ProgressBar prefWidth="400.0" progress="0.5">
+                  <ProgressBar fx:id="progressBar" prefWidth="400.0" progress="0.0">
                      <HBox.margin>
                         <Insets left="15.0" top="35.0" />
                      </HBox.margin>
@@ -46,7 +46,7 @@
                         <Insets left="15.0" top="15.0" />
                      </HBox.margin>
                   </Label>
-                  <Button fx:id="resumeBtn" disable="true" mnemonicParsing="false" styleClass="resumeBtn" stylesheets="@css/pasueGui.css" text="Resume">
+                  <Button fx:id="resumeBtn" disable="true" mnemonicParsing="false" onAction="#Resume" styleClass="resumeBtn" stylesheets="@css/pasueGui.css" text="Resume">
                      <HBox.margin>
                         <Insets left="140.0" top="40.0" />
                      </HBox.margin>

@@ -17,7 +17,7 @@ public class Spider{
     private String URL;
     private List<String> urlsList;
     volatile private Boolean repeat;
-    volatile private long downloadingSize = 10;
+    volatile private long downloadingSize = 0;
     private ALLURL allUrl = new ALLURL();
     private PageFiles file;
     volatile private Boolean CancelStatementInfoGui = false;
@@ -66,7 +66,7 @@ public class Spider{
 
     //Get Full Size of Web Site
     private long getFullSize(){
-        return /*filter.getFullSize();*/ 50;
+        return /*filter.getFullSize();*/ 500;
     }
 
     //run threads

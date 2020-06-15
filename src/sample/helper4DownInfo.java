@@ -7,7 +7,7 @@ public class helper4DownInfo {
     private Downloading download;
     private pauseGui pauseGui = new pauseGui();
     private info information = new info();
-
+    private long i = 0;
     public void setD(Downloading d) {
         this.download = d;
     }
@@ -95,6 +95,24 @@ public class helper4DownInfo {
         download.OpenFileLocation();
     }
 
+    //get downloading size
+    public long getDownloadingSize(){
+
+        return i++;
+    }
+
+    public void update(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    information.startProgress();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
     //-----------------------pauseGUI-------------------------\\
     public void RunPauseGui(){
         Platform.runLater(new Runnable() {

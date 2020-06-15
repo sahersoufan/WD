@@ -1,6 +1,10 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -94,5 +99,44 @@ public class info extends Application implements Objects4GUI{
         Stage stage = (Stage)close.getScene().getWindow();
         stage.close();
     }
+
+
+    //Progress bar
+    public void startProgress(){
+
+        Label fullsize = (Label)root.lookup("#fullsize");
+        Label downloadingsize = (Label)root.lookup("#Downloadingsize");
+        ProgressBar progressBar =(ProgressBar) root.lookup("#progressBar");
+
+        long FZ = Long.parseLong(fullsize.getText());
+        Task<Void> task = new Task<Void>() {
+            long DZ;
+            @Override
+            protected Void call() throws Exception {
+
+                while((DZ = helper.getDownloadingSize()) <= FZ){
+                    updateProgress(DZ,FZ);
+                    updateMessage(Long.toString(DZ));
+                    Thread.sleep(10);
+                }
+                return null;
+            }
+        };
+            task.messageProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    downloadingsize.setText(t1);
+                }
+            });
+
+        progressBar.progressProperty().unbind();
+        progressBar.progressProperty().bind(task.progressProperty());
+
+        Thread th = new Thread(task);
+        th.setDaemon(true);
+        th.start();
+
+    }
+
 
 }
