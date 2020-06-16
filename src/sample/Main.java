@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 
@@ -15,9 +16,17 @@ public class Main extends Application{
 
 
     public static void main(String[] args) throws Exception {
-        Downloading d = new Downloading();
-
-        d.Start();
+        BasicGui b = new BasicGui();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    b.start(new Stage());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
         launch(args);
     }
 }
