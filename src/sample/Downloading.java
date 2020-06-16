@@ -44,6 +44,7 @@ public class Downloading implements Objects4GUI{
     public void Start() throws Exception {
         spider.setURL(URL);
         spider.setSaveLocation(saveLocation);
+        spider.initPageFile();
         //RunInformationGui();
         spider.FirstStep();
         //helper.update();

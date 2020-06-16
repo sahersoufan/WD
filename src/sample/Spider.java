@@ -2,6 +2,8 @@ package sample;
 
 import org.jsoup.nodes.Document;
 import sample.Paths.PageFiles;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,11 @@ public class Spider {
 
     public void setSaveLocation(String saveLocation) {
         SaveLocation = saveLocation;
+    }
+
+    public void initPageFile() throws IOException {
+        file = new PageFiles(SaveLocation + File.separator + Filter.getTitlePage(URL));
+
     }
 
     public void setURL(String URL) {
@@ -100,8 +107,7 @@ public class Spider {
 
     //send urlsList to urlFile to save it in txt file
     private void saveUrls() throws IOException {
-        file = new PageFiles(SaveLocation + Filter.getTitlePage(URL));
-        file.setURLS(urlsList, SaveLocation + allUrl.getMainTitle(), "URLS");
+       // file.setURLS(urlsList);
     }
 
     //Cancel threads work

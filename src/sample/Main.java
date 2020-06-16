@@ -16,6 +16,7 @@ public class Main extends Application{
 
     public static void main(String[] args) throws Exception {
         Downloading d = new Downloading();
+
         d.Start();
         launch(args);
     }
