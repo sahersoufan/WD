@@ -1,14 +1,11 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.application.Platform;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 
-public class Main extends Application {
+public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         /*Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -19,9 +16,17 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws Exception {
-        //Spider s = new Spider();
-        Downloading s = new Downloading();
-        s.RunInformationGui();
+        BasicGui b = new BasicGui();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    b.start(new Stage());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
         launch(args);
     }
 }

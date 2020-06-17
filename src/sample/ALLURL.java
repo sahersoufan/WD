@@ -14,14 +14,18 @@ import java.util.*;
 public class ALLURL{
 
 
-    private static final int MAX_DEPTH = 5;
-    static List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
-    static List<String>AllLink =new ArrayList<>();
-    static long size;
+    private  final int MAX_DEPTH = 5;
+     List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
+     List<String>AllLink =new ArrayList<>();
+     long size;
+     String MainTitle;
 
 
+    public  String getMainTitle() {
+        return MainTitle;
+    }
 
-    static boolean Searsh(String string)
+     boolean Search(String string)
     {
         for (int i=0;i<Link.size();i++)
         {
@@ -34,13 +38,17 @@ public class ALLURL{
 
         return false;
     }
-    public static void getLink(String Url,String MainUrl,int depth) throws IOException {
+    public  void getLink(String Url,String MainUrl,int depth) throws IOException {
 
 
 
         if(!Filter.FilterExcluded(Url))
         {
             Document doc = Jsoup.connect(Url).get();
+            if(depth==0)
+            {
+                MainTitle= doc.title();
+            }
             size += doc.outerHtml().length();
             Elements links1 = doc.select("a[href]");
             Elements links2 = doc.select("link[href]");
@@ -48,7 +56,7 @@ public class ALLURL{
 
             for (Element link : links1) {
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")),false),depth);
-                if(!Searsh(Pair.getKey().getKey()))
+                if(!Search(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
 
@@ -59,7 +67,7 @@ public class ALLURL{
             for (Element link : links2) {
 
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")),false),depth);
-                if(!Searsh(Pair.getKey().getKey()))
+                if(!Search(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
 
@@ -69,7 +77,7 @@ public class ALLURL{
 
             for (Element image : images) {
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, image.attr("href")),false),depth);
-                if(!Searsh(Pair.getKey().getKey()))
+                if(!Search(Pair.getKey().getKey()))
                 {
                     Link.add(Pair);
                 }
@@ -81,7 +89,7 @@ public class ALLURL{
 
     }
 
-    public static List<String> getAllLink(String MainUrl) throws IOException {
+    public  List<String> getAllLink(String MainUrl) throws IOException {
 
 
 
@@ -122,7 +130,7 @@ public class ALLURL{
 
     }
 
-    public static long getSize() {
+    public  long getSize() {
         return size;
     }
 }

@@ -11,6 +11,7 @@ public class Filter {
         String Split[]=link.split("\\.");
         return Split[Split.length-1];
     }
+
     static Boolean FilterExcluded(String Url)  {
 
 
@@ -37,13 +38,17 @@ public class Filter {
         return  false;
 
     }
+
+    //get name page
     static String getTitlePage(String page) {
         int  Index0 = page.indexOf("<title>");
         int  Index1 = page.indexOf("</title>");
-        String result=page.substring(Index0+7,Index1);
+        String result=/*page.substring(Index0+7,Index1)*/ "FACEBOOK";
 
         return  result;
     }
+
+
     Boolean FilterHtml(String Url) {
         if(TypeUrl(Url).equals("html"))
             return true;

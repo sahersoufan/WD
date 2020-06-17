@@ -2,16 +2,17 @@ package sample.Paths;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PageFiles{
-    public static final String DOWNLOADING_FILE="downloading.txt";
+    public static final String DOWNLOADING_FILE = "downloading.txt";
     String mainPath;
     Path CSS;
     Path HTML;
     Path media;
     Path JS;
-
+/*
     public PageFiles(String mainPath) {
         this.mainPath = mainPath;
         CSS=new CSS(mainPath,"CSS");
@@ -26,21 +27,25 @@ public class PageFiles{
     public Path getHTML() {
         return HTML;
     }
-
     public Path getMedia() {
         return media;
     }
-
     public Path getJS() {
         return JS;
     }
     public Path getCSS() {
         return CSS;
     }
+<<<<<<< HEAD
     public synchronized void setURLS(ArrayList<String> urls,String location,String namePage) throws IOException {
+=======
+
+    public void setURLS(List<String> urls, String location, String namePage) throws IOException {
+
+>>>>>>> 5f4237f84af6f3285bd3f168929406ddfbfebaab
         File folder=new File(location);
         folder.mkdirs();
-        File saveURLS=new File(location+File.separator+namePage);
+        File saveURLS=new File(location+File.separator+namePage+".txt");
         if (!(saveURLS.exists())){
             boolean safe= saveURLS.createNewFile();
             if (safe)
@@ -55,8 +60,15 @@ public class PageFiles{
         }
         pw.close();
         fos.close();
+        deleteFirstLine(location+File.separator+namePage+".txt");
+
     }
+<<<<<<< HEAD
     public synchronized void deleteFirstLine(String file) throws IOException {
+=======
+
+    public void deleteFirstLine(String file) throws IOException {
+>>>>>>> 5f4237f84af6f3285bd3f168929406ddfbfebaab
         File path = new File(file);
         Scanner scanner = new Scanner(path);
         ArrayList<String> coll = new ArrayList<String>();
@@ -65,9 +77,7 @@ public class PageFiles{
             String line = scanner.nextLine();
             coll.add(line);
         }
-
         scanner.close();
-
         FileWriter writer = new FileWriter(path);
         for (String line : coll) {
             writer.write(line+"\n");
@@ -75,7 +85,14 @@ public class PageFiles{
 
         writer.close();
     }
+<<<<<<< HEAD
     public synchronized String getOneURL(String pathOfFile) throws IOException {
+=======
+
+
+
+    public String getOneURL(String pathOfFile) throws IOException {
+>>>>>>> 5f4237f84af6f3285bd3f168929406ddfbfebaab
         FileInputStream fis = new FileInputStream(pathOfFile);
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
@@ -128,8 +145,20 @@ public class PageFiles{
     }
     public synchronized boolean isURL_InURL_Text(String textPath){
         File file=new File(textPath);
+
+
+    public synchronized boolean isURL_InDownloading(){
+
+        File file = new File(DOWNLOADING_FILE);
         return !file.exists() || file.length() <= 0;
     }
+
+
+    public synchronized boolean isURL_InURL_Text(){
+        File file=new File(mainPath);
+        return !file.exists() || file.length() <= 0;
+    }
+
     public long sizeOfFileInKB(String file){
         return file.length()/1024;
     }
@@ -146,4 +175,6 @@ public class PageFiles{
             System.err.println(e.getMessage());
         }
     }
+
+ */
 }
