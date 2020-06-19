@@ -25,7 +25,6 @@ public class BasicGui extends Application implements Initializable{
     private List<String> URLS = new ArrayList<>();
     private String SaveLocation = "C:\\";
 
-
     @FXML private Button ChoiceLocation;
     @FXML private Button Cancel;
     @FXML private Button Start;
@@ -52,16 +51,19 @@ public class BasicGui extends Application implements Initializable{
     @FXML
     private void ChoiceLocation(){
         SaveLocation = choseLocation.ChoisLocation();
+        Add.setDisable(false);
     }
 
     //enter one url to list of urls
     @FXML
     private void InputUrl(){
         String webSite = inputURL.getText();
-        URLS.add(webSite);
-        addToTableView(webSite);
-        checkNumOfURLS();
-        inputURL.clear();
+        if(!webSite.equals("")){
+            URLS.add(webSite);
+            addToTableView(webSite);
+            checkNumOfURLS();
+            inputURL.clear();
+        }
     }
 
     //check number of ws and make add disable if number is 5

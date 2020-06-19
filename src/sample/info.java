@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.scene.control.ProgressBar;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class info extends Application implements Objects4GUI{
     public void start(Stage primaryStage) throws Exception{
 
         root = FXMLLoader.load(getClass().getResource("info.fxml"));
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.setTitle("Information");
         primaryStage.setScene(new Scene(root, 550, 124));
         primaryStage.show();

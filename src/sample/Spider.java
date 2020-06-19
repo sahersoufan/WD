@@ -3,7 +3,6 @@ package sample;
 import org.jsoup.nodes.Document;
 import sample.Paths.PageFiles;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +32,7 @@ public class Spider {
     }
 
     public void initPageFile() throws IOException {
-        file = new PageFiles(SaveLocation + File.separator + Filter.getTitlePage(URL));
-
+        file = new PageFiles(SaveLocation);
     }
 
     public void setURL(String URL) {
@@ -45,9 +43,9 @@ public class Spider {
     public void FirstStep() throws Exception {
         filterUrls();
         saveUrls();
-        //setFullSizeLabel();
-        //setUpdateDownloadingSizeLabel();
-        //setOriginPathFolder();
+        setFullSizeLabel();
+        setUpdateDownloadingSizeLabel();
+        setOriginPathFolder();
     }
 
     //Run threads
@@ -72,7 +70,7 @@ public class Spider {
 
     //Get Full Size of Web Site
     private long getFullSize() {
-        return /*filter.getFullSize();*/ 500;
+        return allUrl.getSize();
     }
 
     //get downloading size
@@ -107,7 +105,7 @@ public class Spider {
 
     //send urlsList to urlFile to save it in txt file
     private void saveUrls() throws IOException {
-       // file.setURLS(urlsList);
+        file.setURLS((ArrayList<String>) urlsList);
     }
 
     //Cancel threads work
@@ -135,44 +133,53 @@ public class Spider {
         @Override
         public void start() {
 
-            //if there is still urls in downloading txt file
-            if (file.isURL_InDownloading()) {
+            Document Page = new Document("hi");
+            String oneUrl = "hello";
 
-                String stackUrl = null;
+            //if there is still urls in downloading txt file
+            if (!file.isURL_InDownloading()) {
+
                 try {
-                    stackUrl = file.getOneURL_From_Downloading();
+                    oneUrl = file.getOneURL_From_Downloading();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 try {
 
-                    Document Page = connection.connect(stackUrl);
+                    Page = connection.connect(oneUrl);
                     if (PauseStatementInfoGui) {
                         throw new IOException();
                     }
-                    System.out.print(Page);
                 } catch (IOException e) {
-
-                    if (!repeat) {
-                        repeat = true;
-                        try {
-                            sleep(1000);
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
+                    if (!e.toString().contains("Unhandled content type.")) {
+                        if (!repeat) {
+                            repeat = true;
+                            try {
+                                sleep(2000);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
+                            download.RunPauseGui();
                         }
-                        download.RunPauseGui();
                     }
+                }
+
+
+                try {
+                    SendPage(Page.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    deleteOneUrlFromDownloading(oneUrl);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-
-            //SendPage(page);
-            //deleteOneUrl(oneUrl);
-
-
-            while (!CancelStatementInfoGui && file.isURL_InURL_Text()) {
+            while (!CancelStatementInfoGui && !file.isURL_InURL_Text()) {
 
                 try {
-                    String oneUrl = file.getOneURL(/*repaire it mayar*/ "hello.txt");
+                    oneUrl = file.getOneURL();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -182,30 +189,43 @@ public class Spider {
                         throw new IOException();
                     }
 
-                    Document Page = connection.connect("http://www.guimp.com/");
-                    System.out.print(Page);
+                    Page = connection.connect(oneUrl);
+
 
                 } catch (IOException e) {
-                    if (!repeat) {
-                        repeat = true;
-                        try {
-                            sleep(2000);
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
+                    if (!e.toString().contains("Unhandled content type.")) {
+                        if (!repeat) {
+                            repeat = true;
+                            try {
+                                sleep(2000);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
+                            download.RunPauseGui();
                         }
-                        download.RunPauseGui();
                     }
                 }
-                //SendPage(page);
-                //deleteOneUrl(oneUrl);
+                try {
+                    SendPage(Page.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    deleteOneUrlFromDownloading(oneUrl);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-
-
         //send page to PageFile class
-        private void SendPage(String page) {
+        private void SendPage(String page) throws IOException {
+            file.saveIn(page);
+        }
 
+        //delete one url from urls.txt
+        private void deleteOneUrlFromDownloading(String url) throws IOException {
+            file.removeOneURL_FromDownloading(url);
         }
     }
 }

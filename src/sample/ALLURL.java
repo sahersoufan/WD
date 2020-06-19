@@ -131,6 +131,6 @@ public class ALLURL{
     }
 
     public  long getSize() {
-        return size;
+        return size/1024;
     }
 }

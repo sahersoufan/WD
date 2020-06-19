@@ -22,10 +22,10 @@ public abstract class Path implements fun {
             boolean safe= file.createNewFile();
             if (safe){
                 System.out.println("Created successful "+fileName);
-            return true;}
+                return true;}
             else{
                 System.err.println("unsafe new file");
-            return false;}
+                return false;}
         }
         return true;
     }
@@ -53,7 +53,28 @@ public abstract class Path implements fun {
         fis.close();
         return allText;
     }
-        public String getMainPath() {
+    public String readOneLine(String fileName) throws IOException {
+        FileInputStream fis = new FileInputStream(fileName);
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
+        String oneLine = "";
+        oneLine=br.readLine();
+        br.close();
+        isr.close();
+        fis.close();
+        return oneLine;
+    }
+    public boolean writeOneLine(String fileName,String oneLine) throws IOException {
+
+        boolean test=isCreatedFile(fileName);
+        FileOutputStream fos = new FileOutputStream(fileName);
+        PrintWriter pw = new PrintWriter(fos);
+        pw.println(oneLine);
+        pw.close();
+        fos.close();
+        return test;
+    }
+    public String getMainPath() {
         return mainPath;
     }
 

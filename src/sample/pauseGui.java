@@ -22,7 +22,7 @@ public class pauseGui extends Application implements Objects4GUI{
     @FXML private javafx.scene.control.Button resumeid;
     @FXML
     public void Resume(){
-        //helper.ResumeDownloading();
+        helper.ResumeDownloading();
         Stage stage = (Stage) resumeid.getScene().getWindow();
         stage.close();
     }

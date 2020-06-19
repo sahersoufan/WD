@@ -17,18 +17,17 @@ public class SaveLocation{
         String location;
         Stage windo=new Stage();
         FileChooser fileChooser=new FileChooser();
+        fileChooser.setInitialFileName("website");
         fileChooser.setInitialDirectory(new File("C:\\"));
-        //fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(" "),new FileChooser.ExtensionFilter(""));
         File file=  fileChooser.showSaveDialog(windo);
 
         if(file==null)
             location="C:\\";
-        else
-            location=  file.getPath();
+        else {
+            location = file.getPath();
+
+        }
 
         return location;
     }
-
-
-
 }

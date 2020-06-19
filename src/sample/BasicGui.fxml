@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane prefHeight="360.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BasicGui">
    <children>
       <VBox prefHeight="361.0" prefWidth="450.0">
@@ -20,7 +19,7 @@
                <children>
                   <VBox>
                      <children>
-                        <Label text="Enter your URL :">
+                        <Label text="Click Choice Location befor Enter your URL  :">
                            <VBox.margin>
                               <Insets left="10.0" top="40.0" />
                            </VBox.margin>
@@ -32,7 +31,7 @@
                         </TextField>
                      </children>
                   </VBox>
-                  <Button fx:id="Add" mnemonicParsing="false" onAction="#InputUrl" prefHeight="27.0" prefWidth="67.0" text="Add">
+                  <Button fx:id="Add" disable="true" mnemonicParsing="false" onAction="#InputUrl" prefHeight="27.0" prefWidth="67.0" text="Add">
                      <HBox.margin>
                         <Insets left="10.0" top="60.0" />
                      </HBox.margin>
@@ -85,7 +84,7 @@
                         <Insets left="5.0" right="5.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="ChoiceLocation" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" onAction="#ChoiceLocation" prefHeight="27.0" prefWidth="97.0" styleClass="cancelBtn" stylesheets="@css/pasueGui.css" text="Choice Location">
+                  <Button fx:id="ChoiceLocation" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" onAction="#ChoiceLocation" prefHeight="27.0" prefWidth="97.0" styleClass="ChoiceLocation" stylesheets="@css/pasueGui.css" text="Choice Location">
                      <padding>
                         <Insets left="5.0" right="5.0" />
                      </padding>

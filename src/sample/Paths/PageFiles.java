@@ -1,74 +1,67 @@
 package sample.Paths;
+import sample.Filter;
+
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class PageFiles{
-    public static final String DOWNLOADING_FILE = "downloading.txt";
-    String mainPath;
-    Path CSS;
-    Path HTML;
-    Path media;
-    Path JS;
-/*
+    private static final String DOWNLOADING_FILE="downloading.txt";
+    private static final String URLs_FILE="URLs.txt";
+    private String mainPath;
+    private Path CSS;
+    private Path HTML;
+    private Path media;
+    private Path JS;
     public PageFiles(String mainPath) {
-        this.mainPath = mainPath;
+        this.mainPath=mainPath;
         CSS=new CSS(mainPath,"CSS");
         HTML=new HTML(mainPath,"HTML");
         JS=new JS(mainPath,"JS");
         media=new Media(mainPath,"Media");
     }
-    public synchronized void saveIn(Path folder,String data,String nameOfFile) throws IOException {
-        String fileSave= folder.getObjPath()+File.separator+nameOfFile;
-        folder.writeFile(fileSave,data);
-    }
-    public Path getHTML() {
-        return HTML;
-    }
-    public Path getMedia() {
-        return media;
-    }
-    public Path getJS() {
-        return JS;
-    }
-    public Path getCSS() {
-        return CSS;
-    }
-<<<<<<< HEAD
-    public synchronized void setURLS(ArrayList<String> urls,String location,String namePage) throws IOException {
-=======
-
-    public void setURLS(List<String> urls, String location, String namePage) throws IOException {
-
->>>>>>> 5f4237f84af6f3285bd3f168929406ddfbfebaab
-        File folder=new File(location);
+    public synchronized void setURLS(ArrayList<String> urls) throws IOException {
+        File folder=new File(getMainPath());
         folder.mkdirs();
-        File saveURLS=new File(location+File.separator+namePage+".txt");
+        String pathOfURLS=getMainPath()+File.separator+URLs_FILE;
+        File saveURLS=new File(pathOfURLS);
         if (!(saveURLS.exists())){
             boolean safe= saveURLS.createNewFile();
             if (safe)
-                System.out.println("Created successful "+location);
+                System.out.println("Created successful "+pathOfURLS);
             else
                 System.err.println("unsafe new file");
         }
-        FileOutputStream fos=new FileOutputStream(saveURLS,true);
-        PrintWriter pw=new PrintWriter(fos);
-        for (String temp:urls){
-            pw.println(temp);
+        String pathOfDownloading=getMainPath()+File.separator+DOWNLOADING_FILE;
+        File saveDownloading=new File(pathOfDownloading);
+        if (!(saveDownloading.exists())){
+            boolean safe= saveDownloading.createNewFile();
+            if (safe)
+                System.out.println("Created successful "+pathOfDownloading);
+            else
+                System.err.println("unsafe new file");
         }
-        pw.close();
-        fos.close();
-        deleteFirstLine(location+File.separator+namePage+".txt");
 
+        for (String temp:urls){
+            getHTML().writeFile(pathOfURLS,temp);
+        }
+        deleteFirstLine(pathOfURLS);
     }
-<<<<<<< HEAD
-    public synchronized void deleteFirstLine(String file) throws IOException {
-=======
+    public synchronized void saveIn(String data) throws IOException {
 
-    public void deleteFirstLine(String file) throws IOException {
->>>>>>> 5f4237f84af6f3285bd3f168929406ddfbfebaab
+        if((Boolean) Filter.FilterCss(data))
+            getCSS().writeFile(setCSS_File(data),data);
+        else if((Boolean) Filter.FilterJs(data))
+            getJS().writeFile(setJS_File(data),data);
+        else if((Boolean) Filter.FilterImage(data))
+            getMedia().writeFile(setMedia_File(data),data);
+        else if((Boolean) Filter.FilterAduio(data))
+            getMedia().writeFile(setMedia_File(data),data);
+        else
+            getHTML().writeFile(setHTML_File(data),data);
+    }
+    public synchronized void deleteFirstLine(String file) throws IOException {
         File path = new File(file);
         Scanner scanner = new Scanner(path);
         ArrayList<String> coll = new ArrayList<String>();
@@ -77,7 +70,9 @@ public class PageFiles{
             String line = scanner.nextLine();
             coll.add(line);
         }
+
         scanner.close();
+
         FileWriter writer = new FileWriter(path);
         for (String line : coll) {
             writer.write(line+"\n");
@@ -85,43 +80,42 @@ public class PageFiles{
 
         writer.close();
     }
-<<<<<<< HEAD
-    public synchronized String getOneURL(String pathOfFile) throws IOException {
-=======
-
-
-
-    public String getOneURL(String pathOfFile) throws IOException {
->>>>>>> 5f4237f84af6f3285bd3f168929406ddfbfebaab
-        FileInputStream fis = new FileInputStream(pathOfFile);
-        InputStreamReader isr = new InputStreamReader(fis);
-        BufferedReader br = new BufferedReader(isr);
-        String oneLine = "";
-        oneLine=br.readLine();
-        br.close();
-        isr.close();
-        fis.close();
-        FileOutputStream fos=new FileOutputStream(DOWNLOADING_FILE);
-        PrintWriter pw=new PrintWriter(fos);
-        pw.println(oneLine);
-        pw.close();
-        fos.close();
-        deleteFirstLine(pathOfFile);
+    public synchronized String getOneURL() throws IOException {
+        String oneLine=getHTML().readOneLine(getMainPath()+File.separator+URLs_FILE);
+        getHTML().writeOneLine(getMainPath()+File.separator+DOWNLOADING_FILE,oneLine);
+        deleteFirstLine(getMainPath()+File.separator+URLs_FILE);
         return oneLine;
     }
     public synchronized String getOneURL_From_Downloading() throws IOException {
-        FileInputStream fis = new FileInputStream(DOWNLOADING_FILE);
-        InputStreamReader isr = new InputStreamReader(fis);
-        BufferedReader br = new BufferedReader(isr);
-        String oneLine = "";
-        oneLine=br.readLine();
-        br.close();
-        isr.close();
-        fis.close();
-        return oneLine;
+
+        return getHTML().readOneLine(getMainPath()+File.separator+DOWNLOADING_FILE);
     }
-    public synchronized void  removeOneURL_FromDownloading() throws IOException {
-        File path = new File(DOWNLOADING_FILE);
+    public synchronized void  removeOneURL_FromDownloading(String url) throws IOException {
+        File inputFile = new File(getMainPath()+File.separator+DOWNLOADING_FILE);
+        File tempFile = new File("myTempFile.txt");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+
+        String currentLine;
+
+        while((currentLine = reader.readLine()) != null) {
+            // trim newline when comparing with lineToRemove
+            String trimmedLine = currentLine.trim();
+            if(trimmedLine.equals(url)) continue;
+            writer.write(currentLine + System.getProperty("line.separator"));
+        }
+        writer.close();
+        reader.close();
+        boolean successful = tempFile.renameTo(inputFile);
+        System.out.println(successful);
+        inputFile.delete();
+        tempFile.renameTo(new File(getMainPath()+File.separator+DOWNLOADING_FILE));
+
+    }
+    public synchronized void  removeOneURL_FromURLs() throws IOException {
+        File path = new File(getMainPath()+File.separator+URLs_FILE);
         Scanner scanner = new Scanner(path);
         ArrayList<String> coll = new ArrayList<String>();
         scanner.nextLine();
@@ -140,34 +134,22 @@ public class PageFiles{
         writer.close();
     }
     public synchronized boolean  isURL_InDownloading() {
-        File file = new File(DOWNLOADING_FILE);
+        File file = new File(getMainPath()+File.separator+DOWNLOADING_FILE);
         return !file.exists() || file.length() <= 0;
     }
-    public synchronized boolean isURL_InURL_Text(String textPath){
-        File file=new File(textPath);
-
-
-    public synchronized boolean isURL_InDownloading(){
-
-        File file = new File(DOWNLOADING_FILE);
-        return !file.exists() || file.length() <= 0;
-    }
-
-
     public synchronized boolean isURL_InURL_Text(){
-        File file=new File(mainPath);
+        File file=new File(getMainPath()+File.separator+URLs_FILE);
         return !file.exists() || file.length() <= 0;
     }
-
     public long sizeOfFileInKB(String file){
         return file.length()/1024;
     }
     public long sizeOfFileInMB(String file){
         return sizeOfFileInKB(file)/1024;
     }
-    public void openInBrowser(String filePath) throws IOException {
+    public void openInBrowser(){
         try {
-            File htmlFile = new File(filePath);
+            File htmlFile = new File(getMainPath()+File.separator+"index.html");
             Desktop.getDesktop().browse(htmlFile.toURI());
         }
         catch (Exception e){
@@ -175,6 +157,64 @@ public class PageFiles{
             System.err.println(e.getMessage());
         }
     }
-
- */
+    public void openInExplorer() throws IOException {
+        File file = new File (getMainPath()+File.separator);
+        Desktop desktop = Desktop.getDesktop();
+        desktop.open(file);
+    }
+    public void deleteURLs(){
+        try
+        {
+            File f= new File(getMainPath()+File.separator+URLs_FILE);
+            if(f.delete())
+            {
+                System.out.println(f.getName() + " deleted");
+            }
+            else
+            {
+                System.out.println("failed");
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public void deleteDownloading(){
+        try
+        {
+            File f= new File(getMainPath()+File.separator+DOWNLOADING_FILE);
+            if(f.delete())
+            {
+                System.out.println(f.getName() + " deleted");
+            }
+            else
+            {
+                System.out.println("failed");
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    private String getMainPath() {
+        return mainPath;
+    }
+    private Path getHTML() {
+        return HTML;
+    }
+    private Path getMedia() {
+        return media;
+    }
+    private Path getJS() {
+        return JS;
+    }
+    private Path getCSS() {
+        return CSS;
+    }
+    private String setHTML_File(String name){return getHTML().getObjPath()+File.separator+Filter.getTitlePage(name)+".html";}
+    private String setCSS_File(String name){return getCSS().getObjPath()+File.separator+Filter.getTitlePage(name)+".css";}
+    private String setJS_File(String name){return getJS().getObjPath()+File.separator+Filter.getTitlePage(name)+".js";}
+    private String setMedia_File(String name){return getMedia().getObjPath()+File.separator+ Filter.getTitlePage(name)+".img";}
 }
