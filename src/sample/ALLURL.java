@@ -114,19 +114,16 @@ public class ALLURL{
         }
 
 
+
         for (pair<pair<String,Boolean>, Integer> link : Link)
         {
             AllLink.add(link.getKey().getKey());
 
         }
-        for (int i=0;i<AllLink.size();i++)
-        {
-            System.out.println(AllLink.get(i));
-        }
 
-        System.out.println(AllLink.size());
 
-        return AllLink;
+
+        return  Filter.FilterUrl(AllLink);
 
     }
 

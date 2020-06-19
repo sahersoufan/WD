@@ -1,8 +1,7 @@
 package sample;
 
 
-
-
+import java.util.List;
 
 public class Filter {
 
@@ -47,7 +46,45 @@ public class Filter {
 
         return  result;
     }
+    static Boolean UrlForbidden(String Url)  {
 
+
+
+
+
+        if(TypeUrl(Url).equals("jar")||TypeUrl(Url).equals("war")||TypeUrl(Url).equals("ear")||TypeUrl(Url).equals("mpg")||TypeUrl(Url).equals("wmv")){
+            return true;
+        }
+        if(TypeUrl(Url).equals("cab")||TypeUrl(Url).equals("mpeg")||TypeUrl(Url).equals("scm")||TypeUrl(Url).equals("iso")||TypeUrl(Url).equals("dmp")||TypeUrl(Url).equals("dll")){
+            return true;
+        }
+        if(TypeUrl(Url).equals("exe")||TypeUrl(Url).equals("avi")||TypeUrl(Url).equals("wav")||TypeUrl(Url).equals("mp3")||TypeUrl(Url).equals("wma")||TypeUrl(Url).equals("bin")){
+            return true;
+        }
+        if(TypeUrl(Url).equals("so")||TypeUrl(Url).equals("tar")||TypeUrl(Url).equals("tif")||TypeUrl(Url).equals("ttf")||TypeUrl(Url).equals("pcf")||TypeUrl(Url).equals("bdf")||TypeUrl(Url).equals("snf")||TypeUrl(Url).equals("woff")){
+            return true;
+        }
+
+
+
+        return  false;
+
+    }
+
+    public static List<String> FilterUrl( List<String>OldUrl )
+    {
+        List<String>newUrl = null;
+        for (int i=0;i<OldUrl.size();i++)
+        {
+            if(!UrlForbidden(OldUrl.get(i)))
+            {
+                 newUrl.add(OldUrl.get(i));
+                System.out.println(OldUrl.get(i));
+            }
+        }
+        System.out.println(OldUrl.size());
+        return newUrl;
+    }
 
     Boolean FilterHtml(String Url) {
         if(TypeUrl(Url).equals("html"))
