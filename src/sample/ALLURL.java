@@ -19,14 +19,14 @@ public class ALLURL{
      List<String>AllLink =new ArrayList<>();
      long size;
      String MainTitle;
+     String MainURL;
 
 
     public  String getMainTitle() {
         return MainTitle;
     }
 
-     boolean Search(String string)
-    {
+     boolean Search(String string) {
         for (int i=0;i<Link.size();i++)
         {
             if(Link.get(i).getKey().getKey().equals(string)||Link.get(i).getKey().getKey().equals(string+"/"))
@@ -91,7 +91,7 @@ public class ALLURL{
 
     public  List<String> getAllLink(String MainUrl) throws IOException {
 
-
+        MainURL=MainUrl;
 
         Link.add(new pair<>(new pair<>(MainUrl,true),0));
         getLink(MainUrl,MainUrl,1);
@@ -130,4 +130,10 @@ public class ALLURL{
     public  long getSize() {
         return size/1024;
     }
+
+     public  String getMainURL() {
+     return MainURL;
+     }
+
+
 }

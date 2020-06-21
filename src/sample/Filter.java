@@ -1,16 +1,19 @@
 package sample;
 
 
+import org.jsoup.nodes.Document;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Filter {
 
 
+    //get Suffix
     static String TypeUrl(String link) {
         String Split[]=link.split("\\.");
         return Split[Split.length-1];
     }
-
     static Boolean FilterExcluded(String Url)  {
 
 
@@ -37,15 +40,22 @@ public class Filter {
         return  false;
 
     }
-
     //get name page
     public static String getTitlePage(String page) {
+        String result=null;
         int  Index0 = page.indexOf("<title>");
         int  Index1 = page.indexOf("</title>");
-        String result=/*page.substring(Index0+7,Index1)*/ "FACEBOOK";
+        if((Index0>0)&&(Index1>0))
+        {
+             result=page.substring(Index0+7,Index1) ;
+        }
+        else
+            result="nothing title";
+
 
         return  result;
     }
+
     static Boolean UrlForbidden(String Url)  {
 
 
@@ -70,9 +80,7 @@ public class Filter {
         return  false;
 
     }
-
-    public static List<String> FilterUrl( List<String>OldUrl )
-    {
+    public static List<String> FilterUrl( List<String>OldUrl ) {
         List<String>newUrl = null;
         for (int i=0;i<OldUrl.size();i++)
         {
@@ -85,7 +93,6 @@ public class Filter {
         System.out.println(OldUrl.size());
         return newUrl;
     }
-
     Boolean FilterHtml(String Url) {
         if(TypeUrl(Url).equals("html"))
             return true;
