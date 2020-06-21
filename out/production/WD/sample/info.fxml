@@ -41,29 +41,33 @@
             </HBox>
             <HBox>
                <children>
-                  <Label fx:id="pathfolder" text="D:\NEW HORIZON\WEB">
+                  <Label fx:id="pathfolder" prefHeight="17.0" prefWidth="481.0" text="D:\NEW HORIZON\WEB">
                      <HBox.margin>
                         <Insets left="15.0" top="15.0" />
                      </HBox.margin>
                   </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="65.0" prefWidth="550.0">
+               <children>
                   <Button fx:id="resumeBtn" disable="true" mnemonicParsing="false" onAction="#Resume" styleClass="resumeBtn" stylesheets="@css/pasueGui.css" text="Resume">
                      <HBox.margin>
-                        <Insets left="140.0" top="40.0" />
+                        <Insets left="260.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#Cancel" styleClass="cancelBtn" stylesheets="@css/pasueGui.css" text="Cancel">
                      <HBox.margin>
-                        <Insets left="5.0" top="40.0" />
+                        <Insets top="10.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#Pause" text="Pause">
                      <HBox.margin>
-                        <Insets left="5.0" right="5.0" top="40.0" />
+                        <Insets top="10.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="fileLocation" mnemonicParsing="false" onAction="#OpenFileLocation" text="File Location">
                      <HBox.margin>
-                        <Insets top="40.0" />
+                        <Insets top="10.0" />
                      </HBox.margin>
                   </Button>
                </children>

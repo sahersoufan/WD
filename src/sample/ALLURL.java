@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+
 import java.io.IOException;
 import java.util.*;
 
@@ -15,17 +16,18 @@ public class ALLURL{
 
 
     private  final int MAX_DEPTH = 5;
-     List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
-     List<String>AllLink =new ArrayList<>();
-     long size;
-     String MainTitle;
+    List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
+    List<String>AllLink =new ArrayList<>();
+    long size;
+    String MainTitle;
+    String MainURL;
 
 
     public  String getMainTitle() {
         return MainTitle;
     }
 
-     boolean Search(String string)
+    boolean Search(String string)
     {
         for (int i=0;i<Link.size();i++)
         {
@@ -52,6 +54,7 @@ public class ALLURL{
             size += doc.outerHtml().length();
             Elements links1 = doc.select("a[href]");
             Elements links2 = doc.select("link[href]");
+            Elements links3= doc.select("script[src~=(?i)\\.(js)]");
             Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
 
             for (Element link : links1) {
@@ -74,7 +77,15 @@ public class ALLURL{
                 }
             }
 
+            for (Element link : links3) {
+                pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")),false),depth);
+                if(!Search(Pair.getKey().getKey()))
+                {
+                    Link.add(Pair);
 
+                }
+
+            }
             for (Element image : images) {
                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, image.attr("href")),false),depth);
                 if(!Search(Pair.getKey().getKey()))
@@ -91,7 +102,7 @@ public class ALLURL{
 
     public  List<String> getAllLink(String MainUrl) throws IOException {
 
-
+        MainURL=MainUrl;
 
         Link.add(new pair<>(new pair<>(MainUrl,true),0));
         getLink(MainUrl,MainUrl,1);
@@ -113,24 +124,24 @@ public class ALLURL{
 
         }
 
-
         for (pair<pair<String,Boolean>, Integer> link : Link)
         {
             AllLink.add(link.getKey().getKey());
 
         }
-        for (int i=0;i<AllLink.size();i++)
-        {
-            System.out.println(AllLink.get(i));
-        }
 
-        System.out.println(AllLink.size());
-
-        return AllLink;
+        return  Filter.FilterUrl(AllLink);
 
     }
 
     public  long getSize() {
         return size/1024;
     }
+
+    public  String getMainURL() {
+        return MainURL;
+    }
+
+
 }
+

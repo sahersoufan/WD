@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class pauseGui extends Application implements Objects4GUI{
 
     @Override
@@ -21,7 +23,7 @@ public class pauseGui extends Application implements Objects4GUI{
 
     @FXML private javafx.scene.control.Button resumeid;
     @FXML
-    public void Resume(){
+    public void Resume() throws IOException {
         helper.ResumeDownloading();
         Stage stage = (Stage) resumeid.getScene().getWindow();
         stage.close();
