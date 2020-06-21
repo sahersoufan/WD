@@ -1,6 +1,7 @@
 package sample;
 
 
+import java.io.IOException;
 
 public class Downloading implements Objects4GUI{
     private Spider spider = new Spider();
@@ -45,12 +46,18 @@ public class Downloading implements Objects4GUI{
         spider.setURL(URL);
         spider.setSaveLocation(saveLocation);
         spider.initPageFile();
-        RunInformationGui();
         spider.FirstStep();
-        spider.secondStep();
+        //RunInformationGui();
+        //helper.update();
+       // if(!CheckRunInfo()){
+            spider.secondStep();
+        //}
     }
 
-
+    //check if information is running
+    private boolean CheckRunInfo(){
+        return helper.CheckRunInfo();
+    }
     // send an order to spider to stop the download operation
     public  void CancelDownloading(){
         spider.setCancelStatementInfoGui(true);
@@ -62,7 +69,7 @@ public class Downloading implements Objects4GUI{
     }
 
     // send order to spider to resume the download operation
-    public void ResumeDownloading(){
+    public void ResumeDownloading() throws IOException {
         spider.ResumeDownloading();
     }
 

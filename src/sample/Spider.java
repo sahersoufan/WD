@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 public class Spider {
     private Downloading download;
     private Connection connection = new Connection();
@@ -44,12 +46,11 @@ public class Spider {
         filterUrls();
         saveUrls();
         setFullSizeLabel();
-        setUpdateDownloadingSizeLabel();
         setOriginPathFolder();
     }
 
     //Run threads
-    public void secondStep() {
+    public void secondStep() throws IOException {
         RunThreads();
     }
 
@@ -75,12 +76,12 @@ public class Spider {
 
     //get downloading size
     public long getDownloadingSize(){
-        //file.sizeOfFileInMB(/*repaire it mayar*/ "hello.txt");
-        return downloadingSize ++;
+        return file.sizeOfFileInMB();
+
     }
 
     //run threads
-    public void RunThreads() {
+    public void RunThreads() throws IOException {
         threads[] threadsArray = new threads[5];
         repeat = false;
         CancelStatementInfoGui = false;
@@ -94,6 +95,11 @@ public class Spider {
             } catch (InterruptedException e) {
                 System.out.print("interrupt exception");
             }
+        }
+        if(file.isURL_InURL_Text()){
+            file.deleteURLs();
+            file.deleteDownloading();
+            file.repair(URL);
         }
     }
 
@@ -119,7 +125,7 @@ public class Spider {
     }
 
     // resume the download operation
-    public void ResumeDownloading() {
+    public void ResumeDownloading() throws IOException {
         RunThreads();
     }
 
@@ -147,6 +153,17 @@ public class Spider {
                 try {
 
                     Page = connection.connect(oneUrl);
+
+                    try {
+                        SendPage(Page.toString(),oneUrl);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        deleteOneUrlFromDownloading(oneUrl);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (PauseStatementInfoGui) {
                         throw new IOException();
                     }
@@ -165,16 +182,7 @@ public class Spider {
                 }
 
 
-                try {
-                    SendPage(Page.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    deleteOneUrlFromDownloading(oneUrl);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
             }
             while (!CancelStatementInfoGui && !file.isURL_InURL_Text()) {
 
@@ -191,6 +199,16 @@ public class Spider {
 
                     Page = connection.connect(oneUrl);
 
+                    try {
+                        SendPage(Page.toString(), oneUrl);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        deleteOneUrlFromDownloading(oneUrl);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                 } catch (IOException e) {
                     if (!e.toString().contains("Unhandled content type.")) {
@@ -205,22 +223,13 @@ public class Spider {
                         }
                     }
                 }
-                try {
-                    SendPage(Page.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    deleteOneUrlFromDownloading(oneUrl);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
             }
         }
 
         //send page to PageFile class
-        private void SendPage(String page) throws IOException {
-            file.saveIn(page);
+        private void SendPage(String page, String url) throws IOException {
+            file.saveIn(page , url);
         }
 
         //delete one url from urls.txt

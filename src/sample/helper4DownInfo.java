@@ -3,6 +3,8 @@ package sample;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class helper4DownInfo {
     private Downloading download;
     private pauseGui pauseGui = new pauseGui();
@@ -86,7 +88,7 @@ public class helper4DownInfo {
     }
 
     // send order to downloading to resume the download operation
-    public void ResumeDownloading(){
+    public void ResumeDownloading() throws IOException {
         download.ResumeDownloading();
     }
 
@@ -94,10 +96,10 @@ public class helper4DownInfo {
     public void OpenFileLocation(){
         download.OpenFileLocation();
     }
-
+    long j = 0;
     //get downloading size
     public long getDownloadingSize(){
-        return download.getDownloadingSize();
+        return /*download.getDownloadingSize()*/ j++;
     }
 
     public void update(){
@@ -112,6 +114,13 @@ public class helper4DownInfo {
             }
         });
     }
+
+    //check if information is running
+    public boolean CheckRunInfo(){
+        return information.CheckRunInfo();
+    }
+
+
     //-----------------------pauseGUI-------------------------\\
     public void RunPauseGui(){
         Platform.runLater(new Runnable() {

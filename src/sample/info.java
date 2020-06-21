@@ -24,16 +24,17 @@ import java.util.ResourceBundle;
 public class info extends Application implements Objects4GUI{
 
     Parent root;
-
+    boolean isRunning = false;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         root = FXMLLoader.load(getClass().getResource("info.fxml"));
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.setTitle("Information");
         primaryStage.setScene(new Scene(root, 550, 124));
         primaryStage.show();
+        isRunning = true;
     }
 
 
@@ -59,7 +60,6 @@ public class info extends Application implements Objects4GUI{
     @FXML
     public void setOriginPathFolder(String OriginPath){
         Label path = (Label)root.lookup("#pathfolder");
-
         path.setText(OriginPath);
     }
 
@@ -87,6 +87,7 @@ public class info extends Application implements Objects4GUI{
     public void Resume() throws IOException {
         pauseBtn.setDisable(false);
         helper.ResumeDownloading();
+        resumeBtn.setDisable(true);
     }
 
     //fileLocation
@@ -100,6 +101,11 @@ public class info extends Application implements Objects4GUI{
         Button close = (Button) root.lookup("#cancelBtn");
         Stage stage = (Stage)close.getScene().getWindow();
         stage.close();
+    }
+
+    //check if information is running
+    public boolean CheckRunInfo(){
+        return isRunning;
     }
 
 
@@ -121,8 +127,8 @@ public class info extends Application implements Objects4GUI{
 
                 while((DZ = helper.getDownloadingSize()) <= FZ){
                     updateProgress(DZ,FZ);
-                    updateMessage(DZ + " mg");
-                    Thread.sleep(10);
+                    updateMessage(DZ + " MG");
+                    //Thread.sleep(10);
                 }
                 return null;
             }

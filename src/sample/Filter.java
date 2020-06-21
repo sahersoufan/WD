@@ -1,15 +1,12 @@
 package sample;
 
 
-import org.jsoup.nodes.Document;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Filter {
 
 
-    //get Suffix
     static String TypeUrl(String link) {
         String Split[]=link.split("\\.");
         return Split[Split.length-1];
@@ -31,7 +28,7 @@ public class Filter {
         if(TypeUrl(Url).equals("exe")||TypeUrl(Url).equals("avi")||TypeUrl(Url).equals("wav")||TypeUrl(Url).equals("mp3")||TypeUrl(Url).equals("wma")||TypeUrl(Url).equals("bin")){
             return true;
         }
-        if(TypeUrl(Url).equals("so")||TypeUrl(Url).equals("tar")||TypeUrl(Url).equals("tif")){
+        if(TypeUrl(Url).equals("so")||TypeUrl(Url).equals("tar")||TypeUrl(Url).equals("tif")||TypeUrl(Url).equals("js")||TypeUrl(Url).equals("css")){
             return true;
         }
 
@@ -40,21 +37,7 @@ public class Filter {
         return  false;
 
     }
-    //get name page
-    public static String getTitlePage(String page) {
-        String result=null;
-        int  Index0 = page.indexOf("<title>");
-        int  Index1 = page.indexOf("</title>");
-        if((Index0>0)&&(Index1>0))
-        {
-             result=page.substring(Index0+7,Index1) ;
-        }
-        else
-            result="nothing title";
 
-
-        return  result;
-    }
 
     static Boolean UrlForbidden(String Url)  {
 
@@ -62,7 +45,7 @@ public class Filter {
 
 
 
-        if(TypeUrl(Url).equals("jar")||TypeUrl(Url).equals("war")||TypeUrl(Url).equals("ear")||TypeUrl(Url).equals("mpg")||TypeUrl(Url).equals("wmv")){
+        if(TypeUrl(Url).equals("jar")||TypeUrl(Url).equals("war")||TypeUrl(Url).equals("ear")||TypeUrl(Url).equals("mpg")||TypeUrl(Url).equals("wmv")||TypeUrl(Url).equals("ico")){
             return true;
         }
         if(TypeUrl(Url).equals("cab")||TypeUrl(Url).equals("mpeg")||TypeUrl(Url).equals("scm")||TypeUrl(Url).equals("iso")||TypeUrl(Url).equals("dmp")||TypeUrl(Url).equals("dll")){
@@ -79,19 +62,34 @@ public class Filter {
 
         return  false;
 
+
     }
-    public static List<String> FilterUrl( List<String>OldUrl ) {
-        List<String>newUrl = null;
+    public static List<String> FilterUrl(List<String>OldUrl ) {
+        List<String>newUrl = new ArrayList<>();
         for (int i=0;i<OldUrl.size();i++)
         {
             if(!UrlForbidden(OldUrl.get(i)))
             {
-                 newUrl.add(OldUrl.get(i));
+
+                newUrl.add(OldUrl.get(i));
+
+                newUrl.add(OldUrl.get(i));
+
                 System.out.println(OldUrl.get(i));
             }
         }
         System.out.println(OldUrl.size());
         return newUrl;
+
+    }
+
+
+    static String getTitlePage(String page) {
+        int  Index0 = page.indexOf("<title>");
+        int  Index1 = page.indexOf("</title>");
+        String result=page.substring(Index0+7,Index1);
+
+        return  result;
     }
     Boolean FilterHtml(String Url) {
         if(TypeUrl(Url).equals("html"))
@@ -129,6 +127,23 @@ public class Filter {
             return true;
         }
         return false;
+    }
+
+
+    public static String filterType(String link){
+        if(FilterCss(link)){
+            return "CSS";
+        }else if(FilterJs(link)){
+            return "JS";
+        }else if(FilterAduio(link)){
+            return "Media";
+        }else if(FilterImage(link)){
+            return "Media";
+        }else{
+            return "HTML";
+        }
+
+
     }
 
 }

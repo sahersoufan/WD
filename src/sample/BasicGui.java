@@ -110,6 +110,7 @@ public class BasicGui extends Application implements Initializable{
             download.setSaveLocation(SaveLocation);
             download.setURL(ws);
             download.Start();
+
         }
     }
 
