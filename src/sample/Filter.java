@@ -1,10 +1,13 @@
 package sample;
 
 
+<<<<<<< HEAD
 import org.jsoup.nodes.Document;
 
 import java.io.File;
 import java.util.ArrayList;
+=======
+>>>>>>> 5e0e7f7de7000e915c599bcd56e0bc508afca1cc
 import java.util.List;
 
 public class Filter {
@@ -56,6 +59,9 @@ public class Filter {
 
         return  result;
     }
+    static Boolean UrlForbidden(String Url)  {
+
+
 
     static Boolean UrlForbidden(String Url)  {
 
@@ -80,20 +86,54 @@ public class Filter {
 
         return  false;
 
+<<<<<<< HEAD
     }
     public static List<String> FilterUrl( List<String>OldUrl ) {
         List<String>newUrl = new ArrayList<>();
+=======
+
+        if(TypeUrl(Url).equals("jar")||TypeUrl(Url).equals("war")||TypeUrl(Url).equals("ear")||TypeUrl(Url).equals("mpg")||TypeUrl(Url).equals("wmv")){
+            return true;
+        }
+        if(TypeUrl(Url).equals("cab")||TypeUrl(Url).equals("mpeg")||TypeUrl(Url).equals("scm")||TypeUrl(Url).equals("iso")||TypeUrl(Url).equals("dmp")||TypeUrl(Url).equals("dll")){
+            return true;
+        }
+        if(TypeUrl(Url).equals("exe")||TypeUrl(Url).equals("avi")||TypeUrl(Url).equals("wav")||TypeUrl(Url).equals("mp3")||TypeUrl(Url).equals("wma")||TypeUrl(Url).equals("bin")){
+            return true;
+        }
+        if(TypeUrl(Url).equals("so")||TypeUrl(Url).equals("tar")||TypeUrl(Url).equals("tif")||TypeUrl(Url).equals("ttf")||TypeUrl(Url).equals("pcf")||TypeUrl(Url).equals("bdf")||TypeUrl(Url).equals("snf")||TypeUrl(Url).equals("woff")){
+            return true;
+        }
+
+
+
+        return  false;
+
+    }
+
+    public static List<String> FilterUrl( List<String>OldUrl )
+    {
+        List<String>newUrl = null;
+>>>>>>> 5e0e7f7de7000e915c599bcd56e0bc508afca1cc
         for (int i=0;i<OldUrl.size();i++)
         {
             if(!UrlForbidden(OldUrl.get(i)))
             {
+<<<<<<< HEAD
                 newUrl.add(OldUrl.get(i));
+=======
+                 newUrl.add(OldUrl.get(i));
+>>>>>>> 5e0e7f7de7000e915c599bcd56e0bc508afca1cc
                 System.out.println(OldUrl.get(i));
             }
         }
         System.out.println(OldUrl.size());
         return newUrl;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5e0e7f7de7000e915c599bcd56e0bc508afca1cc
     Boolean FilterHtml(String Url) {
         if(TypeUrl(Url).equals("html"))
             return true;

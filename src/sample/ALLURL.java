@@ -124,12 +124,22 @@ public class ALLURL{
 
         }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 5e0e7f7de7000e915c599bcd56e0bc508afca1cc
         for (pair<pair<String,Boolean>, Integer> link : Link)
         {
             AllLink.add(link.getKey().getKey());
 
         }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 5e0e7f7de7000e915c599bcd56e0bc508afca1cc
         return  Filter.FilterUrl(AllLink);
 
     }
