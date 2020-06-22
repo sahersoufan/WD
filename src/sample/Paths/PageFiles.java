@@ -3,16 +3,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import sample.ALLURL;
-import sample.Filter;
-import sample.Repair;
+import sample.process.ALLURL;
+import sample.process.Filter;
+import sample.process.Repair;
 
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PageFiles{
     private static final String DOWNLOADING_FILE="downloading.txt";

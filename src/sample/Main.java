@@ -3,6 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import sample.basicGui.BasicGui;
 
 
 public class Main extends Application{
