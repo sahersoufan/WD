@@ -41,7 +41,6 @@ public class helper4DownInfo {
             }
         });
     }
-
     //set FUll size text Label
     public void setFullSizeLabel(String fullSize){
         Platform.runLater(new Runnable() {

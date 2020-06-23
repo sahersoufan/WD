@@ -172,7 +172,7 @@ public class Spider {
             while (!CancelStatementInfoGui && file.isURL_InURL_Text()) {
 
                 try {
-                    String oneUrl = file.getOneURL(/*repaire it mayar*/ "hello.txt");
+                    String oneUrl = file.getOneURL();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

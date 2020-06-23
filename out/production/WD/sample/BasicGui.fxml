@@ -93,7 +93,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="67.0" styleClass="resumeBtn" stylesheets="@css/pasueGui.css" text="Start">
+                  <Button fx:id="Start" mnemonicParsing="false" onAction="#StartDownloading" prefHeight="27.0" prefWidth="67.0" styleClass="resumeBtn" stylesheets="@css/pasueGui.css" text="Start">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

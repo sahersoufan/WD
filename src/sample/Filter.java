@@ -40,7 +40,7 @@ public class Filter {
     }
 
     //get name page
-    static String getTitlePage(String page) {
+    public static String getTitlePage(String page) {
         int  Index0 = page.indexOf("<title>");
         int  Index1 = page.indexOf("</title>");
         String result=/*page.substring(Index0+7,Index1)*/ "FACEBOOK";
@@ -54,17 +54,17 @@ public class Filter {
             return true;
         return false;
     }
-    Boolean FilterCss(String Url) {
+    public static Boolean FilterCss(String Url) {
         if(TypeUrl(Url).equals("css"))
             return true;
         return false;
     }
-    Boolean FilterJs(String Url) {
+    public static Boolean FilterJs(String Url) {
         if(TypeUrl(Url).equals("js"))
             return true;
         return false;
     }
-    static Boolean FilterImage(String Url) {
+    public static Boolean FilterImage(String Url) {
 
 
 
