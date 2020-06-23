@@ -266,7 +266,7 @@ public class PageFiles{
         }
         return allLinks;
     }
-    public int numberOfLinesIn_URLS() throws IOException {
+    public synchronized int numberOfLinesIn_URLS() throws IOException {
         return getHTML().numberOfLines(getMainPath()+File.separator+URLs_FILE);
     }
     private String getMainPath() {
