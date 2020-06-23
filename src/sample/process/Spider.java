@@ -3,12 +3,10 @@ package sample.process;
 import org.jsoup.nodes.Document;
 import sample.getUrlFiles.Connection;
 import sample.Paths.PageFiles;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
 
 public class Spider {
     private Downloading download;
@@ -55,7 +53,7 @@ public class Spider {
         RunThreads();
     }
 
-    //set full suze of web site
+    //set full size of web site
     public void setFullSizeLabel() throws Exception {
         download.setFullSizeLabel(getFullSize() +" file");
     }
@@ -76,8 +74,8 @@ public class Spider {
     }
 
     //get downloading size
-    public long getDownloadingSize(){
-        return file.sizeOfFileInMB();
+    public long getDownloadingSize() throws IOException {
+        return file.numberOfLinesIn_URLS();
 
     }
 

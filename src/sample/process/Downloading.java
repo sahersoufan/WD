@@ -89,7 +89,7 @@ public class Downloading implements Objects4GUI {
     }
 
     //get downloading size
-    public long getDownloadingSize(){
+    public long getDownloadingSize() throws IOException {
         return spider.getDownloadingSize();
     }
 

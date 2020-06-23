@@ -155,7 +155,7 @@ public class info extends Application implements Objects4GUI {
             @Override
             protected Void call() throws Exception {
 
-                while((DZ = helper.getDownloadingSize()) <= FZ){
+                while((DZ = FZ - helper.getDownloadingSize()) <= FZ){
                     updateProgress(DZ,FZ);
                     updateMessage(DZ + "");
                     Thread.sleep(100);

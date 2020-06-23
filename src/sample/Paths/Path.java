@@ -7,7 +7,7 @@ public abstract class Path implements fun {
     String mainPath;
     String objPath;
 
-    private Path(String mainPath, String objPath) {
+    Path(String mainPath, String objPath) {
         this.mainPath = mainPath;
         this.objPath = mainPath+ File.separator+objPath;
     }

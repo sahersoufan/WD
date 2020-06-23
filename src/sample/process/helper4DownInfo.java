@@ -75,10 +75,10 @@ public class helper4DownInfo {
     public void OpenFileLocation() throws IOException {
         download.OpenFileLocation();
     }
-    long j = 0;
+
     //get downloading size
-    public long getDownloadingSize(){
-        return /*download.getDownloadingSize()*/ j++;
+    public long getDownloadingSize() throws IOException{
+        return download.getDownloadingSize();
     }
 
     public void update(){
