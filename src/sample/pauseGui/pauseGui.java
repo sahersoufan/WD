@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Objects4GUI;
-
+import sample.threads.thread4StartPauseGui;
 import java.io.IOException;
 
 public class pauseGui extends Application implements Objects4GUI {
@@ -25,9 +25,11 @@ public class pauseGui extends Application implements Objects4GUI {
     @FXML private javafx.scene.control.Button resumeid;
     @FXML
     public void Resume() throws IOException, InterruptedException {
-        helper.ResumeDownloading();
         Stage stage = (Stage) resumeid.getScene().getWindow();
         stage.close();
+        thread4StartPauseGui th = new thread4StartPauseGui();
+        th.setHelper(helper);
+        new Thread(th).start();
     }
 
     @FXML private javafx.scene.control.Button cancelid;

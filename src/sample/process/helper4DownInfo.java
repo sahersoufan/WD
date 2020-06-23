@@ -93,16 +93,16 @@ public class helper4DownInfo {
 
     //-----------------------pauseGUI-------------------------\\
     public void RunPauseGui() throws Exception {
-        /*Platform.runLater(new Runnable() {
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try {
+                    pauseGui.start(new Stage());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
-        });*/
-         pauseGui.start(new Stage());
+        });
 
     }
 

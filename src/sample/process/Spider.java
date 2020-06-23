@@ -168,6 +168,7 @@ public class Spider {
                 } catch (IOException e) {
                     if (!e.toString().contains("Unhandled content type.")) {
                         if (!repeat) {
+                            PauseStatementInfoGui = true;
                             repeat = true;
                             try {
                                 sleep(2000);
@@ -175,7 +176,7 @@ public class Spider {
                                 ex.printStackTrace();
                             }
                             try {
-                                //download.RunPauseGui();
+                                download.RunPauseGui();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -212,6 +213,7 @@ public class Spider {
                 } catch (IOException e) {
                     if (!e.toString().contains("Unhandled content type.")) {
                         if (!repeat) {
+                            PauseStatementInfoGui = true;
                             repeat = true;
                             try {
                                 sleep(2000);
@@ -219,7 +221,7 @@ public class Spider {
                                 ex.printStackTrace();
                             }
                             try {
-                               // download.RunPauseGui();
+                                download.RunPauseGui();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
