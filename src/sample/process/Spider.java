@@ -138,6 +138,7 @@ public class Spider {
         public void start() {
 
             Document Page = new Document("hi");
+            String webPage ;
             String oneUrl = "hello";
 
             //if there is still urls in downloading txt file
@@ -150,10 +151,11 @@ public class Spider {
                 }
                 try {
 
-                    Page = connection.connect(oneUrl);
+                    //Page = connection.connect(oneUrl);
 
+                    webPage = connection.DownloadWebPage(oneUrl);
                     try {
-                        SendPage(Page.toString(),oneUrl);
+                        SendPage(/*Page.toString()*/webPage,oneUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -195,10 +197,12 @@ public class Spider {
 
                 try {
 
-                    Page = connection.connect(oneUrl);
+                    //Page = connection.connect(oneUrl);
+
+                    webPage = connection.DownloadWebPage(oneUrl);
 
                     try {
-                        SendPage(Page.toString(), oneUrl);
+                        SendPage(/*Page.toString()*/webPage,oneUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

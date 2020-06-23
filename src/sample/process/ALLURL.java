@@ -12,7 +12,7 @@ import java.util.*;
 public class ALLURL{
 
 
-    private  final int MAX_DEPTH = 5;
+    private  final int MAX_DEPTH = 3;
     List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
     List<String>AllLink =new ArrayList<>();
     long size;
