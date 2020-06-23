@@ -215,13 +215,11 @@ public class PageFiles{
         }
     }
     public void repair(String mainUrl) throws IOException {
-        //allurl=new ALLURL();
         String path=getMainPath()+File.separator+"HTML";
         String[] pathNames;
         File f=new File(path);
         pathNames=f.list();
         String copy;
-        String firstLine;
         ArrayList<String> allLinks;
         ArrayList<String> allLinksPaste;
         assert pathNames != null;
@@ -267,6 +265,9 @@ public class PageFiles{
             allLinks.add( Repair.RepairUrl(MainUrl,link.attr("href")));
         }
         return allLinks;
+    }
+    public int numberOfLinesIn_URLS() throws IOException {
+        return getHTML().numberOfLines(getMainPath()+File.separator+URLs_FILE);
     }
     private String getMainPath() {
         return mainPath;
