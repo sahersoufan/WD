@@ -14,8 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.informationGui.properity4TableviewURLS;
-import sample.process.Downloading;
-import sample.process.SaveLocation;
+import sample.proccess.Downloading;
+import sample.proccess.SaveLocation;
 import sample.threads.thread4StartDownloading;
 
 import java.net.URL;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class BasicGui extends Application implements Initializable{
-    private sample.process.SaveLocation choseLocation = new SaveLocation();
+    private sample.proccess.SaveLocation choseLocation = new SaveLocation();
     private Downloading download;
     private List<String> URLS = new ArrayList<>();
     private String SaveLocation = "C:\\";
@@ -109,12 +109,9 @@ public class BasicGui extends Application implements Initializable{
     //Start Downloading ^_^ :)
     @FXML
     private void StartDownloading() throws Exception {
-            for (String ws : URLS) {
                 thread4StartDownloading t = new thread4StartDownloading();
-                t.seturl(ws,SaveLocation);
+                t.seturl(URLS,SaveLocation);
                 new Thread(t).start();
-            }
-
 
     }
 

@@ -1,4 +1,4 @@
-package sample.process;
+package sample.proccess;
 
 
 import sample.Objects4GUI;
@@ -30,6 +30,11 @@ public class Downloading implements Objects4GUI {
         helper.setFullSizeLabel(fullSize);
     }
 
+    //set title of info gui
+    public void setTitle4InfoGui(String mainTitle) throws Exception {
+        helper.setTitle4InfoGui(mainTitle);
+    }
+
     // Update download size label
     public void setUpdateDownloadingSizeLabel(String updateSize){
             helper.setUpdateDownloadingSizeLabel(updateSize);
@@ -55,19 +60,16 @@ public class Downloading implements Objects4GUI {
         RunInformationGui();
 
         spider.initPageFile();
-        spider.FirstStep();
+        spider.InitSpiderProp();
         helper.update();
-        spider.secondStep();
+        spider.StartSpiderThreads();
     }
 
 
 
 
 
-    //check if information is running
-    private boolean CheckRunInfo(){
-        return helper.CheckRunInfo();
-    }
+
     // send an order to spider to stop the download operation
     public  void CancelDownloading(){
         spider.setCancelStatementInfoGui(true);

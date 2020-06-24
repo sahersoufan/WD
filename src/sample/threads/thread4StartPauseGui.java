@@ -1,5 +1,5 @@
 package sample.threads;
-import sample.process.helper4DownInfo;
+import sample.proccess.helper4DownInfo;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package sample.process;
+package sample.proccess;
 
 import org.jsoup.nodes.Document;
 import sample.getUrlFiles.Connection;
@@ -41,15 +41,16 @@ public class Spider {
     }
 
     //Run method to start the operation
-    public void FirstStep() throws Exception {
+    public void InitSpiderProp() throws Exception {
         filterUrls();
         saveUrls();
         setFullSizeLabel();
         setOriginPathFolder();
+        setTitle4InfoGui();
     }
 
     //Run threads
-    public void secondStep() throws IOException, InterruptedException {
+    public void StartSpiderThreads() throws IOException, InterruptedException {
         RunThreads();
     }
 
@@ -66,6 +67,11 @@ public class Spider {
     //set origin path folder
     public void setOriginPathFolder() throws Exception {
         download.setOriginPathFolder(SaveLocation);
+    }
+
+    //set title of info gui
+    public void setTitle4InfoGui() throws Exception {
+        download.setTitle4InfoGui(urlsList.get(0));
     }
 
     //Get Full Size of Web Site

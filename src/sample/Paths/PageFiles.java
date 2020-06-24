@@ -3,9 +3,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import sample.process.ALLURL;
-import sample.process.Filter;
-import sample.process.Repair;
+import sample.proccess.Filter;
+import sample.proccess.Repair;
+
 
 import java.awt.*;
 import java.io.*;
@@ -16,21 +16,31 @@ public class PageFiles{
     private static final String DOWNLOADING_FILE="downloading.txt";
     private static final String URLs_FILE="URLs.txt";
     private String mainPath;
+    private String lastMainPath;
     private Path CSS;
     private Path HTML;
     private Path media;
     private Path JS;
-    ALLURL allurl;
+    private ArrayList<String> pastArray;
+
     public PageFiles(String mainPath) {
+
         this.mainPath=mainPath;
-        CSS=new CSS(mainPath,"CSS");
-        HTML=new HTML(mainPath,"HTML");
-        JS=new JS(mainPath,"JS");
-        media=new Media(mainPath,"Media");
+        this.lastMainPath=mainPath;
     }
+
     public synchronized void setURLS(ArrayList<String> urls) throws IOException {
+        mainPath=lastMainPath;
+        pastArray= new ArrayList<>(urls);
+        String[] parts=urls.get(0).split("\\.");
+        String base=parts[1];
+        mainPath=getMainPath()+File.separator+base;
         File folder=new File(getMainPath());
         folder.mkdirs();
+        CSS=new CSS(getMainPath(),"CSS");
+        HTML=new HTML(getMainPath(),"HTML");
+        JS=new JS(getMainPath(),"JS");
+        media=new Media(getMainPath(),"Media");
         String pathOfURLS=getMainPath()+File.separator+URLs_FILE;
         File saveURLS=new File(pathOfURLS);
         if (!(saveURLS.exists())){
@@ -55,7 +65,7 @@ public class PageFiles{
         }
 
         //issue
-       // deleteFirstLine(pathOfURLS);
+        // deleteFirstLine(pathOfURLS);
     }
     public synchronized void saveIn(String data,String url) throws IOException {
         if((Boolean) Filter.FilterCss(url))
@@ -65,6 +75,9 @@ public class PageFiles{
         else if((Boolean) Filter.FilterJs(url))
 
             getJS().writeFile(setJS_File(url),data);
+        else if ((Boolean)Filter.FilterDomain(url))
+
+            getHTML().writeFile(setDomain_File(url),data);
 
         else if((Boolean) Filter.FilterImage(url))
 
@@ -225,25 +238,36 @@ public class PageFiles{
         assert pathNames != null;
         for (String pathName:pathNames){
             copy=getHTML().readFile(path+File.separator+pathName);
-            allLinks=getAllSubLinks(copy,mainUrl);
-            allLinksPaste=getAllSubLinks(copy,mainUrl);
+            allLinks=new ArrayList<>(getPastArray());
+            allLinksPaste= new ArrayList<>(getPastArray());
+            for (int i=0;i<allLinks.size();i++){
+                String one=allLinks.get(i);
+                String[] parts=one.split("/");
+                one=parts[parts.length-1];
+                allLinks.set(i,one);
+            }
             for (int i=0;i<allLinksPaste.size();i++){
                 String link=allLinksPaste.get(i);
                 String[] parts = link.split("/");
-                String type=Filter.filterType(link);
+                link=parts[parts.length-1];
+                String type= Filter.filterType(link);
                 File subFile=new File(getMainPath()+File.separator+type);
                 String[] subPathNames=subFile.list();
                 String paste;
                 assert subPathNames != null;
                 for (String sub:subPathNames){
                     if (sub.equals(link)){
-                        paste=getMainPath()+File.separator+type+File.separator+parts[parts.length-1];
+                        char ch = '\u00A5';
+                        String replace1=getMainPath();
+                        replace1= replace1.replaceAll("\u00A5",'\u00A5'+'\u00A5');
+                        paste=replace1+File.separator+type+File.separator+parts[parts.length-1];
                         allLinksPaste.set(i,paste);
+                        break;
                     }
                 }
             }
             for (int i=0;i<allLinks.size();i++){
-                copy=copy.replace(allLinks.get(i),allLinksPaste.get(i));
+                copy = copy.replaceAll(allLinks.get(i),allLinksPaste.get(i));
             }
             File fDelete=new File(path+File.separator+pathName);
             fDelete.delete();
@@ -284,19 +308,27 @@ public class PageFiles{
     private Path getCSS() {
         return CSS;
     }
+    private ArrayList<String> getPastArray() {
+        return pastArray;
+    }
     private String setHTML_File(String url){
         String[] parts=url.split("/");
-        return getHTML().getObjPath()+File.separator+parts[parts.length-1]+".html";}
+        return getHTML().getObjPath()+File.separator+parts[parts.length-1];}
     private String setCSS_File(String url){
         String[] parts=url.split("/");
-        return getCSS().getObjPath()+File.separator+parts[parts.length-1]+".css";}
+        return getCSS().getObjPath()+File.separator+parts[parts.length-1];}
     private String setJS_File(String url){
         String[] parts=url.split("/");
-        return getJS().getObjPath()+File.separator+parts[parts.length-1]+".js";}
+        return getJS().getObjPath()+File.separator+parts[parts.length-1];}
     private String setMedia_File(String url){
         String[] parts=url.split("/");
-        return getMedia().getObjPath()+File.separator+parts[parts.length-1]+".img";}
+        return getMedia().getObjPath()+File.separator+parts[parts.length-1];}
     private String setAudio_File(String url){
         String[] parts=url.split("/");
-        return getMedia().getObjPath()+File.separator+parts[parts.length-1]+".mp3";}
+        return getMedia().getObjPath()+File.separator+parts[parts.length-1];}
+        private String setDomain_File(String url){
+            String[] parts=url.split("/");
+            return getHTML().getObjPath()+File.separator+parts[parts.length-1]+".html";}
+
 }
+

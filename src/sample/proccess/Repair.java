@@ -1,12 +1,29 @@
-package sample.process;
+package sample.proccess;
 
 
 
 public class Repair {
 
+    public static String RepairDomain(String MainUrl){
+        String Split[]=MainUrl.split("/");
+        String ans=null;
+        ans=MainUrl;
+        if(Split.length>0){
+            if(!Split[0].equals("https:")) {
+                if (!Split[0].equals("http:")) {
+                    ans= "https://"+MainUrl;
+                }
+            }
+        }
+        String Split1[]=ans.split("/");
+
+        return Split1[0]+"//"+Split1[1]+ Split1[2]+"/";
 
 
+    }
     public static String RepairUrl(String MainUrl, String RepairLink)  {
+
+        MainUrl= RepairDomain(MainUrl);
         String Split[]=RepairLink.split("/");
         String Split1[]=MainUrl.split("/");
         String Split2[]=RepairLink.split("\\.");

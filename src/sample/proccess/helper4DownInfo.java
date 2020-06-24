@@ -1,7 +1,8 @@
-package sample.process;
+package sample.proccess;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import sample.informationGui.endGui;
 import sample.informationGui.info;
 import sample.pauseGui.pauseGui;
 
@@ -11,6 +12,7 @@ public class helper4DownInfo {
     private Downloading download;
     private sample.pauseGui.pauseGui pauseGui = new pauseGui();
     private info information = new info();
+    private endGui EndGui = new endGui();
     private long i = 0;
     public void setD(Downloading d) {
         this.download = d;
@@ -42,6 +44,11 @@ public class helper4DownInfo {
     //set FUll size text Label
     public void setFullSizeLabel(String fullSize) throws Exception {
         information.set(fullSize);
+    }
+
+    //set title of info gui
+    public void setTitle4InfoGui(String mainTitle) throws Exception {
+        information.setTitle4InfoGui(mainTitle);
     }
 
     //set origin path of downloading folder
@@ -85,10 +92,6 @@ public class helper4DownInfo {
         information.startProgress();
     }
 
-    //check if information is running
-    public boolean CheckRunInfo(){
-        return information.CheckRunInfo();
-    }
 
 
     //-----------------------pauseGUI-------------------------\\
@@ -106,5 +109,11 @@ public class helper4DownInfo {
 
     }
 
+    //-----------------------EndGUI-------------------------\\
+
+    public void RunEndGui(String name) throws Exception{
+        EndGui.start(new Stage());
+        EndGui.SetNameWebSIte(name);
+    }
 
 }

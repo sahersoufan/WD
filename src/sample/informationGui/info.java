@@ -23,7 +23,6 @@ import java.io.IOException;
 public class info extends Application implements Objects4GUI {
 
     Parent root;
-    volatile boolean isRunning = false;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -33,7 +32,6 @@ public class info extends Application implements Objects4GUI {
         primaryStage.setTitle("Information");
         primaryStage.setScene(new Scene(root, 550, 124));
         primaryStage.showAndWait();
-        isRunning = true;
     }
 
 
@@ -90,6 +88,19 @@ public class info extends Application implements Objects4GUI {
         });
     }
 
+    //set title of info gui
+    public void setTitle4InfoGui(String mainTitle) throws Exception {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Stage s = (Stage) root.getScene().getWindow();
+                    s.setTitle(mainTitle);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });    }
 
     //close
     @FXML Button cancelBtn;
@@ -133,10 +144,6 @@ public class info extends Application implements Objects4GUI {
         stage.close();
     }
 
-    //check if information is running
-    public boolean CheckRunInfo(){
-        return isRunning;
-    }
 
 
     //Progress bar
@@ -159,7 +166,26 @@ public class info extends Application implements Objects4GUI {
                     updateProgress(DZ,FZ);
                     updateMessage(DZ + "");
                     Thread.sleep(100);
+                    if(DZ == FZ)
+                        break;
                 }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+
+                            // <------- Start End Gui ------->
+
+                            Stage stage = (Stage) root.getScene().getWindow();
+                            helper.RunEndGui(stage.getTitle());
+                            stage.close();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+
+
                 return null;
             }
         };

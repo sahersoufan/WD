@@ -1,4 +1,4 @@
-package sample.process;
+package sample.proccess;
 
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
