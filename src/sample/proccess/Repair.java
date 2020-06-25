@@ -19,7 +19,10 @@ public class Repair {
         String Split1[]=ans.split("/");
         MainDomain=Split1[0]+"//"+Split1[2];
 
+
        return MainUrl;
+
+
 
 
     }

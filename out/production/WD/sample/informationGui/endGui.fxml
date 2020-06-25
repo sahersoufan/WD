@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="120.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.informationGui.endGui">
    <children>
@@ -15,12 +16,15 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Label>
-            <Label text="was Downloaded">
+            <Label text="Was Downloaded :)">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
             </Label>
-            <Button fx:id="CloseBtn" mnemonicParsing="false" onAction="#CLoseIt" prefWidth="60.0" text="Close">
+            <Button fx:id="CloseBtn" mnemonicParsing="false" onAction="#CLoseIt" prefWidth="60.0" styleClass="cancelBtn" stylesheets="@../css/pasueGui.css" text="Close">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>

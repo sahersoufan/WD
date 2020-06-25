@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="124.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.informationGui.info">
+<AnchorPane prefHeight="130.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.informationGui.info">
    <children>
-      <VBox prefHeight="130.0" prefWidth="550.0">
+      <VBox prefHeight="130.0" prefWidth="500.0">
          <children>
             <HBox>
                <children>
-                  <ProgressBar fx:id="progressBar" prefWidth="400.0" progress="0.0">
+                  <ProgressBar fx:id="progressBar" prefWidth="390.0" progress="0.0">
                      <HBox.margin>
                         <Insets left="15.0" top="35.0" />
                      </HBox.margin>
@@ -52,22 +52,22 @@
                <children>
                   <Button fx:id="resumeBtn" disable="true" mnemonicParsing="false" onAction="#Resume" styleClass="resumeBtn" stylesheets="@../css/pasueGui.css" text="Resume">
                      <HBox.margin>
-                        <Insets left="260.0" top="10.0" />
+                        <Insets left="215.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#Cancel" styleClass="cancelBtn" stylesheets="@../css/pasueGui.css" text="Cancel">
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets left="5.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#Pause" text="Pause">
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets left="5.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="fileLocation" mnemonicParsing="false" onAction="#OpenFileLocation" text="File Location">
+                  <Button fx:id="fileLocation" mnemonicParsing="false" onAction="#OpenFileLocation" styleClass="ChoiceLocation" stylesheets="@../css/pasueGui.css" text="File Location">
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets left="5.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                </children>

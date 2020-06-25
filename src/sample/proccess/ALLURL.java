@@ -12,10 +12,13 @@ import java.util.*;
 public class ALLURL{
 
 
-    private  final int MAX_DEPTH = 1;
+
+    private  final int MAX_DEPTH = 5;
     List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
     List<String>AllLink =new ArrayList<>();
      static List<String>NOEdit =new ArrayList<>();
+
+
     long size;
     String MainTitle;
     String MainURL;
@@ -86,7 +89,7 @@ public class ALLURL{
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
-                        NOEdit.add(scripts.attr("href"));
+                        NOEdit.add(scripts.attr("src"));
 
                     }
                 }
@@ -96,7 +99,7 @@ public class ALLURL{
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
-                        NOEdit.add(links4.attr("href"));
+                        NOEdit.add(links4.attr("style"));
 
                     }
 
@@ -109,7 +112,7 @@ public class ALLURL{
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
-                        NOEdit.add(image.attr("href"));
+                        NOEdit.add(image.attr("src"));
                     }
 
                 }
@@ -128,6 +131,7 @@ public class ALLURL{
         String MainURL1=Repair.RepairDomain(MainUrl);
 
         Link.add(new pair<>(new pair<>(MainURL1,true),0));
+        NOEdit.add(MainURL1);
         getLink(MainURL1,MainURL1,1);
 
         for(int i=0;i<Link.size();i++)

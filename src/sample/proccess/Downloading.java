@@ -2,6 +2,7 @@ package sample.proccess;
 
 
 import sample.Objects4GUI;
+import sample.threads.thread4StartDownloading;
 
 import java.io.IOException;
 
@@ -10,7 +11,11 @@ import static java.lang.Thread.sleep;
 public class Downloading implements Objects4GUI {
     private Spider spider = new Spider();
     private String URL="http://www.guimp.com/", saveLocation="D:\\";
+    private thread4StartDownloading th4SD ;
 
+    public void setTh4SD(thread4StartDownloading th4SD) {
+        this.th4SD = th4SD;
+    }
 
     public Downloading(){
         spider.setDownload(this);
@@ -55,20 +60,50 @@ public class Downloading implements Objects4GUI {
 
     //Start method
     public void Start() throws Exception {
+
         spider.setURL(URL);
         spider.setSaveLocation(saveLocation);
-        RunInformationGui();
-
         spider.initPageFile();
-        spider.InitSpiderProp();
-        helper.update();
-        spider.StartSpiderThreads();
+        StartSpiderWorking();
+
+
     }
 
+    //Start spider working
+    public void StartSpiderWorking() throws Exception{
+        try{
+            RunInformationGui();
+            spider.InitSpiderProp();
+            helper.update();
+            spider.StartSpiderThreads();
 
+        }catch (IOException e){
+            System.out.println(e.toString());
+            SendOrderToTheThreadsToStopDownloading();
+            if(e.toString().equals("no protocol")){
+                UnValidUrlMessage(URL);
+            }else{
+                LoseInternetConnMessage();
+            }
+        }
+    }
 
+    //mesage that you lose your internet conn
+    private void LoseInternetConnMessage(){
+        helper.LoseInternetConnMessage();
+        spider.setStartDownloadAgain(true);
+    }
 
+    // message that the url is not valid
+    private void UnValidUrlMessage(String message){
+        helper.CancelDownloadingFromPauseGui();
+        helper.UnValidUrlMessage(message);
+    }
 
+    // restart Downloading
+    void StartDownloadingAgain(){
+        new Thread(th4SD).start();
+    }
 
     // send an order to spider to stop the download operation
     public  void CancelDownloading(){
@@ -98,6 +133,11 @@ public class Downloading implements Objects4GUI {
     // Run Pause Gui
     public void RunPauseGui() throws Exception {
         helper.RunPauseGui();
+    }
+
+    // send orders to download to stop for loop
+    public void SendOrderToTheThreadsToStopDownloading(){
+        th4SD.StopDownloading();
     }
 
     }

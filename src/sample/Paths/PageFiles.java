@@ -235,16 +235,19 @@ public class PageFiles{
         pathNames=f.list();
         String copy;
         ArrayList<String> allLinks;
+        ArrayList<String> allLinks1;
         ArrayList<String> allLinksPaste;
         assert pathNames != null;
         for (String pathName:pathNames){
             copy=getHTML().readFile(path+"/"+pathName);
-            allLinks=new ArrayList<>(ALLURL.getNOEdit());
+            allLinks=new ArrayList<>(getPastArray());
+            allLinks1=new ArrayList<>(ALLURL.getNOEdit());
             allLinksPaste= new ArrayList<>(ALLURL.getNOEdit());
             for (int i=0;i<allLinks.size();i++){
                 String one=allLinks.get(i);
                 String[] parts=one.split("/");
                 one=parts[parts.length-1];
+                allLinks1.set(i,allLinks1.get(i));
                 allLinks.set(i,one);
             }
             for (int i=0;i<allLinksPaste.size();i++){
@@ -268,7 +271,7 @@ public class PageFiles{
             }
 
             for (int i=0;i<allLinksPaste.size();i++){
-                copy = copy.replaceAll(allLinks.get(i),allLinksPaste.get(i));
+                copy = copy.replaceAll(allLinks1.get(i),allLinksPaste.get(i));
                 System.out.println("int:"+allLinks.get(i)+"  path:"+allLinksPaste.get(i));
             }
             File fDelete=new File(path+"/"+pathName);
@@ -315,8 +318,11 @@ public class PageFiles{
         String[] parts=url.split("/");
         return getMedia().getObjPath()+"/"+parts[parts.length-1];}
     private String setDomain_File(String url){
+
             String[] parts=url.split("/");
             return getHTML().getObjPath()+"/"+parts[parts.length-1]+".html";}
+
+
 
 }
 

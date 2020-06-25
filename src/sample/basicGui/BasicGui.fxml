@@ -10,10 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="360.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.basicGui.BasicGui">
+<AnchorPane prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.basicGui.BasicGui">
    <children>
-      <VBox prefHeight="361.0" prefWidth="450.0">
+      <VBox prefHeight="450.0" prefWidth="650.0">
          <children>
             <HBox>
                <children>
@@ -24,16 +25,19 @@
                               <Insets left="10.0" top="40.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField fx:id="inputURL" prefHeight="25.0" prefWidth="350.0">
+                        <TextField fx:id="inputURL" prefHeight="25.0" prefWidth="550.0">
                            <VBox.margin>
                               <Insets left="10.0" top="5.0" />
                            </VBox.margin>
                         </TextField>
                      </children>
+                     <padding>
+                        <Insets bottom="5.0" />
+                     </padding>
                   </VBox>
                   <Button fx:id="Add" disable="true" mnemonicParsing="false" onAction="#InputUrl" prefHeight="27.0" prefWidth="67.0" text="Add">
                      <HBox.margin>
-                        <Insets left="10.0" top="60.0" />
+                        <Insets left="15.0" top="60.0" />
                      </HBox.margin>
                      <padding>
                         <Insets left="5.0" right="5.0" />
@@ -46,11 +50,11 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Separator>
-            <HBox>
+            <HBox style="-fx-background-color: #4a5459;">
                <children>
-                  <TableView fx:id="tableView" prefHeight="200.0" prefWidth="350.0">
+                  <TableView fx:id="tableView" prefHeight="250.0" prefWidth="550.0">
                     <columns>
-                      <TableColumn fx:id="tableColumn" prefWidth="350.0" text="URLS" />
+                      <TableColumn fx:id="tableColumn" prefWidth="500.0" text="URLS" />
                     </columns>
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -58,7 +62,7 @@
                   </TableView>
                   <Button fx:id="Delete" mnemonicParsing="false" onAction="#DeleteWSFromTable" prefHeight="27.0" prefWidth="67.0" text="Delete">
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="15.0" />
                      </HBox.margin>
                      <padding>
                         <Insets left="5.0" right="5.0" />
@@ -71,14 +75,14 @@
             </HBox>
             <Separator prefWidth="200.0">
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets top="15.0" />
                </VBox.margin>
             </Separator>
             <HBox>
                <children>
-                  <Button fx:id="Cancel" mnemonicParsing="false" onAction="#CancelOperation" prefHeight="27.0" prefWidth="67.0" styleClass="cancelBtn" stylesheets="@../css/pasueGui.css" text="Cancel">
+                  <Button fx:id="Cancel" mnemonicParsing="false" onAction="#CancelOperation" prefHeight="27.0" prefWidth="67.0" styleClass="cancelBtn" stylesheets="@../css/pasueGui.css" text="Cancel :(">
                      <HBox.margin>
-                        <Insets left="186.0" />
+                        <Insets left="379.0" />
                      </HBox.margin>
                      <padding>
                         <Insets left="5.0" right="5.0" />
@@ -89,12 +93,12 @@
                         <Insets left="5.0" right="5.0" />
                      </padding>
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="15.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="Start" mnemonicParsing="false" onAction="#StartDownloading" prefHeight="27.0" prefWidth="67.0" styleClass="resumeBtn" stylesheets="@../css/pasueGui.css" text="Start">
+                  <Button fx:id="Start" mnemonicParsing="false" onAction="#StartDownloading" prefHeight="27.0" prefWidth="67.0" styleClass="resumeBtn" stylesheets="@../css/pasueGui.css" text="Start ^_^">
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="15.0" />
                      </HBox.margin>
                      <padding>
                         <Insets left="5.0" right="5.0" />
@@ -102,7 +106,22 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox style="-fx-background-color: #4a5459;">
+               <children>
+                  <Label text="Anonymous Team ." textFill="#dadada" underline="true">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
                </VBox.margin>
             </HBox>
          </children>

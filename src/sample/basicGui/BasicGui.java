@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 
 public class BasicGui extends Application implements Initializable{
     private sample.proccess.SaveLocation choseLocation = new SaveLocation();
-    private Downloading download;
     private List<String> URLS = new ArrayList<>();
     private String SaveLocation = "C:\\";
 
@@ -41,8 +40,9 @@ public class BasicGui extends Application implements Initializable{
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("BasicGui.fxml"));
+        stage.setResizable(false);
         stage.setTitle("welcome in WD");
-        stage.setScene(new Scene(root,450 , 360));
+        stage.setScene(new Scene(root,650 , 450));
         stage.show();
     }
     @Override
@@ -51,14 +51,14 @@ public class BasicGui extends Application implements Initializable{
     }
 
 
-    //run save location gui
+    // run save location gui
     @FXML
     private void ChoiceLocation(){
         SaveLocation = choseLocation.ChoisLocation();
         Add.setDisable(false);
     }
 
-    //enter one url to list of urls
+    // enter one url to list of urls
     @FXML
     private void InputUrl(){
         String webSite = inputURL.getText();
@@ -70,7 +70,7 @@ public class BasicGui extends Application implements Initializable{
         }
     }
 
-    //check number of ws and make add disable if number is 5
+    // check number of ws and make add disable if number is 5
     @FXML
     private void checkNumOfURLS(){
         if(URLS.size() >= 5){
@@ -80,13 +80,13 @@ public class BasicGui extends Application implements Initializable{
         }
     }
 
-    //add url to the table view
+    // add url to the table view
     @FXML
     private void addToTableView(String website){
         tableView.getItems().add(new properity4TableviewURLS(new SimpleStringProperty(website)));
     }
 
-    //delete one selected url from table view
+    // delete one selected url from table view
     @FXML
     private void DeleteWSFromTable(){
         ObservableList<properity4TableviewURLS> all , selected;
@@ -98,7 +98,7 @@ public class BasicGui extends Application implements Initializable{
         checkNumOfURLS();
     }
 
-    //Cancel the operation
+    // Cancel the operation
     @FXML
     private void CancelOperation(){
         Stage stage = (Stage) Cancel.getScene().getWindow();
@@ -106,9 +106,10 @@ public class BasicGui extends Application implements Initializable{
         System.exit(0);
     }
 
-    //Start Downloading ^_^ :)
+    // Start Downloading ^_^ :)
     @FXML
     private void StartDownloading() throws Exception {
+
                 thread4StartDownloading t = new thread4StartDownloading();
                 t.seturl(URLS,SaveLocation);
                 new Thread(t).start();
