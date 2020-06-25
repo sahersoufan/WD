@@ -187,6 +187,8 @@ public class Spider {
                     }
 
                 } catch (IOException e) {
+                    if(!e.toString().contains("Unhandled content type.") &&!e.toString().contains("code: 400")&&!e.toString().contains("FileNotFoundException")) {
+
                         if (!repeat) {
                             PauseStatementInfoGui = true;
                             repeat = true;
@@ -201,7 +203,7 @@ public class Spider {
                                 ex.printStackTrace();
                             }
                         }
-
+                    }
                 }
 
 
@@ -231,6 +233,7 @@ public class Spider {
                     }
 
                 } catch (IOException e) {
+                    if(!e.toString().contains("Unhandled content type.") &&!e.toString().contains("code: 400")&&!e.toString().contains("FileNotFoundException")){
                         if (!repeat) {
                             PauseStatementInfoGui = true;
                             repeat = true;
@@ -246,6 +249,7 @@ public class Spider {
                                 ex.printStackTrace();
                             }
                         }
+                    }
                 }
 
             }

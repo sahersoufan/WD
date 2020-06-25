@@ -20,7 +20,7 @@ public class pauseGui extends Application implements Objects4GUI {
         pauseStage.setResizable(false);
 
         pauseStage.setTitle("Pause Download");
-        pauseStage.setScene(new Scene(root, 500, 50));
+        pauseStage.setScene(new Scene(root, 500, 100));
         pauseStage.show();
     }
 
