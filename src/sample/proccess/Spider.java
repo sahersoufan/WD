@@ -17,7 +17,10 @@ public class Spider {
     private long downloadingSize = 0;
     private ALLURL allUrl = new ALLURL();
     private PageFiles file;
+    private boolean noInterNetConn = false;
+    private boolean StartDownloadAgain = false;
     volatile private Boolean repeat = false;
+    volatile private Boolean repeatStopDownloading = false;
     volatile private Boolean CancelStatementInfoGui = false;
     volatile private Boolean PauseStatementInfoGui = false;
 
@@ -40,19 +43,53 @@ public class Spider {
         this.URL = URL;
     }
 
+
+
+
     //Run method to start the operation
     public void InitSpiderProp() throws Exception {
         filterUrls();
-        saveUrls();
-        setFullSizeLabel();
-        setOriginPathFolder();
-        setTitle4InfoGui();
+            saveUrls();
+            setFullSizeLabel();
+            setOriginPathFolder();
+            setTitle4InfoGui();
+
     }
 
     //Run threads
     public void StartSpiderThreads() throws IOException, InterruptedException {
         RunThreads();
     }
+
+    //run threads
+    public void RunThreads() throws IOException, InterruptedException {
+        threads[] threadsArray = new threads[5];
+        repeat = false;
+        repeatStopDownloading = false;
+        CancelStatementInfoGui = false;
+        PauseStatementInfoGui = false;
+        for (int i = 0 ; i < threadsArray.length ; i++) {
+            threadsArray[i] = new threads();
+            threadsArray[i].start();
+        }
+        for (int i = 0 ; i < threadsArray.length ; i++) {
+            threadsArray[i].join();
+        }
+        if(file.isURL_InURL_Text()){
+            file.deleteURLs();
+            file.deleteDownloading();
+            //file.repair(URL);
+            if(StartDownloadAgain){
+                StartDownloadAgain = false;
+                download.StartDownloadingAgain();
+            }
+        }
+    }
+
+
+
+
+
 
     //set full size of web site
     public void setFullSizeLabel() throws Exception {
@@ -85,29 +122,14 @@ public class Spider {
 
     }
 
-    //run threads
-    public void RunThreads() throws IOException, InterruptedException {
-        threads[] threadsArray = new threads[5];
-        repeat = false;
-        CancelStatementInfoGui = false;
-        PauseStatementInfoGui = false;
-        for (int i = 0 ; i < threadsArray.length ; i++) {
-            threadsArray[i] = new threads();
-            threadsArray[i].start();
-        }
-        for (int i = 0 ; i < threadsArray.length ; i++) {
-            threadsArray[i].join();
-        }
-        if(file.isURL_InURL_Text()){
-            file.deleteURLs();
-            file.deleteDownloading();
-            file.repair(URL);
-        }
-    }
 
     //send basic url to filter and get all urls
-    private void filterUrls() throws IOException {
-        urlsList = allUrl.getAllLink(URL);
+    private void filterUrls(){
+        try{
+            urlsList = allUrl.getAllLink(URL);
+        }catch (IOException e){
+            System.out.println("error");
+        }
     }
 
     //send urlsList to urlFile to save it in txt file
@@ -143,7 +165,6 @@ public class Spider {
         @Override
         public void start() {
 
-            Document Page = new Document("hi");
             String webPage ;
             String oneUrl = "hello";
 
@@ -157,11 +178,9 @@ public class Spider {
                 }
                 try {
 
-                    //Page = connection.connect(oneUrl);
-
                     webPage = connection.DownloadWebPage(oneUrl);
                     try {
-                        SendPage(/*Page.toString()*/webPage,oneUrl);
+                        SendPage(webPage,oneUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -172,7 +191,6 @@ public class Spider {
                     }
 
                 } catch (IOException e) {
-                    if (!e.toString().contains("Unhandled content type.")) {
                         if (!repeat) {
                             PauseStatementInfoGui = true;
                             repeat = true;
@@ -187,7 +205,7 @@ public class Spider {
                                 ex.printStackTrace();
                             }
                         }
-                    }
+
                 }
 
 
@@ -203,12 +221,10 @@ public class Spider {
 
                 try {
 
-                    //Page = connection.connect(oneUrl);
-
                     webPage = connection.DownloadWebPage(oneUrl);
 
                     try {
-                        SendPage(/*Page.toString()*/webPage,oneUrl);
+                        SendPage(webPage,oneUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -219,7 +235,6 @@ public class Spider {
                     }
 
                 } catch (IOException e) {
-                    if (!e.toString().contains("Unhandled content type.")) {
                         if (!repeat) {
                             PauseStatementInfoGui = true;
                             repeat = true;
@@ -229,14 +244,19 @@ public class Spider {
                                 ex.printStackTrace();
                             }
                             try {
+
                                 download.RunPauseGui();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
                         }
-                    }
                 }
 
+            }
+            if(PauseStatementInfoGui && !repeatStopDownloading){
+                repeatStopDownloading = true;
+                StartDownloadAgain = true;
+                SendOrderToDownloadToStopDownloading();
             }
 
         }
@@ -249,6 +269,11 @@ public class Spider {
         //delete one url from urls.txt
         private void deleteOneUrlFromDownloading(String url) throws IOException {
             file.removeOneURL_FromDownloading(url);
+        }
+
+        // send orders to download to stop for loop
+        private void SendOrderToDownloadToStopDownloading(){
+            download.SendOrderToDownloadToStopDownloading();
         }
     }
 }

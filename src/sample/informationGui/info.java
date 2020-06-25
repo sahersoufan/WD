@@ -28,7 +28,7 @@ public class info extends Application implements Objects4GUI {
     public void start(Stage primaryStage) throws Exception {
 
         root = FXMLLoader.load(getClass().getResource("info.fxml"));
-        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        //primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.setTitle("Information");
         primaryStage.setScene(new Scene(root, 550, 124));
         primaryStage.showAndWait();

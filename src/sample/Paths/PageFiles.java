@@ -257,10 +257,7 @@ public class PageFiles{
                 assert subPathNames != null;
                 for (String sub:subPathNames){
                     if (sub.equals(link)){
-                        char ch = '\u00A5';
-                        String replace1=getMainPath();
-                        replace1= replace1.replaceAll("\u00A5",'\u00A5'+'\u00A5');
-                        paste=replace1+File.separator+type+File.separator+parts[parts.length-1];
+                        paste=getMainPath()+File.separator+type+File.separator+parts[parts.length-1];
                         allLinksPaste.set(i,paste);
                         break;
                     }

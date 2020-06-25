@@ -2,6 +2,7 @@ package sample.proccess;
 
 
 import sample.Objects4GUI;
+import sample.threads.thread4StartDownloading;
 
 import java.io.IOException;
 
@@ -10,7 +11,11 @@ import static java.lang.Thread.sleep;
 public class Downloading implements Objects4GUI {
     private Spider spider = new Spider();
     private String URL="http://www.guimp.com/", saveLocation="D:\\";
+    private thread4StartDownloading th4SD ;
 
+    public void setTh4SD(thread4StartDownloading th4SD) {
+        this.th4SD = th4SD;
+    }
 
     public Downloading(){
         spider.setDownload(this);
@@ -65,6 +70,10 @@ public class Downloading implements Objects4GUI {
         spider.StartSpiderThreads();
     }
 
+    // restart Downloading
+    public void StartDownloadingAgain(){
+        new Thread(th4SD).start();
+    }
 
 
 
@@ -98,6 +107,11 @@ public class Downloading implements Objects4GUI {
     // Run Pause Gui
     public void RunPauseGui() throws Exception {
         helper.RunPauseGui();
+    }
+
+    // send orders to download to stop for loop
+    public void SendOrderToDownloadToStopDownloading(){
+        th4SD.StopDownloading();
     }
 
     }

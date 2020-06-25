@@ -44,7 +44,9 @@ public class ALLURL{
         {
             Document doc = null;
             try {
+
                 doc = Jsoup.connect(Url).get();
+
                 if(depth==0)
                 {
                     MainTitle= doc.title();
@@ -109,6 +111,7 @@ public class ALLURL{
                 }
             } catch (HttpStatusException ex) {
                 System.out.println("pad request!!!!!!!!!!!!");
+
             }
 
 
