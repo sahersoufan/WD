@@ -60,24 +60,50 @@ public class Downloading implements Objects4GUI {
 
     //Start method
     public void Start() throws Exception {
+
         spider.setURL(URL);
         spider.setSaveLocation(saveLocation);
-        RunInformationGui();
-
         spider.initPageFile();
-        spider.InitSpiderProp();
-        helper.update();
-        spider.StartSpiderThreads();
+        StartSpiderWorking();
+
+
+    }
+
+    //Start spider working
+    public void StartSpiderWorking() throws Exception{
+        try{
+            RunInformationGui();
+            spider.InitSpiderProp();
+            helper.update();
+            spider.StartSpiderThreads();
+
+        }catch (IOException e){
+            System.out.println(e.toString());
+            SendOrderToTheThreadsToStopDownloading();
+            if(e.toString().equals("no protocol")){
+                UnValidUrlMessage(URL);
+            }else{
+                LoseInternetConnMessage();
+            }
+        }
+    }
+
+    //mesage that you lose your internet conn
+    private void LoseInternetConnMessage(){
+        helper.LoseInternetConnMessage();
+        spider.setStartDownloadAgain(true);
+    }
+
+    // message that the url is not valid
+    private void UnValidUrlMessage(String message){
+        helper.CancelDownloadingFromPauseGui();
+        helper.UnValidUrlMessage(message);
     }
 
     // restart Downloading
-    public void StartDownloadingAgain(){
+    void StartDownloadingAgain(){
         new Thread(th4SD).start();
     }
-
-
-
-
 
     // send an order to spider to stop the download operation
     public  void CancelDownloading(){
@@ -110,7 +136,7 @@ public class Downloading implements Objects4GUI {
     }
 
     // send orders to download to stop for loop
-    public void SendOrderToDownloadToStopDownloading(){
+    public void SendOrderToTheThreadsToStopDownloading(){
         th4SD.StopDownloading();
     }
 

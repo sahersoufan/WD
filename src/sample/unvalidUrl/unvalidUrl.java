@@ -1,4 +1,4 @@
-package sample.informationGui;
+package sample.unvalidUrl;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -11,14 +11,16 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class endGui extends Application {
-    Parent root;
+public class unvalidUrl extends Application {
+
+    private Parent root;
 
     @Override
     public void start(Stage stage) throws Exception {
-        root = FXMLLoader.load(getClass().getResource("endGui.fxml"));
+        root = FXMLLoader.load(getClass().getResource("unvalidUrl.fxml"));
         stage.setResizable(false);
-        stage.setTitle("End Download");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Unvalid Url");
         stage.setScene(new Scene(root, 300 , 120));
         stage.show();
     }
@@ -30,18 +32,20 @@ public class endGui extends Application {
         stage.close();
     }
 
-    public void SetNameWebSIte(String name){
-        Label webSiteName = (Label) root.lookup("#webSiteName");
+
+    public void SetUrlMessage(String message){
+        Label Urlname = (Label) root.lookup("#Urlname");
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    webSiteName.setText(name);
+                    Urlname.setText(message);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         });
     }
+
 
 }

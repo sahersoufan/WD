@@ -3,6 +3,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import sample.proccess.ALLURL;
 import sample.proccess.Filter;
 import sample.proccess.Repair;
 
@@ -34,14 +35,14 @@ public class PageFiles{
         pastArray= new ArrayList<>(urls);
         String[] parts=urls.get(0).split("\\.");
         String base=parts[1];
-        mainPath=getMainPath()+File.separator+base;
+        mainPath=getMainPath()+"/"+base;
         File folder=new File(getMainPath());
         folder.mkdirs();
         CSS=new CSS(getMainPath(),"CSS");
         HTML=new HTML(getMainPath(),"HTML");
         JS=new JS(getMainPath(),"JS");
         media=new Media(getMainPath(),"Media");
-        String pathOfURLS=getMainPath()+File.separator+URLs_FILE;
+        String pathOfURLS=getMainPath()+"/"+URLs_FILE;
         File saveURLS=new File(pathOfURLS);
         if (!(saveURLS.exists())){
             boolean safe= saveURLS.createNewFile();
@@ -50,7 +51,7 @@ public class PageFiles{
             else
                 System.err.println("unsafe new file");
         }
-        String pathOfDownloading=getMainPath()+File.separator+DOWNLOADING_FILE;
+        String pathOfDownloading=getMainPath()+"/"+DOWNLOADING_FILE;
         File saveDownloading=new File(pathOfDownloading);
         if (!(saveDownloading.exists())){
             boolean safe= saveDownloading.createNewFile();
@@ -109,17 +110,17 @@ public class PageFiles{
         writer.close();
     }
     public synchronized String getOneURL() throws IOException {
-        String oneLine=getHTML().readOneLine(getMainPath()+File.separator+URLs_FILE);
-        getHTML().writeOneLine(getMainPath()+File.separator+DOWNLOADING_FILE,oneLine);
-        deleteFirstLine(getMainPath()+File.separator+URLs_FILE);
+        String oneLine=getHTML().readOneLine(getMainPath()+"/"+URLs_FILE);
+        getHTML().writeOneLine(getMainPath()+"/"+DOWNLOADING_FILE,oneLine);
+        deleteFirstLine(getMainPath()+"/"+URLs_FILE);
         return oneLine;
     }
     public synchronized String getOneURL_From_Downloading() throws IOException {
 
-        return getHTML().readOneLine(getMainPath()+File.separator+DOWNLOADING_FILE);
+        return getHTML().readOneLine(getMainPath()+"/"+DOWNLOADING_FILE);
     }
     public synchronized void  removeOneURL_FromDownloading(String url) throws IOException {
-        File inputFile = new File(getMainPath()+File.separator+DOWNLOADING_FILE);
+        File inputFile = new File(getMainPath()+"/"+DOWNLOADING_FILE);
         File tempFile = new File("myTempFile.txt");
 
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -139,11 +140,11 @@ public class PageFiles{
         boolean successful = tempFile.renameTo(inputFile);
         System.out.println(successful);
         inputFile.delete();
-        tempFile.renameTo(new File(getMainPath()+File.separator+DOWNLOADING_FILE));
+        tempFile.renameTo(new File(getMainPath()+"/"+DOWNLOADING_FILE));
 
     }
     public synchronized void  removeOneURL_FromURLs() throws IOException {
-        File path = new File(getMainPath()+File.separator+URLs_FILE);
+        File path = new File(getMainPath()+"/"+URLs_FILE);
         Scanner scanner = new Scanner(path);
         ArrayList<String> coll = new ArrayList<String>();
         scanner.nextLine();
@@ -162,11 +163,11 @@ public class PageFiles{
         writer.close();
     }
     public synchronized boolean  isURL_InDownloading() {
-        File file = new File(getMainPath()+File.separator+DOWNLOADING_FILE);
+        File file = new File(getMainPath()+"/"+DOWNLOADING_FILE);
         return !file.exists() || file.length() <= 0;
     }
     public synchronized boolean isURL_InURL_Text(){
-        File file=new File(getMainPath()+File.separator+URLs_FILE);
+        File file=new File(getMainPath()+"/"+URLs_FILE);
         return !file.exists() || file.length() <= 0;
     }
     public long sizeOfFileInKB(){
@@ -178,7 +179,7 @@ public class PageFiles{
     }
     public void openInBrowser(){
         try {
-            File htmlFile = new File(getMainPath()+File.separator+"index.html");
+            File htmlFile = new File(getMainPath()+"/"+"index.html");
             Desktop.getDesktop().browse(htmlFile.toURI());
         }
         catch (Exception e){
@@ -187,14 +188,14 @@ public class PageFiles{
         }
     }
     public void openInExplorer() throws IOException {
-        File file = new File (getMainPath()+File.separator);
+        File file = new File (getMainPath()+"/");
         Desktop desktop = Desktop.getDesktop();
         desktop.open(file);
     }
     public void deleteURLs(){
         try
         {
-            File f= new File(getMainPath()+File.separator+URLs_FILE);
+            File f= new File(getMainPath()+"/"+URLs_FILE);
             if(f.delete())
             {
                 System.out.println(f.getName() + " deleted");
@@ -212,7 +213,7 @@ public class PageFiles{
     public void deleteDownloading(){
         try
         {
-            File f= new File(getMainPath()+File.separator+DOWNLOADING_FILE);
+            File f= new File(getMainPath()+"/"+DOWNLOADING_FILE);
             if(f.delete())
             {
                 System.out.println(f.getName() + " deleted");
@@ -228,7 +229,7 @@ public class PageFiles{
         }
     }
     public void repair(String mainUrl) throws IOException {
-        String path=getMainPath()+File.separator+"HTML";
+        String path=getMainPath()+"/"+"HTML";
         String[] pathNames;
         File f=new File(path);
         pathNames=f.list();
@@ -237,9 +238,9 @@ public class PageFiles{
         ArrayList<String> allLinksPaste;
         assert pathNames != null;
         for (String pathName:pathNames){
-            copy=getHTML().readFile(path+File.separator+pathName);
-            allLinks=new ArrayList<>(getPastArray());
-            allLinksPaste= new ArrayList<>(getPastArray());
+            copy=getHTML().readFile(path+"/"+pathName);
+            allLinks=new ArrayList<>(ALLURL.getNOEdit());
+            allLinksPaste= new ArrayList<>(ALLURL.getNOEdit());
             for (int i=0;i<allLinks.size();i++){
                 String one=allLinks.get(i);
                 String[] parts=one.split("/");
@@ -251,44 +252,34 @@ public class PageFiles{
                 String[] parts = link.split("/");
                 link=parts[parts.length-1];
                 String type= Filter.filterType(link);
-                File subFile=new File(getMainPath()+File.separator+type);
+                File subFile=new File(getMainPath()+"/"+type);
                 String[] subPathNames=subFile.list();
                 String paste;
                 assert subPathNames != null;
                 for (String sub:subPathNames){
                     if (sub.equals(link)){
-                        paste=getMainPath()+File.separator+type+File.separator+parts[parts.length-1];
+                        String replace1=getMainPath();
+                        replace1 = replace1.replace("\\", "/");
+                        paste=replace1+"/"+type+"/"+parts[parts.length-1];
                         allLinksPaste.set(i,paste);
                         break;
                     }
                 }
             }
-            for (int i=0;i<allLinks.size();i++){
+
+            for (int i=0;i<allLinksPaste.size();i++){
                 copy = copy.replaceAll(allLinks.get(i),allLinksPaste.get(i));
+                System.out.println("int:"+allLinks.get(i)+"  path:"+allLinksPaste.get(i));
             }
-            File fDelete=new File(path+File.separator+pathName);
+            File fDelete=new File(path+"/"+pathName);
             fDelete.delete();
-            File fNew=new File(path+File.separator+pathName);
-            getHTML().writeFile(path+File.separator+pathName,copy);
+            File fNew=new File(path+"/"+pathName);
+            getHTML().writeFile(path+"/"+pathName,copy);
         }
     }
-    public  ArrayList<String> getAllSubLinks(String html, String MainUrl){
-        ArrayList<String>allLinks=new ArrayList<>();
-        Document doc= Jsoup.parse(html);
-        Elements links=doc.select("a[href]");
-        Elements links2 = doc.select("link[href]");
-        for (Element link :links){
-            Repair.RepairUrl(MainUrl,link.attr("href"));
-            allLinks.add( Repair.RepairUrl(MainUrl,link.attr("href")));
-        }
-        for (Element link :links2){
-            Repair.RepairUrl(MainUrl,link.attr("href"));
-            allLinks.add( Repair.RepairUrl(MainUrl,link.attr("href")));
-        }
-        return allLinks;
-    }
+
     public synchronized int numberOfLinesIn_URLS() throws IOException {
-        return getHTML().numberOfLines(getMainPath()+File.separator+URLs_FILE);
+        return getHTML().numberOfLines(getMainPath()+"/"+URLs_FILE);
     }
     private String getMainPath() {
         return mainPath;
@@ -310,22 +301,22 @@ public class PageFiles{
     }
     private String setHTML_File(String url){
         String[] parts=url.split("/");
-        return getHTML().getObjPath()+File.separator+parts[parts.length-1];}
+        return getHTML().getObjPath()+"/"+parts[parts.length-1];}
     private String setCSS_File(String url){
         String[] parts=url.split("/");
-        return getCSS().getObjPath()+File.separator+parts[parts.length-1];}
+        return getCSS().getObjPath()+"/"+parts[parts.length-1];}
     private String setJS_File(String url){
         String[] parts=url.split("/");
-        return getJS().getObjPath()+File.separator+parts[parts.length-1];}
+        return getJS().getObjPath()+"/"+parts[parts.length-1];}
     private String setMedia_File(String url){
         String[] parts=url.split("/");
-        return getMedia().getObjPath()+File.separator+parts[parts.length-1];}
+        return getMedia().getObjPath()+"/"+parts[parts.length-1];}
     private String setAudio_File(String url){
         String[] parts=url.split("/");
-        return getMedia().getObjPath()+File.separator+parts[parts.length-1];}
-        private String setDomain_File(String url){
-            String[] parts=url.split("/");
-            return getHTML().getObjPath()+File.separator+parts[parts.length-1]+".html";}
+        return getMedia().getObjPath()+"/"+parts[parts.length-1];}
+    private String setDomain_File(String url){
+        String[] parts=url.split("/");
+        return getHTML().getObjPath()+"/"+parts[parts.length-1]+".html";}
 
 }
 

@@ -2,9 +2,11 @@ package sample.proccess;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import sample.CheckConn.CheckYourInternet;
 import sample.informationGui.endGui;
 import sample.informationGui.info;
 import sample.pauseGui.pauseGui;
+import sample.unvalidUrl.unvalidUrl;
 
 import java.io.IOException;
 
@@ -13,7 +15,8 @@ public class helper4DownInfo {
     private sample.pauseGui.pauseGui pauseGui = new pauseGui();
     private info information = new info();
     private endGui EndGui = new endGui();
-    private long i = 0;
+    private unvalidUrl unvalidUrl = new unvalidUrl();
+    private CheckYourInternet  checkConn = new CheckYourInternet();
     public void setD(Downloading d) {
         this.download = d;
     }
@@ -116,4 +119,42 @@ public class helper4DownInfo {
         EndGui.SetNameWebSIte(name);
     }
 
+    //-----------------------unValidUrlGui-------------------------\\
+
+
+    // message that the url is not valid
+    public void UnValidUrlMessage(String message){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    unvalidUrl.start(new Stage());
+                    unvalidUrl.SetUrlMessage(message);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //-----------------------LoseInternetConnInGetLinkGui-------------------------\\
+
+    //mesage that you lose your internet conn
+    public void LoseInternetConnMessage(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    checkConn.start(new Stage());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //ok i check please restart the spider
+    public void restartTheSpiders() throws Exception {
+        download.StartSpiderWorking();
+    }
 }

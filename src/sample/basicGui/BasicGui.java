@@ -40,8 +40,9 @@ public class BasicGui extends Application implements Initializable{
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("BasicGui.fxml"));
+        stage.setResizable(false);
         stage.setTitle("welcome in WD");
-        stage.setScene(new Scene(root,450 , 360));
+        stage.setScene(new Scene(root,650 , 450));
         stage.show();
     }
     @Override

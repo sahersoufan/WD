@@ -14,10 +14,9 @@ public class Spider {
     private String SaveLocation;
     private String URL;
     private List<String> urlsList = new ArrayList<String>();;
-    private long downloadingSize = 0;
     private ALLURL allUrl = new ALLURL();
     private PageFiles file;
-    private boolean noInterNetConn = false;
+    private boolean errorInGetAllLink = false;
     private boolean StartDownloadAgain = false;
     volatile private Boolean repeat = false;
     volatile private Boolean repeatStopDownloading = false;
@@ -43,8 +42,9 @@ public class Spider {
         this.URL = URL;
     }
 
-
-
+    public void setStartDownloadAgain(boolean startDownloadAgain) {
+        StartDownloadAgain = startDownloadAgain;
+    }
 
     //Run method to start the operation
     public void InitSpiderProp() throws Exception {
@@ -53,12 +53,11 @@ public class Spider {
             setFullSizeLabel();
             setOriginPathFolder();
             setTitle4InfoGui();
-
-    }
+        }
 
     //Run threads
     public void StartSpiderThreads() throws IOException, InterruptedException {
-        RunThreads();
+         RunThreads();
     }
 
     //run threads
@@ -86,11 +85,6 @@ public class Spider {
         }
     }
 
-
-
-
-
-
     //set full size of web site
     public void setFullSizeLabel() throws Exception {
         download.setFullSizeLabel(getFullSize() +" file");
@@ -98,6 +92,7 @@ public class Spider {
 
     //set update for downloading size
     public void setUpdateDownloadingSizeLabel() throws Exception {
+        long downloadingSize = 0;
         download.setUpdateDownloadingSizeLabel(downloadingSize +" mb");
     }
 
@@ -124,12 +119,8 @@ public class Spider {
 
 
     //send basic url to filter and get all urls
-    private void filterUrls(){
-        try{
+    private void filterUrls() throws IOException{
             urlsList = allUrl.getAllLink(URL);
-        }catch (IOException e){
-            System.out.println("error");
-        }
     }
 
     //send urlsList to urlFile to save it in txt file
@@ -154,6 +145,11 @@ public class Spider {
     //open file location that we download web site in it
     public void OpenFileLocation() throws IOException {
         file.openInExplorer();
+    }
+
+    // send orders to download to stop for loop
+    public void SendOrderToDownloadToStopDownloading(){
+        download.SendOrderToTheThreadsToStopDownloading();
     }
 
     //------------------------innerClass--------------------------\\
@@ -271,10 +267,7 @@ public class Spider {
             file.removeOneURL_FromDownloading(url);
         }
 
-        // send orders to download to stop for loop
-        private void SendOrderToDownloadToStopDownloading(){
-            download.SendOrderToDownloadToStopDownloading();
-        }
+
     }
 }
 

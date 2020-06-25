@@ -17,8 +17,10 @@ public class pauseGui extends Application implements Objects4GUI {
     public void start(Stage pauseStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("pauseGui.fxml"));
         pauseStage.initModality(Modality.APPLICATION_MODAL);
+        pauseStage.setResizable(false);
+
         pauseStage.setTitle("Pause Download");
-        pauseStage.setScene(new Scene(root, 500, 100));
+        pauseStage.setScene(new Scene(root, 500, 50));
         pauseStage.show();
     }
 
