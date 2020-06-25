@@ -51,7 +51,7 @@ public class Filter {
         if(TypeUrl(Url).equals("cab")||TypeUrl(Url).equals("scm")||TypeUrl(Url).equals("iso")||TypeUrl(Url).equals("dmp")||TypeUrl(Url).equals("dll")){
             return true;
         }
-        if(TypeUrl(Url).equals("exe")||TypeUrl(Url).equals("avi")||TypeUrl(Url).equals("wma")||TypeUrl(Url).equals("bin")){
+        if(TypeUrl(Url).equals("exe")||TypeUrl(Url).equals("avi")||TypeUrl(Url).equals("wma")||TypeUrl(Url).equals("bin")||TypeUrl(Url).equals("zip")){
             return true;
         }
         if(TypeUrl(Url).equals("so")||TypeUrl(Url).equals("tar")||TypeUrl(Url).equals("tif")||TypeUrl(Url).equals("ttf")||TypeUrl(Url).equals("pcf")||TypeUrl(Url).equals("bdf")||TypeUrl(Url).equals("snf")||TypeUrl(Url).equals("woff")){

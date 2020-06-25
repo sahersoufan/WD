@@ -3,6 +3,7 @@ package sample.proccess;
 
 
 public class Repair {
+    private static String MainDomain;
 
     public static String RepairDomain(String MainUrl){
         String Split[]=MainUrl.split("/");
@@ -11,21 +12,22 @@ public class Repair {
         if(Split.length>0){
             if(!Split[0].equals("https:")) {
                 if (!Split[0].equals("http:")) {
-                    ans= "https://"+MainUrl;
+                   return ans= "https://"+MainUrl;
                 }
             }
         }
         String Split1[]=ans.split("/");
+        MainDomain=Split1[0]+"//"+Split1[2];
 
-        return Split1[0]+"//"+Split1[1]+ Split1[2]+"/";
+       return MainUrl;
 
 
     }
-    public static String RepairUrl(String MainUrl, String RepairLink)  {
+    public static String RepairUrl( String RepairLink)  {
 
-        MainUrl= RepairDomain(MainUrl);
+
         String Split[]=RepairLink.split("/");
-        String Split1[]=MainUrl.split("/");
+
         String Split2[]=RepairLink.split("\\.");
         String NewUrl=null;
         boolean Signal=false;
@@ -35,7 +37,7 @@ public class Repair {
 
                 if (!Split[0].equals("http:")) {
                     for (int i = 0; i < Split.length; i++) {
-                        if (!Split[i].equals(Split1[2])) {
+                        if (!Split[i].equals(MainDomain)) {
                             Signal = true;
 
                         }
@@ -50,7 +52,7 @@ public class Repair {
         }
         if(Signal)
         {
-            NewUrl=Split1[0]+"//"+ Split1[2]+"/"+RepairLink;
+            NewUrl= MainDomain+"/"+RepairLink;
             return NewUrl;
 
         }

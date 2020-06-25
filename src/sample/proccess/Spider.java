@@ -3,6 +3,8 @@ package sample.proccess;
 import org.jsoup.nodes.Document;
 import sample.getUrlFiles.Connection;
 import sample.Paths.PageFiles;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -219,7 +221,8 @@ public class Spider {
                     }
 
                 } catch (IOException e) {
-                    if (!e.toString().contains("Unhandled content type.")) {
+                    if (!e.toString().contains("Unhandled content type.") && !e.toString().contains("FileNotFoundException"))
+                         {
                         if (!repeat) {
                             PauseStatementInfoGui = true;
                             repeat = true;

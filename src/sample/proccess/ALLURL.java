@@ -12,9 +12,10 @@ import java.util.*;
 public class ALLURL{
 
 
-    private  final int MAX_DEPTH = 3;
+    private  final int MAX_DEPTH = 1;
     List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
     List<String>AllLink =new ArrayList<>();
+     static List<String>NOEdit =new ArrayList<>();
     long size;
     String MainTitle;
     String MainURL;
@@ -58,10 +59,11 @@ public class ALLURL{
 
 
                 for (Element link : links1) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( link.attr("href")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
+                        NOEdit.add(link.attr("href"));
 
                     }
 
@@ -69,29 +71,32 @@ public class ALLURL{
 
                 for (Element link : links2) {
 
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( link.attr("href")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
+                        NOEdit.add(link.attr("href"));
 
                     }
                 }
 
 
                 for (Element scripts : links3) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, scripts.attr("src")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( scripts.attr("src")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
+                        NOEdit.add(scripts.attr("href"));
 
                     }
                 }
 
                 for (Element links4 : CSS) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, links4.attr("style")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( links4.attr("style")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
+                        NOEdit.add(links4.attr("href"));
 
                     }
 
@@ -100,15 +105,16 @@ public class ALLURL{
 
 
                 for (Element image : images) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl(MainUrl, image.attr("src")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( image.attr("src")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
+                        NOEdit.add(image.attr("href"));
                     }
 
                 }
             } catch (HttpStatusException ex) {
-                System.out.println("pad request!!!!!!!!!!!!");
+                System.out.println("bad request!!!!!!!!!!!!");
             }
 
 
@@ -119,10 +125,10 @@ public class ALLURL{
 
     public  List<String> getAllLink(String MainUrl) throws IOException {
 
-        MainURL=MainUrl;
+        String MainURL1=Repair.RepairDomain(MainUrl);
 
-        Link.add(new pair<>(new pair<>(MainUrl,true),0));
-        getLink(MainUrl,MainUrl,1);
+        Link.add(new pair<>(new pair<>(MainURL1,true),0));
+        getLink(MainURL1,MainURL1,1);
 
         for(int i=0;i<Link.size();i++)
         {
@@ -162,7 +168,9 @@ public class ALLURL{
     public  String getMainURL() {
         return MainURL;
     }
-
+    public  static  List<String> getNOEdit() {
+        return NOEdit;
+    }
 
 }
 
