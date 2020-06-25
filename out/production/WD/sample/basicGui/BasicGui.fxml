@@ -35,7 +35,7 @@
                         <Insets bottom="5.0" />
                      </padding>
                   </VBox>
-                  <Button fx:id="Add" mnemonicParsing="false" onAction="#InputUrl" prefHeight="27.0" prefWidth="67.0" text="Add">
+                  <Button fx:id="Add" disable="true" mnemonicParsing="false" onAction="#InputUrl" prefHeight="27.0" prefWidth="67.0" text="Add">
                      <HBox.margin>
                         <Insets left="15.0" top="60.0" />
                      </HBox.margin>
