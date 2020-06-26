@@ -37,10 +37,10 @@ public class CheckYourInternet extends Application implements Objects4GUI {
 
     @FXML
     private void ICheckIt() throws Exception {
+        helper.CancelDownloadingFromPauseGui();
         Stage s = (Stage) ICheckIt.getScene().getWindow();
         s.close();
-        helper.CancelDownloadingFromPauseGui();
-        helper.restartTheSpiders();
+        //helper.restartTheSpiders();
     }
 
 

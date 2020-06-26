@@ -140,9 +140,18 @@ public class info extends Application implements Objects4GUI {
 
     // close information Gui from pause command
     public  void CancelDownloadingFromPauseGui(){
-        Button close = (Button) root.lookup("#cancelBtn");
-        Stage stage = (Stage)close.getScene().getWindow();
-        stage.close();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Button close = (Button) root.lookup("#cancelBtn");
+                    Stage stage = (Stage)close.getScene().getWindow();
+                    stage.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
 

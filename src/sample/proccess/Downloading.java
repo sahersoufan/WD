@@ -71,20 +71,23 @@ public class Downloading implements Objects4GUI {
 
     //Start spider working
     public void StartSpiderWorking() throws Exception{
-        try{
+        try {
             RunInformationGui();
             spider.InitSpiderProp();
             helper.update();
             spider.StartSpiderThreads();
 
         }catch (IOException e){
-            System.out.println(e.toString());
             SendOrderToTheThreadsToStopDownloading();
-            if(e.toString().equals("no protocol")){
+            Process process = java.lang.Runtime.getRuntime().exec("ping www.google.com");
+            int x = process.waitFor();
+            if(x == 0){
                 UnValidUrlMessage(URL);
-            }else{
+            }else {
                 LoseInternetConnMessage();
             }
+
+
         }
     }
 

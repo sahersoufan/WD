@@ -244,9 +244,6 @@ public class Spider {
                     }
 
                 } catch (IOException e) {
-
-                    if (!e.toString().contains("Unhandled content type.") && !e.toString().contains("FileNotFoundException")) {
-
                         if (!e.toString().contains("Unhandled content type.") && !e.toString().contains("code: 400") && !e.toString().contains("FileNotFoundException")) {
 
                             if (!repeat) {
@@ -265,7 +262,7 @@ public class Spider {
                                 }
                             }
                         }
-                    }
+
 
                 }
                 if (PauseStatementInfoGui && !repeatStopDownloading) {

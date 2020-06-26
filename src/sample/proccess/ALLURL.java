@@ -13,7 +13,7 @@ public class ALLURL{
 
 
 
-    private  final int MAX_DEPTH = 1;
+    private  final int MAX_DEPTH = 5;
     List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
     List<String>AllLink =new ArrayList<>();
     static List<String>NOEdit =new ArrayList<>();
