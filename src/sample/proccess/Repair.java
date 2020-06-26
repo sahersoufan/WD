@@ -1,10 +1,20 @@
 package sample.proccess;
 
 
+import java.net.URL;
 
 public class Repair {
-    private static String MainDomain;
 
+
+    public static boolean isValid(String url)
+    {
+        try {
+            new URL(url).toURI();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public static String RepairDomain(String MainUrl){
         String Split[]=MainUrl.split("/");
         String ans=null;
@@ -12,35 +22,33 @@ public class Repair {
         if(Split.length>0){
             if(!Split[0].equals("https:")) {
                 if (!Split[0].equals("http:")) {
-                   return ans= "https://"+MainUrl;
+                    ans= "http://"+MainUrl;
                 }
             }
         }
         String Split1[]=ans.split("/");
-        MainDomain=Split1[0]+"//"+Split1[2];
 
-
-       return MainUrl;
-
-
+        return Split1[0]+"//"+Split1[1]+ Split1[2]+"/";
 
 
     }
-    public static String RepairUrl( String RepairLink)  {
+    public static String RepairUrl(String MainUrl, String RepairLink)  {
 
 
         String Split[]=RepairLink.split("/");
-
+        String Split1[]=MainUrl.split("/");
         String Split2[]=RepairLink.split("\\.");
         String NewUrl=null;
         boolean Signal=false;
 
+        if(RepairLink.equals("/"))
+            return "????????????????.jar";
         if(Split.length>0) {
             if (!Split[0].equals("https:")) {
 
                 if (!Split[0].equals("http:")) {
                     for (int i = 0; i < Split.length; i++) {
-                        if (!Split[i].equals(MainDomain)) {
+                        if (!Split[i].equals(Split1[2])) {
                             Signal = true;
 
                         }
@@ -55,7 +63,7 @@ public class Repair {
         }
         if(Signal)
         {
-            NewUrl= MainDomain+"/"+RepairLink;
+            NewUrl=Split1[0]+"//"+ Split1[2]+"/"+RepairLink;
             return NewUrl;
 
         }
