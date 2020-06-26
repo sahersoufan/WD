@@ -10,13 +10,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.Objects4GUI;
 
-public class unvalidUrl extends Application {
+public class unvalidUrl extends Application implements Objects4GUI {
 
     private Parent root;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception{
         root = FXMLLoader.load(getClass().getResource("unvalidUrl.fxml"));
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -28,6 +29,7 @@ public class unvalidUrl extends Application {
     @FXML private Button CloseBtn;
     @FXML
     private void CLoseIt(){
+        helper.StartDownloadingAgain();
         Stage stage = (Stage) CloseBtn.getScene().getWindow();
         stage.close();
     }

@@ -137,6 +137,10 @@ public class helper4DownInfo {
         });
     }
 
+    // continue download other urls
+    public void StartDownloadingAgain(){
+        download.StartDownloadingAgain();
+    }
     //-----------------------LoseInternetConnInGetLinkGui-------------------------\\
 
     //mesage that you lose your internet conn

@@ -100,6 +100,7 @@ public class Downloading implements Objects4GUI {
     // message that the url is not valid
     private void UnValidUrlMessage(String message){
         helper.CancelDownloadingFromPauseGui();
+        th4SD.StopDownloading();
         helper.UnValidUrlMessage(message);
     }
 
