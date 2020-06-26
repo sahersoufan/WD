@@ -143,5 +143,30 @@ public class Filter {
             return "HTML";
         }
     }
+    static boolean Search(List<String> Link, String s) {
+        for (int i=0;i<Link.size();i++)
+        {
+            if(Link.get(i).equals(s))
+            {
+                return  true;
+            }
+        }
+
+        return false;
+    }
+    public  static  pair<List<String>,List<String>> FilterList(List<String> list1,List<String> list2) {
+        List<String> newList1=new ArrayList<>();
+        List<String> newList2=new ArrayList<>();
+        for(int i=0;i<list1.size();i++)
+        {
+         if(!Search(newList1,list1.get(i))) {
+             newList1.add(list1.get(i));
+             newList2.add(list2.get(i));
+         }
+        }
+
+      return new pair<>(newList1,newList2);
+    }
+
 
 }

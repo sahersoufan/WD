@@ -13,10 +13,10 @@ public class ALLURL{
 
 
 
-    private  final int MAX_DEPTH = 5;
+    private  final int MAX_DEPTH = 1;
     List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
     List<String>AllLink =new ArrayList<>();
-     static List<String>NOEdit =new ArrayList<>();
+    static List<String>NOEdit =new ArrayList<>();
 
 
     long size;
@@ -62,7 +62,7 @@ public class ALLURL{
 
 
                 for (Element link : links1) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( link.attr("href")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
@@ -74,7 +74,7 @@ public class ALLURL{
 
                 for (Element link : links2) {
 
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( link.attr("href")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
@@ -85,7 +85,7 @@ public class ALLURL{
 
 
                 for (Element scripts : links3) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( scripts.attr("src")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,scripts.attr("src")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
@@ -95,7 +95,7 @@ public class ALLURL{
                 }
 
                 for (Element links4 : CSS) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( links4.attr("style")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,links4.attr("style")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
@@ -108,7 +108,7 @@ public class ALLURL{
 
 
                 for (Element image : images) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( image.attr("src")),false),depth);
+                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,image.attr("src")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
                         Link.add(Pair);
@@ -126,13 +126,12 @@ public class ALLURL{
 
     }
 
-    public  List<String> getAllLink(String MainUrl) throws IOException {
+    public  List<String> getAllLink(String mainUrl) throws IOException {
 
-        String MainURL1=Repair.RepairDomain(MainUrl);
-
-        Link.add(new pair<>(new pair<>(MainURL1,true),0));
-        NOEdit.add(MainURL1);
-        getLink(MainURL1,MainURL1,1);
+        String MainDomain=Repair.RepairDomain(mainUrl);
+        Link.add(new pair<>(new pair<>(MainDomain,true),0));
+        NOEdit.add(MainDomain);
+        getLink(MainDomain,MainDomain,1);
 
         for(int i=0;i<Link.size();i++)
         {
@@ -142,7 +141,7 @@ public class ALLURL{
                 if(!Link.get(i).getKey().getValue())
                 {
                     Link.get(i).getKey().setValue(true);
-                    getLink(Link.get(i).getKey().getKey(),MainUrl,(Link.get(i).getValue()+1));
+                    getLink(Link.get(i).getKey().getKey(),MainDomain,(Link.get(i).getValue()+1));
                 }
             }
             else
@@ -173,7 +172,7 @@ public class ALLURL{
         return MainURL;
     }
     public  static  List<String> getNOEdit() {
-        return NOEdit;
+        return Filter.FilterUrl(NOEdit);
     }
 
 }

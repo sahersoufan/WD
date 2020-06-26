@@ -6,11 +6,13 @@ import org.jsoup.select.Elements;
 import sample.proccess.ALLURL;
 import sample.proccess.Filter;
 import sample.proccess.Repair;
+import sample.proccess.pair;
 
 
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PageFiles{
@@ -237,19 +239,26 @@ public class PageFiles{
         ArrayList<String> allLinks;
         ArrayList<String> allLinks1;
         ArrayList<String> allLinksPaste;
+        ArrayList<String> tempallLinks;
+        ArrayList<String> tempallLinks1;
         assert pathNames != null;
         for (String pathName:pathNames){
-            copy=getHTML().readFile(path+"/"+pathName);
-            allLinks=new ArrayList<>(getPastArray());
-            allLinks1=new ArrayList<>(ALLURL.getNOEdit());
-            allLinksPaste= new ArrayList<>(ALLURL.getNOEdit());
-            for (int i=0;i<allLinks.size();i++){
-                String one=allLinks.get(i);
+
+            tempallLinks=new ArrayList<>(getPastArray());
+            tempallLinks1=new ArrayList<>(ALLURL.getNOEdit());
+            for (int i=0;i<tempallLinks.size();i++){
+                String one=tempallLinks.get(i);
                 String[] parts=one.split("/");
                 one=parts[parts.length-1];
-                allLinks1.set(i,allLinks1.get(i));
-                allLinks.set(i,one);
+                tempallLinks1.set(i,tempallLinks1.get(i));
+                tempallLinks.set(i,one);
             }
+            copy=getHTML().readFile(path+"/"+pathName);
+            pair<List<String>,List<String>> pair=Filter.FilterList(tempallLinks,tempallLinks1);
+            allLinks=new ArrayList<>(pair.getKey());
+            allLinks1=new ArrayList<>(pair.getValue());
+            allLinksPaste= new ArrayList<>(pair.getValue());
+
             for (int i=0;i<allLinksPaste.size();i++){
                 String link=allLinksPaste.get(i);
                 String[] parts = link.split("/");
@@ -280,7 +289,6 @@ public class PageFiles{
             getHTML().writeFile(path+"/"+pathName,copy);
         }
     }
-
     public synchronized int numberOfLinesIn_URLS() throws IOException {
         return getHTML().numberOfLines(getMainPath()+"/"+URLs_FILE);
     }
