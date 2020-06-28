@@ -1,6 +1,9 @@
 package sample.proccess;
 
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +62,15 @@ public class Filter {
         }
         return  false;
     }
-
+    static Boolean ISURLValid(String Url) {
+        try {
+            URL obj=new URL(Url);
+            obj.toURI();
+            return true;
+        } catch (MalformedURLException | URISyntaxException e){
+            return false;
+        }
+    }
     public static List<String> FilterUrl(List<String>OldUrl ) {
         List<String>newUrl = new ArrayList<>();
         for (int i=0;i<OldUrl.size();i++)

@@ -24,7 +24,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="CloseBtn" mnemonicParsing="false" onAction="#CLoseIt" prefWidth="60.0" text="Close">
+            <Button fx:id="CloseBtn" mnemonicParsing="false" onAction="#CLoseIt" prefWidth="60.0" styleClass="cancelBtn" stylesheets="@../css/pasueGui.css" text="Close">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>

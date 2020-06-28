@@ -13,7 +13,7 @@ public class ALLURL{
 
 
 
-    private  final int MAX_DEPTH = 5;
+    private  final int MAX_DEPTH = 1;
     List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
     List<String>AllLink =new ArrayList<>();
     static List<String>NOEdit =new ArrayList<>();
@@ -65,8 +65,12 @@ public class ALLURL{
                     pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
-                        Link.add(Pair);
-                        NOEdit.add(link.attr("href"));
+                        if(Filter.ISURLValid(Pair.getKey().getKey()))
+                        {
+                            Link.add(Pair);
+                            NOEdit.add(link.attr("href"));
+                        }
+
 
                     }
 
@@ -77,8 +81,11 @@ public class ALLURL{
                     pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
-                        Link.add(Pair);
-                        NOEdit.add(link.attr("href"));
+                        if(Filter.ISURLValid(Pair.getKey().getKey())){
+                            Link.add(Pair);
+                            NOEdit.add(link.attr("href"));
+                        }
+
 
                     }
                 }
@@ -88,8 +95,12 @@ public class ALLURL{
                     pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,scripts.attr("src")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
-                        Link.add(Pair);
-                        NOEdit.add(scripts.attr("src"));
+                        if(Filter.ISURLValid(Pair.getKey().getKey()))
+                        {
+                            Link.add(Pair);
+                            NOEdit.add(scripts.attr("src"));
+                        }
+
 
                     }
                 }
@@ -98,8 +109,12 @@ public class ALLURL{
                     pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,links4.attr("style")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
-                        Link.add(Pair);
-                        NOEdit.add(links4.attr("style"));
+                        if(Filter.ISURLValid(Pair.getKey().getKey()))
+                        {
+                            Link.add(Pair);
+                            NOEdit.add(links4.attr("style"));
+                        }
+
 
                     }
 
@@ -111,8 +126,12 @@ public class ALLURL{
                     pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,image.attr("src")),false),depth);
                     if(!Search(Pair.getKey().getKey()))
                     {
-                        Link.add(Pair);
-                        NOEdit.add(image.attr("src"));
+                        if(Filter.ISURLValid(Pair.getKey().getKey()))
+                        {
+                            Link.add(Pair);
+                            NOEdit.add(image.attr("src"));
+                        }
+
                     }
 
                 }
