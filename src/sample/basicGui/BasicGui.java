@@ -2,6 +2,7 @@ package sample.basicGui;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +29,8 @@ public class BasicGui extends Application implements Initializable{
     private List<String> URLS = new ArrayList<>();
     private String SaveLocation = "C:\\";
     private List<String> Types = new ArrayList<>();
-
+    ObservableList<String> ob = FXCollections.observableArrayList("1","2","3","4","5");
+    int depth;
     @FXML private Button ChoiceLocation;
     @FXML private Button Cancel;
     @FXML private Button Start;
@@ -42,6 +44,9 @@ public class BasicGui extends Application implements Initializable{
     @FXML private CheckBox CheckCSS;
     @FXML private CheckBox CheckJS;
     @FXML private CheckBox CheckMedia;
+
+    @FXML private ChoiceBox choiceBox;
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("BasicGui.fxml"));
@@ -53,8 +58,10 @@ public class BasicGui extends Application implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableColumn.setCellValueFactory(new PropertyValueFactory<properity4TableviewURLS,String>("url"));
-    }
+        choiceBox.setItems(ob);
+        choiceBox.setValue("1");
 
+    }
 
     // run save location gui
     @FXML
@@ -111,6 +118,7 @@ public class BasicGui extends Application implements Initializable{
         System.exit(0);
     }
 
+    //set types
     @FXML
     private void InputTypes(){
         if(CheckHTML.isSelected()){
@@ -126,13 +134,21 @@ public class BasicGui extends Application implements Initializable{
             Types.add(CheckMedia.getText());
         }
     }
+
+    //set depth
+    @FXML
+    private void setDepth(){
+        depth = Integer.parseInt( (String) choiceBox.getValue());
+        System.out.println(Integer.parseInt( (String) choiceBox.getValue()));
+    }
     // Start Downloading ^_^ :)
     @FXML
     private void StartDownloading() throws Exception {
 
+        setDepth();
         InputTypes();
         thread4StartDownloading t = new thread4StartDownloading();
-        t.seturl(URLS,SaveLocation, Types);
+        t.seturl(URLS,SaveLocation, Types, depth);
         new Thread(t).start();
 
     }

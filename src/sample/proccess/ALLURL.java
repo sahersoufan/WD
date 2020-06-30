@@ -13,7 +13,7 @@ public class ALLURL{
 
 
 
-    private  final int MAX_DEPTH = 1;
+    private int MAX_DEPTH;
     List<pair<pair<String,Boolean>,Integer>> Link= new ArrayList<>();
     List<String>AllLink =new ArrayList<>();
     static List<String>NOEdit =new ArrayList<>();
@@ -145,8 +145,9 @@ public class ALLURL{
 
     }
 
-    public  List<String> getAllLink(String mainUrl, List<String> Types) throws IOException {
+    public  List<String> getAllLink(String mainUrl, List<String> Types, int depth) throws IOException {
 
+        MAX_DEPTH = depth;
         String MainDomain=Repair.RepairDomain(mainUrl);
         Link.add(new pair<>(new pair<>(MainDomain,true),0));
         NOEdit.add(MainDomain);

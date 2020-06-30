@@ -15,6 +15,7 @@ public class Downloading implements Objects4GUI {
     private String URL="http://www.guimp.com/", saveLocation="D:\\";
     private thread4StartDownloading th4SD ;
     private List<String> Types;
+    private int depth;
 
     public void setTh4SD(thread4StartDownloading th4SD) {
         this.th4SD = th4SD;
@@ -34,6 +35,9 @@ public class Downloading implements Objects4GUI {
     }
 
     public void setTypes(List<String> t){Types = new ArrayList<>(t);}
+
+    public void setDepth(int d){depth = d;}
+
     //set FUll size text Label
     public void setFullSizeLabel(String fullSize) throws Exception {
         helper.setFullSizeLabel(fullSize);
@@ -68,6 +72,7 @@ public class Downloading implements Objects4GUI {
         spider.setURL(URL);
         spider.setSaveLocation(saveLocation);
         spider.setTypes(Types);
+        spider.setDepth(depth);
         spider.initPageFile();
         StartSpiderWorking();
 

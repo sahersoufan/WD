@@ -4,7 +4,9 @@ import sample.proccess.helper4DownInfo;
 
 import java.io.IOException;
 
-public class thread4ResumeDownloading implements Runnable {
+import static java.lang.Thread.sleep;
+
+public class thread4StartSpiderAgain implements Runnable{
     private helper4DownInfo helper;
 
     public void setHelper(helper4DownInfo helper) {
@@ -14,8 +16,9 @@ public class thread4ResumeDownloading implements Runnable {
     @Override
     public void run() {
         try {
-            helper.ResumeDownloading();
-        } catch (IOException | InterruptedException e) {
+            sleep(2000);
+            helper.restartTheSpiders();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

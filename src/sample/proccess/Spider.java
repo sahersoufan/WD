@@ -17,6 +17,7 @@ public class Spider {
     private String URL;
     private List<String> urlsList = new ArrayList<String>();
     private List<String> Types;
+    private int depth;
     private ALLURL allUrl = new ALLURL();
     private PageFiles file;
     private boolean errorInGetAllLink = false;
@@ -36,6 +37,8 @@ public class Spider {
     }
 
     public void setTypes(List<String> t){Types = new ArrayList<>(t);}
+
+    public void setDepth(int d){depth = d;}
 
     public void initPageFile() throws IOException {
         file = new PageFiles(SaveLocation);
@@ -123,7 +126,7 @@ public class Spider {
 
     //send basic url to filter and get all urls
     private void filterUrls() throws IOException {
-        urlsList = allUrl.getAllLink(URL, Types);
+        urlsList = allUrl.getAllLink(URL, Types,depth);
     }
 
     //send urlsList to urlFile to save it in txt file
