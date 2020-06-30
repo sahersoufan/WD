@@ -10,6 +10,7 @@ import static java.lang.Thread.sleep;
 public class thread4StartDownloading implements Runnable {
     private List<String> ws;
     private String SaveLocation;
+    private List<String> Types;
     private boolean stopDownloading = false;
 
     // send this to download
@@ -17,9 +18,10 @@ public class thread4StartDownloading implements Runnable {
         d.setTh4SD(this);
     }
 
-    public void seturl(List<String> w, String s){
+    public void seturl(List<String> w, String s, List<String> t){
         ws = new ArrayList<>(w);
         SaveLocation = s;
+        Types = new ArrayList<>(t);
     }
 
     @Override
@@ -34,6 +36,7 @@ public class thread4StartDownloading implements Runnable {
             Downloading download = new Downloading();
             download.setSaveLocation(SaveLocation);
             download.setURL(ws.get(i));
+            download.setTypes(Types);
             SendThread4StartDownloading(download);
             try {
                 download.Start();

@@ -1,0 +1,49 @@
+pwd
+cd
+git init
+git add .
+git commit -m ""
+git status
+git remote add origin //نسخ الرابط
+git push origin master
+
+لرفع التعديلات
+git add .
+git commit
+git push origin master
+
+الشخص الثاني
+git clone (url)
+
+رفع تغييرات الشخص الثاني
+1 الذهاب الى نفس folder
+git add .
+git commit
+git push origin master
+
+تنزيل التحديثات 
+git pull origin master
+
+ او من خلال server للحذف يجب ان تحذف من
+git rm -r --cached (لسم الملف)
+git commit 
+git push origi master
+
+ git log لمعرفة جميع الكومنت المضافين  
+ 
+للرجوع الى المشروع السابق الصحيح
+git log(نأخذ الرقم الذي نريد العودة اليه)
+git chechout (number)
+
+creat new branch by    git checkout -b (name of branch)
+git branch(لرؤية الافرع)
+git checkout (name of branch)(to switch between branches)
+
+git push origin (name of branch that we wont to push the files)
+
+
+للوصول الى كافة الأفرع 
+git branch -a
+git checkout -b '(name of branch)' '(المسار)'
+
+ 

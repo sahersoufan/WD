@@ -27,6 +27,7 @@ public class BasicGui extends Application implements Initializable{
     private sample.proccess.SaveLocation choseLocation = new SaveLocation();
     private List<String> URLS = new ArrayList<>();
     private String SaveLocation = "C:\\";
+    private List<String> Types = new ArrayList<>();
 
     @FXML private Button ChoiceLocation;
     @FXML private Button Cancel;
@@ -37,6 +38,10 @@ public class BasicGui extends Application implements Initializable{
     @FXML private TableView<properity4TableviewURLS> tableView;
     @FXML private TableColumn<properity4TableviewURLS, String> tableColumn;
 
+    @FXML private CheckBox CheckHTML;
+    @FXML private CheckBox CheckCSS;
+    @FXML private CheckBox CheckJS;
+    @FXML private CheckBox CheckMedia;
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("BasicGui.fxml"));
@@ -106,13 +111,29 @@ public class BasicGui extends Application implements Initializable{
         System.exit(0);
     }
 
+    @FXML
+    private void InputTypes(){
+        if(CheckHTML.isSelected()){
+            Types.add(CheckHTML.getText());
+        }
+        if(CheckCSS.isSelected()){
+            Types.add(CheckCSS.getText());
+        }
+        if(CheckJS.isSelected()){
+            Types.add(CheckJS.getText());
+        }
+        if(CheckMedia.isSelected()){
+            Types.add(CheckMedia.getText());
+        }
+    }
     // Start Downloading ^_^ :)
     @FXML
     private void StartDownloading() throws Exception {
 
-                thread4StartDownloading t = new thread4StartDownloading();
-                t.seturl(URLS,SaveLocation);
-                new Thread(t).start();
+        InputTypes();
+        thread4StartDownloading t = new thread4StartDownloading();
+        t.seturl(URLS,SaveLocation, Types);
+        new Thread(t).start();
 
     }
 

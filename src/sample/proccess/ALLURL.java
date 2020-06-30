@@ -145,7 +145,7 @@ public class ALLURL{
 
     }
 
-    public  List<String> getAllLink(String mainUrl) throws IOException {
+    public  List<String> getAllLink(String mainUrl, List<String> Types) throws IOException {
 
         String MainDomain=Repair.RepairDomain(mainUrl);
         Link.add(new pair<>(new pair<>(MainDomain,true),0));

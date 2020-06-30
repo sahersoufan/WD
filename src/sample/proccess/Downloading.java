@@ -5,6 +5,8 @@ import sample.Objects4GUI;
 import sample.threads.thread4StartDownloading;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Thread.sleep;
 
@@ -12,6 +14,7 @@ public class Downloading implements Objects4GUI {
     private Spider spider = new Spider();
     private String URL="http://www.guimp.com/", saveLocation="D:\\";
     private thread4StartDownloading th4SD ;
+    private List<String> Types;
 
     public void setTh4SD(thread4StartDownloading th4SD) {
         this.th4SD = th4SD;
@@ -30,6 +33,7 @@ public class Downloading implements Objects4GUI {
         this.saveLocation = saveLocation;
     }
 
+    public void setTypes(List<String> t){Types = new ArrayList<>(t);}
     //set FUll size text Label
     public void setFullSizeLabel(String fullSize) throws Exception {
         helper.setFullSizeLabel(fullSize);
@@ -63,6 +67,7 @@ public class Downloading implements Objects4GUI {
 
         spider.setURL(URL);
         spider.setSaveLocation(saveLocation);
+        spider.setTypes(Types);
         spider.initPageFile();
         StartSpiderWorking();
 
