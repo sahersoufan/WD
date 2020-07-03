@@ -40,7 +40,7 @@ public class ALLURL{
 
         return false;
     }
-    public  void getLink(String Url,String MainUrl,int depth) throws IOException {
+    public  void getLink(String Url,String MainUrl,int depth,List<String> Types) throws IOException {
 
 
 
@@ -54,87 +54,188 @@ public class ALLURL{
                     MainTitle= doc.title();
                 }
                 size += doc.outerHtml().length();
-                Elements links1 = doc.select("a[href]");
-                Elements links2 = doc.select("link[href]");
-                Elements links3 = doc.select("script[src~=(?i)\\.(js)]");
-                Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
-                Elements CSS = doc.select("#mp-itn b a");
+                Elements links1 = null;
+                Elements links2=null;
+                Elements links3=null;
+                Elements CSS=null;
+                Elements images=null;
+                if(Types.size()==0){
+                    links1 = doc.select("a[href]");
+                    links2 = doc.select("link[href]");
+                    CSS = doc.select("#mp-itn b a");
+                    links3 = doc.select("script[src~=(?i)\\.(js)]");
+                    images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                    for (Element link : links1) {
+                        pair<pair<String, Boolean>, Integer> Pair = new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")), false), depth);
+                        if (!Search(Pair.getKey().getKey())) {
+                            if (Filter.ISURLValid(Pair.getKey().getKey())) {
+                                Link.add(Pair);
+                                NOEdit.add(link.attr("href"));
+                            }
 
 
-                for (Element link : links1) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
-                    if(!Search(Pair.getKey().getKey()))
-                    {
-                        if(Filter.ISURLValid(Pair.getKey().getKey()))
+                        }
+                    }
+                    for (Element link : links2) {
+
+                        pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
+                        if(!Search(Pair.getKey().getKey()))
                         {
-                            Link.add(Pair);
-                            NOEdit.add(link.attr("href"));
+                            if(Filter.ISURLValid(Pair.getKey().getKey())){
+                                Link.add(Pair);
+                                NOEdit.add(link.attr("href"));
+                            }
+
+
                         }
-
-
                     }
 
-                }
-
-                for (Element link : links2) {
-
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
-                    if(!Search(Pair.getKey().getKey()))
-                    {
-                        if(Filter.ISURLValid(Pair.getKey().getKey())){
-                            Link.add(Pair);
-                            NOEdit.add(link.attr("href"));
-                        }
-
-
-                    }
-                }
-
-
-                for (Element scripts : links3) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,scripts.attr("src")),false),depth);
-                    if(!Search(Pair.getKey().getKey()))
-                    {
-                        if(Filter.ISURLValid(Pair.getKey().getKey()))
+                    for (Element links4 : CSS) {
+                        pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,links4.attr("style")),false),depth);
+                        if(!Search(Pair.getKey().getKey()))
                         {
-                            Link.add(Pair);
-                            NOEdit.add(scripts.attr("src"));
+                            if(Filter.ISURLValid(Pair.getKey().getKey()))
+                            {
+                                Link.add(Pair);
+                                NOEdit.add(links4.attr("style"));
+                            }
+
+
                         }
 
 
                     }
-                }
 
-                for (Element links4 : CSS) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,links4.attr("style")),false),depth);
-                    if(!Search(Pair.getKey().getKey()))
-                    {
-                        if(Filter.ISURLValid(Pair.getKey().getKey()))
+                    for (Element scripts : links3) {
+                        pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,scripts.attr("src")),false),depth);
+                        if(!Search(Pair.getKey().getKey()))
                         {
-                            Link.add(Pair);
-                            NOEdit.add(links4.attr("style"));
+                            if(Filter.ISURLValid(Pair.getKey().getKey()))
+                            {
+                                Link.add(Pair);
+                                NOEdit.add(scripts.attr("src"));
+                            }
+
+
                         }
-
-
                     }
 
-
-                }
-
-
-                for (Element image : images) {
-                    pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,image.attr("src")),false),depth);
-                    if(!Search(Pair.getKey().getKey()))
-                    {
-                        if(Filter.ISURLValid(Pair.getKey().getKey()))
+                    for (Element image : images) {
+                        pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,image.attr("src")),false),depth);
+                        if(!Search(Pair.getKey().getKey()))
                         {
-                            Link.add(Pair);
-                            NOEdit.add(image.attr("src"));
+                            if(Filter.ISURLValid(Pair.getKey().getKey()))
+                            {
+                                Link.add(Pair);
+                                NOEdit.add(image.attr("src"));
+                            }
+
                         }
 
                     }
 
+                }else {
+                    for (int i=0;i<Types.size();i++)
+                    {
+                        if(Types.get(i).equals("HTML")) {
+                            links1 = doc.select("a[href]");
+                            links2 = doc.select("link[href]");
+                            for (Element link : links1) {
+                                pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
+                                if(!Search(Pair.getKey().getKey()))
+                                {
+                                    if(Filter.ISURLValid(Pair.getKey().getKey()))
+                                    {
+                                        Link.add(Pair);
+                                        NOEdit.add(link.attr("href"));
+                                    }
+
+
+                                }
+
+                            }
+
+                            for (Element link : links2) {
+
+                                pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
+                                if(!Search(Pair.getKey().getKey()))
+                                {
+                                    if(Filter.ISURLValid(Pair.getKey().getKey())){
+                                        Link.add(Pair);
+                                        NOEdit.add(link.attr("href"));
+                                    }
+
+
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    for (int i=0;i<Types.size();i++)
+                    {
+                        if(Types.get(i).equals("JS")){
+                            links3 = doc.select("script[src~=(?i)\\.(js)]");
+                            for (Element scripts : links3) {
+                                pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,scripts.attr("src")),false),depth);
+                                if(!Search(Pair.getKey().getKey()))
+                                {
+                                    if(Filter.ISURLValid(Pair.getKey().getKey()))
+                                    {
+                                        Link.add(Pair);
+                                        NOEdit.add(scripts.attr("src"));
+                                    }
+
+
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    for (int i=0;i<Types.size();i++)
+                    {
+                        if(Types.get(i).equals("CSS")){
+                            CSS = doc.select("#mp-itn b a");
+                            for (Element links4 : CSS) {
+                                pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,links4.attr("style")),false),depth);
+                                if(!Search(Pair.getKey().getKey()))
+                                {
+                                    if(Filter.ISURLValid(Pair.getKey().getKey()))
+                                    {
+                                        Link.add(Pair);
+                                        NOEdit.add(links4.attr("style"));
+                                    }
+
+
+                                }
+
+
+                            }
+                            break;
+                        }
+                    }
+                    for (int i=0;i<Types.size();i++)
+                    {
+                        if(Types.get(i).equals("Media")){
+                            images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                            for (Element image : images) {
+                                pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,image.attr("src")),false),depth);
+                                if(!Search(Pair.getKey().getKey()))
+                                {
+                                    if(Filter.ISURLValid(Pair.getKey().getKey()))
+                                    {
+                                        Link.add(Pair);
+                                        NOEdit.add(image.attr("src"));
+                                    }
+
+                                }
+
+                            }
+                            break;
+                        }
+                    }
+
                 }
+
             } catch (HttpStatusException ex) {
                 System.out.println("bad request!!!!!!!!!!!!");
             }
@@ -151,7 +252,7 @@ public class ALLURL{
         String MainDomain=Repair.RepairDomain(mainUrl);
         Link.add(new pair<>(new pair<>(MainDomain,true),0));
         NOEdit.add(MainDomain);
-        getLink(MainDomain,MainDomain,1);
+        getLink(MainDomain,MainDomain,1,Types);
 
         for(int i=0;i<Link.size();i++)
         {
@@ -160,8 +261,9 @@ public class ALLURL{
             {
                 if(!Link.get(i).getKey().getValue())
                 {
+
                     Link.get(i).getKey().setValue(true);
-                    getLink(Link.get(i).getKey().getKey(),MainDomain,(Link.get(i).getValue()+1));
+                    getLink(Link.get(i).getKey().getKey(),MainDomain,(Link.get(i).getValue()+1),Types);
                 }
             }
             else
