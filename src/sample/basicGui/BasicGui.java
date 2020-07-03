@@ -150,6 +150,7 @@ public class BasicGui extends Application implements Initializable{
         thread4StartDownloading t = new thread4StartDownloading();
         t.seturl(URLS,SaveLocation, Types, depth);
         new Thread(t).start();
+        Types.clear();
 
     }
 
