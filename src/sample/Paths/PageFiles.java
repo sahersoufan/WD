@@ -10,6 +10,7 @@ import sample.proccess.pair;
 
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class PageFiles{
         //issue
         // deleteFirstLine(pathOfURLS);
     }
-    public synchronized void saveIn(String data,String url) throws IOException {
+    public synchronized void saveIn(String data, BufferedImage img,InputStream audio,InputStream video, String url) throws IOException {
         if((Boolean) Filter.FilterCss(url))
 
             getCSS().writeFile(setCSS_File(url),data);
@@ -78,17 +79,21 @@ public class PageFiles{
         else if((Boolean) Filter.FilterJs(url))
 
             getJS().writeFile(setJS_File(url),data);
+
+
+        else if((Boolean) Filter.FilterImage(url)){
+            String[] s = url.split("\\.");
+            getMedia().writeImage(setMedia_File(url),img,s[s.length - 1]);
+
+        }else if((Boolean) Filter.FilterVideo(url)){
+            getMedia().writeVideo(setMedia_File(url),video);
+        }
+        else if((Boolean) Filter.FilterAduio(url))
+
+            getMedia().writeAudio(setAudio_File(url),audio);
         else if ((Boolean)Filter.FilterDomain(url))
 
             getHTML().writeFile(setDomain_File(url),data);
-
-        else if((Boolean) Filter.FilterImage(url))
-
-            getMedia().writeFile(setMedia_File(url),data);
-
-        else if((Boolean) Filter.FilterAduio(url))
-
-            getMedia().writeFile(setAudio_File(url),data);
         else
             getHTML().writeFile(setHTML_File(url),data);
     }

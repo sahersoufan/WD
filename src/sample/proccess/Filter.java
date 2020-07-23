@@ -28,7 +28,7 @@ public class Filter {
         if(TypeUrl(Url).equals("cab")||TypeUrl(Url).equals("mpeg")||TypeUrl(Url).equals("scm")||TypeUrl(Url).equals("iso")||TypeUrl(Url).equals("dmp")||TypeUrl(Url).equals("dll")){
             return true;
         }
-        if(TypeUrl(Url).equals("exe")||TypeUrl(Url).equals("avi")||TypeUrl(Url).equals("wav")||TypeUrl(Url).equals("mp3")||TypeUrl(Url).equals("wma")||TypeUrl(Url).equals("bin")){
+        if(TypeUrl(Url).equals("exe")||TypeUrl(Url).equals("avi")||TypeUrl(Url).equals("wav")||TypeUrl(Url).equals("mp3")||TypeUrl(Url).equals("mp4")||TypeUrl(Url).equals("wma")||TypeUrl(Url).equals("bin")){
             return true;
         }
         if(TypeUrl(Url).equals("so")||TypeUrl(Url).equals("tar")||TypeUrl(Url).equals("tif")||TypeUrl(Url).equals("js")||TypeUrl(Url).equals("css")){
@@ -116,7 +116,7 @@ public class Filter {
 
 
 
-        if(TypeUrl(Url).equals("icon")||TypeUrl(Url).equals("img")||TypeUrl(Url).equals("png")||TypeUrl(Url).equals("jpg")||TypeUrl(Url).equals("gif")||TypeUrl(Url).equals("ico")){
+        if(TypeUrl(Url).equals("icon")||TypeUrl(Url).equals("img")||TypeUrl(Url).equals("png")||TypeUrl(Url).equals("jpg")||TypeUrl(Url).equals("gif")){
             return true;
         }
 
@@ -134,7 +134,13 @@ public class Filter {
         }
         return false;
     }
+    public static Boolean FilterVideo(String Url) {
 
+        if(TypeUrl(Url).equals("mp4")){
+            return true;
+        }
+        return false;
+    }
     public static Boolean FilterDomain(String Url) {
 
         return (!FilterCss(Url)) && (!FilterJs(Url)) && (!FilterAduio(Url)) && (!FilterImage(Url)) && (!FilterHtml(Url));

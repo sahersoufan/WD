@@ -249,7 +249,7 @@ public class ALLURL{
     public  List<String> getAllLink(String mainUrl, List<String> Types, int depth) throws IOException {
 
         MAX_DEPTH = depth;
-        String MainDomain=Repair.RepairDomain(mainUrl);
+        String MainDomain=/*Repair.RepairDomain(mainUrl);*/ mainUrl;
         Link.add(new pair<>(new pair<>(MainDomain,true),0));
         NOEdit.add(MainDomain);
         getLink(MainDomain,MainDomain,1,Types);

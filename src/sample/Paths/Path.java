@@ -1,5 +1,7 @@
 package sample.Paths;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 
 
@@ -39,6 +41,41 @@ public abstract class Path implements fun {
         pw.println(data);
         pw.close();
         fos.close();
+        return test;
+    }
+    @Override
+    public boolean writeImage( String fileName, BufferedImage img, String extin)throws IOException {
+        boolean test=isCreatedFile(fileName);
+        FileOutputStream fos=new FileOutputStream(fileName,true);
+
+        ImageIO.write(img,extin,fos);
+        return test;
+
+    }
+
+    @Override
+    public boolean writeAudio( String fileName, InputStream i) throws IOException {
+        boolean test=isCreatedFile(fileName);
+        OutputStream outstream = new FileOutputStream(fileName,true);
+        byte[] buffer = new byte[4096];
+        int len;
+        while ((len = i.read(buffer)) > 0) {
+            outstream.write(buffer, 0, len);
+        }
+        outstream.close();
+        return test;
+    }
+
+    @Override
+    public boolean writeVideo( String fileName, InputStream i) throws IOException {
+        boolean test=isCreatedFile(fileName);
+        OutputStream outstream = new FileOutputStream(fileName,true);
+        byte[] buffer = new byte[4096];
+        int len;
+        while ((len = i.read(buffer)) > 0) {
+            outstream.write(buffer, 0, len);
+        }
+        outstream.close();
         return test;
     }
     @Override

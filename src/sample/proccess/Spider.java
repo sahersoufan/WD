@@ -4,8 +4,10 @@ import org.jsoup.nodes.Document;
 import sample.getUrlFiles.Connection;
 import sample.Paths.PageFiles;
 
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,8 +167,8 @@ public class Spider {
     private class threads extends Thread {
 
         //send page to PageFile class
-        private void SendPage(String page, String url) throws IOException {
-            file.saveIn(page, url);
+        private void SendPage(String page,BufferedImage img,InputStream audio,InputStream video, String url) throws IOException {
+            file.saveIn(page, img,audio,video ,url);
         }
 
         //delete one url from urls.txt
@@ -178,6 +180,7 @@ public class Spider {
         @Override
         public void start() {
 
+            BufferedImage image = null;
             String webPage;
             String oneUrl = "hello";
 
@@ -190,12 +193,36 @@ public class Spider {
                     e.printStackTrace();
                 }
                 try {
-
-                    webPage = connection.DownloadWebPage(oneUrl);
-                    try {
-                        SendPage(webPage, oneUrl);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if((Boolean) Filter.FilterVideo(oneUrl)){
+                        InputStream i = connection.downloadVideo(oneUrl);
+                        try {
+                            SendPage("",null,null,i, oneUrl);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else if((Boolean) Filter.FilterAduio(oneUrl)){
+                        InputStream i = connection.downloadAudio(oneUrl);
+                        try {
+                            SendPage("",null,i,null, oneUrl);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else if((Boolean) Filter.FilterImage(oneUrl)){
+                        image = connection.DownloadImage(oneUrl);
+                        try {
+                            SendPage("",image,null,null, oneUrl);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        webPage = connection.DownloadWebPage(oneUrl);
+                        try {
+                            SendPage(webPage,null,null,null, oneUrl);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     try {
                         deleteOneUrlFromDownloading(oneUrl);
@@ -225,6 +252,8 @@ public class Spider {
 
 
             }
+
+
             while (!CancelStatementInfoGui && !PauseStatementInfoGui && !file.isURL_InURL_Text()) {
 
                 try {
@@ -234,14 +263,38 @@ public class Spider {
                 }
 
                 try {
-
-                    webPage = connection.DownloadWebPage(oneUrl);
-
-                    try {
-                        SendPage(webPage, oneUrl);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if((Boolean) Filter.FilterVideo(oneUrl)){
+                        InputStream i = connection.downloadVideo(oneUrl);
+                        try {
+                            SendPage("",null,null,i, oneUrl);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    else if((Boolean) Filter.FilterAduio(oneUrl)){
+                        InputStream i = connection.downloadAudio(oneUrl);
+                        try {
+                            SendPage("",null,i,null, oneUrl);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else if((Boolean) Filter.FilterImage(oneUrl)){
+                        image = connection.DownloadImage(oneUrl);
+                        try {
+                            SendPage("",image,null,null, oneUrl);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        webPage = connection.DownloadWebPage(oneUrl);
+                        try {
+                            SendPage(webPage,null,null,null, oneUrl);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
                     try {
                         deleteOneUrlFromDownloading(oneUrl);
                     } catch (IOException e) {

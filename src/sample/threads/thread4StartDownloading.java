@@ -47,10 +47,10 @@ public class thread4StartDownloading implements Runnable {
                 e.printStackTrace();
             }
             if(stopDownloading) break;
+
             ws.remove(i);
             i--;
         }
-
     }
 
     //Stop Downloading
