@@ -35,8 +35,6 @@ public class Filter {
             return true;
         }
 
-
-
         return  false;
 
     }
@@ -48,7 +46,7 @@ public class Filter {
 
 
 
-        if(TypeUrl(Url).equals("jar")||TypeUrl(Url).equals("war")||TypeUrl(Url).equals("ear")||TypeUrl(Url).equals("wmv")){
+        if(TypeUrl(Url).equals("jar")||TypeUrl(Url).equals("war")||TypeUrl(Url).equals("ear")||TypeUrl(Url).equals("wmv")||TypeUrl(Url).equals("php")){
             return true;
         }
         if(TypeUrl(Url).equals("cab")||TypeUrl(Url).equals("scm")||TypeUrl(Url).equals("iso")||TypeUrl(Url).equals("dmp")||TypeUrl(Url).equals("dll")){
@@ -62,6 +60,10 @@ public class Filter {
         }
         return  false;
     }
+
+
+
+
     static Boolean ISURLValid(String Url) {
         try {
             URL obj=new URL(Url);

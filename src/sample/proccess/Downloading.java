@@ -96,8 +96,15 @@ public class Downloading implements Objects4GUI {
             }else {
                 LoseInternetConnMessage();
             }
-
-
+        }catch (Exception e){
+            SendOrderToTheThreadsToStopDownloading();
+            Process process = java.lang.Runtime.getRuntime().exec("ping www.google.com");
+            int x = process.waitFor();
+            if(x == 0){
+                UnValidUrlMessage(URL);
+            }else {
+                LoseInternetConnMessage();
+            }
         }
     }
 

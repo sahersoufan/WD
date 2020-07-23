@@ -2,6 +2,7 @@ package sample.proccess;
 
 
 import java.net.URL;
+import java.util.Random;
 
 public class Repair {
 
@@ -34,6 +35,9 @@ public class Repair {
     }
     public static String RepairUrl(String MainUrl, String RepairLink)  {
 
+        if(RepairLink.contains("..")){
+            return "";
+        }
 
         String Split[]=RepairLink.split("/");
         String Split1[]=MainUrl.split("/");

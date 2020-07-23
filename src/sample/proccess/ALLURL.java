@@ -7,6 +7,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class ALLURL{
@@ -29,6 +31,7 @@ public class ALLURL{
     }
 
     boolean Search(String string) {
+        if(string.equals("")) return true;
         for (int i=0;i<Link.size();i++)
         {
             if(Link.get(i).getKey().getKey().equals(string)||Link.get(i).getKey().getKey().equals(string+"/"))
@@ -47,7 +50,7 @@ public class ALLURL{
         if(!Filter.FilterExcluded(Url))
         {
             Document doc = null;
-            try {
+
                 doc = Jsoup.connect(Url).get();
                 if(depth==0)
                 {
@@ -59,19 +62,22 @@ public class ALLURL{
                 Elements links3=null;
                 Elements CSS=null;
                 Elements images=null;
+                Elements sources=null;
+                Elements audio=null;
                 if(Types.size()==0){
                     links1 = doc.select("a[href]");
                     links2 = doc.select("link[href]");
                     CSS = doc.select("#mp-itn b a");
                     links3 = doc.select("script[src~=(?i)\\.(js)]");
                     images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                    sources = doc.select("source[src~=(?i)\\.(mp3)]");
+                    audio = doc.select("audio[src~=(?i)\\.(mp3)]");
                     for (Element link : links1) {
                         pair<pair<String, Boolean>, Integer> Pair = new pair<>(new pair<>(Repair.RepairUrl(MainUrl, link.attr("href")), false), depth);
                         if (!Search(Pair.getKey().getKey())) {
-                            if (Filter.ISURLValid(Pair.getKey().getKey())) {
                                 Link.add(Pair);
                                 NOEdit.add(link.attr("href"));
-                            }
+
 
 
                         }
@@ -81,10 +87,9 @@ public class ALLURL{
                         pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
                         if(!Search(Pair.getKey().getKey()))
                         {
-                            if(Filter.ISURLValid(Pair.getKey().getKey())){
                                 Link.add(Pair);
                                 NOEdit.add(link.attr("href"));
-                            }
+
 
 
                         }
@@ -94,11 +99,10 @@ public class ALLURL{
                         pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,links4.attr("style")),false),depth);
                         if(!Search(Pair.getKey().getKey()))
                         {
-                            if(Filter.ISURLValid(Pair.getKey().getKey()))
-                            {
+
                                 Link.add(Pair);
                                 NOEdit.add(links4.attr("style"));
-                            }
+
 
 
                         }
@@ -110,25 +114,49 @@ public class ALLURL{
                         pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,scripts.attr("src")),false),depth);
                         if(!Search(Pair.getKey().getKey()))
                         {
-                            if(Filter.ISURLValid(Pair.getKey().getKey()))
-                            {
+
                                 Link.add(Pair);
                                 NOEdit.add(scripts.attr("src"));
-                            }
+
 
 
                         }
                     }
 
+
+
+                    for (Element source : sources) {
+                        pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,source.attr("src")),false),depth);
+                        if(!Search(Pair.getKey().getKey()))
+                        {
+
+                                Link.add(Pair);
+                                NOEdit.add(source.attr("src"));
+
+
+
+                        }
+                    }
+                    for (Element source1 : audio) {
+                        pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,source1.attr("src")),false),depth);
+                        if(!Search(Pair.getKey().getKey()))
+                        {
+
+                            Link.add(Pair);
+                            NOEdit.add(source1.attr("src"));
+
+
+
+                        }
+                    }
                     for (Element image : images) {
                         pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,image.attr("src")),false),depth);
                         if(!Search(Pair.getKey().getKey()))
                         {
-                            if(Filter.ISURLValid(Pair.getKey().getKey()))
-                            {
+
                                 Link.add(Pair);
                                 NOEdit.add(image.attr("src"));
-                            }
+
 
                         }
 
@@ -144,11 +172,10 @@ public class ALLURL{
                                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
                                 if(!Search(Pair.getKey().getKey()))
                                 {
-                                    if(Filter.ISURLValid(Pair.getKey().getKey()))
-                                    {
+
                                         Link.add(Pair);
                                         NOEdit.add(link.attr("href"));
-                                    }
+
 
 
                                 }
@@ -160,10 +187,9 @@ public class ALLURL{
                                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,link.attr("href")),false),depth);
                                 if(!Search(Pair.getKey().getKey()))
                                 {
-                                    if(Filter.ISURLValid(Pair.getKey().getKey())){
                                         Link.add(Pair);
                                         NOEdit.add(link.attr("href"));
-                                    }
+
 
 
                                 }
@@ -179,11 +205,10 @@ public class ALLURL{
                                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,scripts.attr("src")),false),depth);
                                 if(!Search(Pair.getKey().getKey()))
                                 {
-                                    if(Filter.ISURLValid(Pair.getKey().getKey()))
-                                    {
+
                                         Link.add(Pair);
                                         NOEdit.add(scripts.attr("src"));
-                                    }
+
 
 
                                 }
@@ -199,11 +224,10 @@ public class ALLURL{
                                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,links4.attr("style")),false),depth);
                                 if(!Search(Pair.getKey().getKey()))
                                 {
-                                    if(Filter.ISURLValid(Pair.getKey().getKey()))
-                                    {
+
                                         Link.add(Pair);
                                         NOEdit.add(links4.attr("style"));
-                                    }
+
 
 
                                 }
@@ -213,19 +237,50 @@ public class ALLURL{
                             break;
                         }
                     }
+
+
+
+
+
                     for (int i=0;i<Types.size();i++)
                     {
                         if(Types.get(i).equals("Media")){
+                            sources = doc.select("source[src~=(?i)\\.(mp3)]");
+
+                            for (Element source : sources) {
+
+                                pair<pair<String, Boolean>, Integer> Pair = new pair<>(new pair<>(Repair.RepairUrl(MainUrl, source.attr("src")), false), depth);
+                                if (!Search(Pair.getKey().getKey())) {
+                                        Link.add(Pair);
+                                        NOEdit.add(source.attr("src"));
+
+
+
+                                }
+                            }
+
+
+                            audio = doc.select("audio[src~=(?i)\\.(mp3)]");
+
+                            for (Element source : audio) {
+
+                                pair<pair<String, Boolean>, Integer> Pair = new pair<>(new pair<>(Repair.RepairUrl(MainUrl, source.attr("src")), false), depth);
+                                if (!Search(Pair.getKey().getKey())) {
+                                    Link.add(Pair);
+                                    NOEdit.add(source.attr("src"));
+
+
+
+                                }
+                            }
+
                             images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
                             for (Element image : images) {
                                 pair<pair<String,Boolean>,Integer> Pair=new pair<>(new pair<>(Repair.RepairUrl( MainUrl,image.attr("src")),false),depth);
                                 if(!Search(Pair.getKey().getKey()))
                                 {
-                                    if(Filter.ISURLValid(Pair.getKey().getKey()))
-                                    {
                                         Link.add(Pair);
                                         NOEdit.add(image.attr("src"));
-                                    }
 
                                 }
 
@@ -234,11 +289,11 @@ public class ALLURL{
                         }
                     }
 
+
+
+
                 }
 
-            } catch (HttpStatusException ex) {
-                System.out.println("bad request!!!!!!!!!!!!");
-            }
 
 
 
@@ -252,6 +307,7 @@ public class ALLURL{
         String MainDomain=/*Repair.RepairDomain(mainUrl);*/ mainUrl;
         Link.add(new pair<>(new pair<>(MainDomain,true),0));
         NOEdit.add(MainDomain);
+
         getLink(MainDomain,MainDomain,1,Types);
 
         for(int i=0;i<Link.size();i++)

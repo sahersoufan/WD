@@ -41,11 +41,13 @@ public class thread4StartDownloading implements Runnable {
             download.setTypes(Types);
             download.setDepth(depth);
             SendThread4StartDownloading(download);
+
             try {
                 download.Start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             if(stopDownloading) break;
 
             ws.remove(i);
